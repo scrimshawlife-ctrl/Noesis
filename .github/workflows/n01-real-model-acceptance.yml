@@ -1,0 +1,61 @@
+name: n01-real-model-acceptance
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_id:
+        description: "Open-weight Hugging Face model ID"
+        required: true
+        type: string
+      revision:
+        description: "Immutable model revision/commit SHA"
+        required: true
+        type: string
+      fixture_text:
+        description: "Public reproducible acceptance fixture text"
+        required: true
+        type: string
+      hidden_layer_1:
+        description: "First hidden-state layer index"
+        required: true
+        default: "1"
+        type: string
+      hidden_layer_2:
+        description: "Second hidden-state layer index"
+        required: true
+        default: "2"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  accept:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Noesis Hugging Face runtime
+        run: python -m pip install -e '.[hf]'
+      - name: Run pinned-model acceptance
+        run: |
+          python scripts/run_n01_acceptance.py \
+            --model-id '${{ inputs.model_id }}' \
+            --revision '${{ inputs.revision }}' \
+            --fixture-id 'n01-manual-fixture' \
+            --text '${{ inputs.fixture_text }}' \
+            --site embedding \
+            --site 'hidden_state:${{ inputs.hidden_layer_1 }}' \
+            --site 'hidden_state:${{ inputs.hidden_layer_2 }}' \
+            --repeats 2 \
+            --artifacts out/acceptance/artifacts \
+            --output out/acceptance/n01-evidence.json
+      - name: Upload acceptance evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: n01-acceptance-evidence
+          path: out/acceptance
+          if-no-files-found: error
