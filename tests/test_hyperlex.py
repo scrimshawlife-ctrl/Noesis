@@ -2,7 +2,14 @@ import hashlib
 
 import pytest
 
-from noesis.hyperlex import CallableHyperlexAdapter, DeterministicHyperlexAdapter, materialize_transform_result
+from noesis.hyperlex import (
+    CallableHyperlexAdapter,
+    DeterministicHyperlexAdapter,
+    build_transform_request,
+    bundle_manifest,
+    generate_transform_bundle,
+    materialize_transform_result,
+)
 
 
 def request_fixture():
@@ -65,3 +72,40 @@ def test_materializer_rejects_mutated_transform_output():
     result["output_text"] += " mutation"
     with pytest.raises(ValueError, match="hash mismatch"):
         materialize_transform_result(result)
+
+
+def test_request_builder_is_deterministic():
+    kwargs = dict(
+        source_fixture_id="source-001",
+        source_text="The king betrayed his brother.",
+        transform_class="metaphor",
+        semantic_intent="preserve betrayal",
+        expected_invariants=["betrayal"],
+        expected_changed_attributes=["surface form"],
+        seed=11,
+    )
+    first = build_transform_request(**kwargs)
+    second = build_transform_request(**kwargs)
+    assert first == second
+    assert first["request_id"].startswith("hxreq-")
+
+
+def test_bundle_generation_and_manifest_are_replayable():
+    adapter = DeterministicHyperlexAdapter()
+    requests = [
+        build_transform_request(
+            source_fixture_id="source-001",
+            source_text="The king betrayed his brother.",
+            transform_class=transform_class,
+            semantic_intent="preserve betrayal",
+            expected_invariants=["betrayal"],
+            expected_changed_attributes=["surface form"],
+            seed=7,
+        )
+        for transform_class in ("literal_paraphrase", "slang", "metaphor")
+    ]
+    first = generate_transform_bundle(adapter, requests)
+    second = generate_transform_bundle(adapter, requests)
+    assert first == second
+    assert bundle_manifest(first) == bundle_manifest(second)
+    assert bundle_manifest(first)["fixture_count"] == 3
