@@ -57,6 +57,16 @@ REQUIRED_SPEC_MARKERS = [
 
 PROVENANCE = ("OBSERVED", "INFERRED", "SPECULATIVE", "NOT_COMPUTABLE")
 
+ID_PATTERNS = {
+    "FR-": r"\bFR-\d+",
+    "NFR-": r"\bNFR-\d+",
+    "J-": r"\bJ-\d+",
+    "WF-": r"\bWF-\d+",
+    "AC-": r"\bAC-[A-Z]+\d+",
+    "T-": r"\bT-\d+",
+    "V-": r"\bV-\d+",
+}
+
 
 def fail(message: str) -> None:
     print(f"ERROR: {message}", file=sys.stderr)
@@ -92,19 +102,21 @@ def main() -> None:
         if not data.get("$id") or not data.get("title"):
             fail(f"{schema_path.relative_to(ROOT)} lacks $id/title")
 
-    requirements = read("specs/REQUIREMENTS.md")
-    workflows = read("specs/WORKFLOWS.md")
-    journeys = read("specs/JOURNEYS.md")
-    acceptance = read("specs/ACCEPTANCE.md")
-    tasks = read("specs/TASKS.md")
-    verification = read("specs/VERIFICATION.md")
-    traceability = read("TRACEABILITY.md")
-
-    for prefix, text in (("FR-", requirements), ("NFR-", requirements), ("J-", journeys), ("WF-", workflows), ("AC-", acceptance), ("T-", tasks), ("V-", verification)):
-        if not re.search(rf"\b{re.escape(prefix)}\d+", text):
+    canonical_text = {
+        "FR-": read("specs/REQUIREMENTS.md"),
+        "NFR-": read("specs/REQUIREMENTS.md"),
+        "J-": read("specs/JOURNEYS.md"),
+        "WF-": read("specs/WORKFLOWS.md"),
+        "AC-": read("specs/ACCEPTANCE.md"),
+        "T-": read("specs/TASKS.md"),
+        "V-": read("specs/VERIFICATION.md"),
+    }
+    for prefix, text in canonical_text.items():
+        if not re.search(ID_PATTERNS[prefix], text):
             fail(f"canonical spec missing {prefix} identifiers")
 
-    for prefix in ("FR-", "NFR-", "J-", "WF-", "AC-", "T-", "V-"):
+    traceability = read("TRACEABILITY.md")
+    for prefix in ID_PATTERNS:
         if prefix not in traceability:
             fail(f"traceability missing {prefix} references")
 
