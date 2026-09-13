@@ -21,3 +21,11 @@ class ContractRegistry:
         if errors:
             joined = "; ".join(error.message for error in errors)
             raise ValueError(f"{name} contract violation: {joined}")
+
+
+def repository_contracts_dir() -> Path:
+    return Path(__file__).resolve().parents[3] / "contracts"
+
+
+def validate_contract(name: str, instance: Any, contracts_dir: str | Path | None = None) -> None:
+    ContractRegistry(contracts_dir or repository_contracts_dir()).validate(name, instance)
