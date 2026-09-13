@@ -8,6 +8,7 @@ from pathlib import Path
 from noesis.acceptance import N01AcceptanceConfig, run_n01_acceptance
 from noesis.adapters.huggingface import HuggingFaceAdapter
 from noesis.artifacts.store import ContentAddressedStore
+from noesis.contracts.registry import ContractRegistry
 from noesis.domain.models import RepresentationSite
 
 
@@ -49,6 +50,7 @@ def main() -> None:
         euclidean_ceiling=args.euclidean_ceiling,
     )
     evidence = run_n01_acceptance(adapter, store, config)
+    ContractRegistry("contracts").validate("n01-acceptance-evidence", evidence)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
     print(json.dumps(evidence["gate_decisions"], sort_keys=True))
