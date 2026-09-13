@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/exp001-transform-catalog.schema.json",
+  "title": "EXP001TransformCatalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "catalog_id", "version", "transforms"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0.0"},
+    "catalog_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "transforms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["transform_class", "semantic_intent", "expected_invariants", "expected_changed_attributes"],
+        "properties": {
+          "transform_class": {"type": "string", "minLength": 1},
+          "semantic_intent": {"type": "string", "minLength": 1},
+          "expected_invariants": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "expected_changed_attributes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "parameters": {"type": "object", "additionalProperties": true},
+          "role": {"enum": ["transform", "negative_control", "positive_control", "adversarial_control"]}
+        }
+      }
+    }
+  }
+}
