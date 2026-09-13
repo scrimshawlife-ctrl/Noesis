@@ -7,6 +7,7 @@
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
 - Runtime implementation: `SLICE-001 IMPLEMENTED / STACKED PR #2`
+- Hyperlex integration: `ADAPTER BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `IMPLEMENTED / CI-VERIFIED / ACCEPTANCE REVIEW PENDING`
 - N1 hidden-state capture: `IMPLEMENTED / REAL-MODEL ACCEPTANCE NOT_EXECUTED`
 - N2 sparse-feature/probe/causal lab: `SPECIFIED / NOT_IMPLEMENTED`
@@ -39,6 +40,21 @@ Implemented on `runtime/slice-001-representation-capture`:
 
 The fake adapter is not scientific model evidence and cannot settle a latent claim.
 
+## Hyperlex adapter boundary
+
+Implemented without binding to the still-training Hyperlex model:
+- `HyperlexTransformRequest` JSON Schema;
+- `HyperlexTransformResult` JSON Schema;
+- `HyperlexAdapter` protocol;
+- deterministic test adapter;
+- callable/in-process adapter for a local model or Python service;
+- JSON-over-HTTP adapter for a future served Hyperlex runtime;
+- transform-result provenance and schema validation;
+- immutable fixture materialization with SHA-256 mutation detection;
+- explicit semantic-intent / expected-invariant metadata separation from Noesis latent settlement authority.
+
+Invariant: Hyperlex may declare intended semantic invariants; Hyperlex may not assert latent truth labels or settle Noesis evidence.
+
 ## Remaining acceptance blockers
 
 1. Freeze an open-weight reference model family and exact revision for controlled N1 acceptance.
@@ -46,14 +62,14 @@ The fake adapter is not scientific model evidence and cannot settle a latent cla
 3. Record runtime/device/dependency fingerprint for that execution.
 4. Complete AC-N0/AC-N1 review from the resulting evidence packet.
 5. EXP-001 fixture corpus remains unfrozen.
-6. Hyperlexical transform boundary remains unimplemented.
+6. Bind the trained Hyperlex model to either the callable or HTTP adapter when its inference surface stabilizes.
 7. No independent replication evidence exists.
 8. No FIELD authorization exists.
 9. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
 
-## Next executable slice
+## Next executable slices
 
-`SLICE-001A — Pinned Real-Model Acceptance`
+### `SLICE-001A — Pinned Real-Model Acceptance`
 
 Scope:
 - choose a small open-weight reference model suitable for repeatable CI/lab execution;
@@ -66,6 +82,17 @@ Scope:
 - assemble AC-N0/AC-N1 evidence packet.
 
 Exit gate: `AC-N0 ACCEPTED` and `AC-N1 ACCEPTED` or explicit `REJECTED/NOT_COMPUTABLE` with preserved evidence.
+
+### `SLICE-002A — Hyperlex Adapter Readiness`
+
+Scope while the Hyperlex model is still training:
+- keep transport/model implementation replaceable behind the adapter protocol;
+- add deterministic transform-set generation helpers;
+- add EXP-001 fixture-bundle assembly from transform results;
+- add negative/control transform classes without requiring the trained model;
+- keep actual model binding and semantic-quality acceptance pending.
+
+Exit gate: Noesis can consume a complete, schema-valid transform bundle from any conforming Hyperlex adapter without changing latent evidence semantics.
 
 ## Promotion posture
 
