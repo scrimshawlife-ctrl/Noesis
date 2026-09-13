@@ -3,7 +3,8 @@ from __future__ import annotations
 import hashlib
 import random
 
-from noesis.domain.models import CaptureRequest, CaptureResult, ModelIdentity
+from noesis.adapters.base import UnsupportedRepresentationSite
+from noesis.domain.models import AdapterCapabilities, CaptureRequest, CaptureResult, ModelIdentity
 
 
 class DeterministicFakeAdapter:
@@ -17,12 +18,19 @@ class DeterministicFakeAdapter:
             tokenizer_revision="none",
             weights_sha256=None,
         )
+        self._capabilities = AdapterCapabilities(frozenset({"embedding", "hidden_state"}))
 
     @property
     def identity(self) -> ModelIdentity:
         return self._identity
 
+    @property
+    def capabilities(self) -> AdapterCapabilities:
+        return self._capabilities
+
     def capture(self, request: CaptureRequest) -> CaptureResult:
+        if not self.capabilities.supports(request.site):
+            raise UnsupportedRepresentationSite(request.site.key())
         material = f"{request.text}|{request.site.key()}|{request.seed}|{self._dimensions}".encode()
         seed = int.from_bytes(hashlib.sha256(material).digest()[:8], "big")
         rng = random.Random(seed)
