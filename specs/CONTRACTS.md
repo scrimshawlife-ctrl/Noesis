@@ -1,7 +1,7 @@
 # Noesis Contracts
 
 Status: `CANON-SHADOW`
-Version: `0.2.0`
+Version: `0.2.1`
 
 ## Contract rules
 
@@ -64,10 +64,31 @@ Required semantics: failure ID, run/manifest/fixture IDs, stage, error class, de
 Purpose: preserve immutable history while identifying obsolete evidence.
 Required semantics: old object ID, new object/defect reference, reason, operator/producer, UTC time.
 
+## C-010 — HyperlexTransformRequest
+
+Purpose: request a controlled lexical/symbolic transformation without granting Hyperlex latent-settlement authority.
+Required semantics: request ID, source fixture ID/text, transform class, semantic intent, expected invariants, expected changed attributes, seed, optional parameters.
+Invariant: semantic intent and expected invariants are hypotheses supplied to the experiment, not latent truth labels.
+Schema: `contracts/hyperlex-transform-request.schema.json`.
+
+## C-011 — HyperlexTransformResult
+
+Purpose: immutable, versioned transform output that can be materialized as a Noesis input fixture.
+Required semantics: transform/request/source identities, output text, transform class/version, output SHA-256, semantic intent, expected invariants, expected changed attributes, provider metadata, `OBSERVED` provenance.
+Invariant: the output hash must match the exact transformed text before fixture materialization.
+Schema: `contracts/hyperlex-transform-result.schema.json`.
+
 ## Boundary contracts
 
-### Hyperlexical -> Noesis
-Hyperlexical may provide immutable transform specifications and generated fixtures. It may not assign latent semantic truth.
+### Hyperlex -> Noesis
+Hyperlex may provide immutable transform specifications and generated fixtures. It may declare intended semantic invariants and expected changed attributes. It may not assign latent semantic truth, feature meaning, mechanistic interpretation, or settlement status.
+
+Current transport bindings:
+- callable/in-process adapter;
+- JSON-over-HTTP adapter;
+- deterministic CI adapter (test-only).
+
+The trained Hyperlex model remains replaceable behind the adapter protocol until its inference surface stabilizes.
 
 ### Noesis -> Abraxas
 Noesis exposes settlements, evidence bundles, artifact hashes, and provenance. Noesis may recommend promotion but cannot mutate canon.
