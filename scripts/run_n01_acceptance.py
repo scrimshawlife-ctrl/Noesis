@@ -11,6 +11,8 @@ from noesis.artifacts.store import ContentAddressedStore
 from noesis.contracts.registry import ContractRegistry
 from noesis.domain.models import RepresentationSite
 
+FLOATING_REVISIONS = {"main", "master", "latest", "HEAD", "head"}
+
 
 def parse_site(value: str) -> RepresentationSite:
     if value == "embedding":
@@ -24,7 +26,7 @@ def parse_site(value: str) -> RepresentationSite:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run Noesis AC-N0/AC-N1 acceptance against a pinned open-weight model.")
     parser.add_argument("--model-id", required=True)
-    parser.add_argument("--revision", required=True, help="Immutable model revision/commit; do not use a floating branch for settlement evidence.")
+    parser.add_argument("--revision", required=True, help="Immutable model revision/commit; floating branch names are rejected.")
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--fixture-id", required=True)
     parser.add_argument("--text", required=True)
@@ -36,6 +38,9 @@ def main() -> None:
     parser.add_argument("--artifacts", type=Path, default=Path("out/acceptance/artifacts"))
     parser.add_argument("--output", type=Path, default=Path("out/acceptance/n01-evidence.json"))
     args = parser.parse_args()
+
+    if args.revision in FLOATING_REVISIONS:
+        parser.error("--revision must be an immutable model revision/commit, not a floating branch")
 
     adapter = HuggingFaceAdapter(args.model_id, revision=args.revision, device=args.device)
     store = ContentAddressedStore(args.artifacts)
