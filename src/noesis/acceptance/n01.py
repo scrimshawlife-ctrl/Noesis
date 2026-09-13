@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import Iterable
 
 from noesis.adapters.base import ModelAdapter
 from noesis.artifacts.store import ContentAddressedStore
@@ -52,10 +51,10 @@ def run_n01_acceptance(
                 result = adapter.capture(request)
                 vectors.append(result.vector)
                 observations.append(
-                    runner.run(
+                    runner.record(
                         config.experiment_id,
                         f"accept-{site.key()}-{repeat_index}",
-                        request,
+                        result,
                     )
                 )
             except Exception as exc:  # noqa: BLE001 - evidence must preserve adapter failures
