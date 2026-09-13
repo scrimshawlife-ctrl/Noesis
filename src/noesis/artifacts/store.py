@@ -10,7 +10,7 @@ import numpy as np
 
 class ContentAddressedStore:
     def __init__(self, root: str | Path) -> None:
-        self.root = Path(root)
+        self.root = Path(root).resolve()
         self.root.mkdir(parents=True, exist_ok=True)
 
     @staticmethod
@@ -23,6 +23,8 @@ class ContentAddressedStore:
         path.parent.mkdir(parents=True, exist_ok=True)
         if not path.exists():
             path.write_bytes(payload)
+        elif path.read_bytes() != payload:
+            raise RuntimeError(f"content-addressed artifact mismatch for {sha}")
         return sha, path
 
     def put_json(self, value: Any) -> tuple[str, Path]:
@@ -31,5 +33,6 @@ class ContentAddressedStore:
 
     def put_vector(self, vector: tuple[float, ...]) -> tuple[str, Path]:
         array = np.asarray(vector, dtype=np.float64)
-        payload = array.tobytes(order="C")
-        return self.put_bytes(payload, "f64")
+        if not np.all(np.isfinite(array)):
+            raise ValueError("vector contains non-finite values")
+        return self.put_bytes(array.tobytes(order="C"), "f64")
