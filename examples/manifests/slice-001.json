@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "SLICE-001-REPLAY",
+  "research_question": "Can Noesis capture and compare a representation reproducibly under a fixed adapter, revision, site, fixture, and seed?",
+  "hypotheses": [
+    {
+      "id": "H-S001-1",
+      "claim": "Repeated deterministic captures produce identical artifact hashes.",
+      "null": "Repeated captures differ despite fixed declared inputs."
+    }
+  ],
+  "model_ids": ["noesis/fake-deterministic@1"],
+  "fixture_ids": ["fixture-001"],
+  "transform_ids": [],
+  "representation_sites": ["hidden_state:layer=2:token=-1"],
+  "metrics": ["cosine", "euclidean", "linear_cka"],
+  "seeds": [42],
+  "thresholds": {
+    "replay_artifact_hash_equal": true,
+    "replay_cosine": 1.0
+  },
+  "partitions": {
+    "test": ["fixture-001"]
+  },
+  "environment_requirements": {
+    "python": ">=3.11"
+  },
+  "data_classification": "PUBLIC_REPRODUCIBLE",
+  "authorization_ref": null,
+  "created_at_utc": "2026-09-13T23:00:00Z"
+}
