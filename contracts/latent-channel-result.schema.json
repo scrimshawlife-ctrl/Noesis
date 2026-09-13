@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/latent-channel-result.schema.json",
+  "title": "LatentChannelResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","channel_result_id","manifest_id","sender_model_id","receiver_model_id","channel_type","text_baseline_metric_ids","serialized_vector_baseline_metric_ids","latent_metric_ids","status","created_at_utc"],
+  "properties": {
+    "schema_version": {"type":"string","const":"1.0.0"},
+    "channel_result_id": {"type":"string","minLength":1},
+    "manifest_id": {"type":"string","minLength":1},
+    "sender_model_id": {"type":"string","minLength":1},
+    "receiver_model_id": {"type":"string","minLength":1},
+    "channel_type": {"type":"string","minLength":1},
+    "alignment_ref": {"type":["string","null"]},
+    "compression_budget": {"type":["number","integer","object","null"]},
+    "text_baseline_metric_ids": {"type":"array","minItems":1,"items":{"type":"string"}},
+    "serialized_vector_baseline_metric_ids": {"type":"array","minItems":1,"items":{"type":"string"}},
+    "latent_metric_ids": {"type":"array","minItems":1,"items":{"type":"string"}},
+    "adversarial_control_metric_ids": {"type":"array","items":{"type":"string"},"default":[]},
+    "semantic_equivalence_settlement_id": {"type":["string","null"]},
+    "leakage_evaluation_refs": {"type":"array","items":{"type":"string"},"default":[]},
+    "status": {"enum":["SUPPORTED","WEAK","REJECTED","FAILED","INCONCLUSIVE","NOT_COMPUTABLE"]},
+    "limitations": {"type":"array","items":{"type":"string"},"default":[]},
+    "created_at_utc": {"type":"string","format":"date-time"}
+  }
+}
