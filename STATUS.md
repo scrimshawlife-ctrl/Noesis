@@ -7,92 +7,73 @@
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
 - Runtime implementation: `SLICE-001 IMPLEMENTED / STACKED PR #2`
-- Hyperlex integration: `ADAPTER BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
-- N0 embedding/representation comparison: `IMPLEMENTED / CI-VERIFIED / ACCEPTANCE REVIEW PENDING`
-- N1 hidden-state capture: `IMPLEMENTED / REAL-MODEL ACCEPTANCE NOT_EXECUTED`
+- Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
+- N0 embedding/representation comparison: `IMPLEMENTED / CI-VERIFIED / REAL-MODEL ACCEPTANCE READY`
+- N1 hidden-state capture: `IMPLEMENTED / REAL-MODEL ACCEPTANCE READY / NOT_EXECUTED`
 - N2 sparse-feature/probe/causal lab: `SPECIFIED / NOT_IMPLEMENTED`
-- N3 semantic invariance: `FULLY_SPECIFIED / NOT_EXECUTED`
+- N3 semantic invariance: `FULLY_SPECIFIED / PREREGISTRATION TOOLING IMPLEMENTED / NOT_EXECUTED`
 - N4 cross-model alignment: `FULLY_SPECIFIED / NOT_EXECUTED`
 - N5 latent communication: `FULLY_SPECIFIED / BLOCKED`
 
-## Specification settlement
+## Implemented evidence surfaces
 
-The specification package is complete through doctrine, requirements, journeys, workflows, state machines, contracts, data, security/governance, acceptance, tasks, verification, experiments, and traceability.
-
-Specification completeness does not imply scientific capability.
-
-## SLICE-001 implementation evidence
-
-Implemented on `runtime/slice-001-representation-capture`:
-- Python package skeleton and typed capture-domain objects;
-- adapter protocol with explicit capability declaration;
-- deterministic fake adapter restricted to CI/runtime semantics;
-- optional Hugging Face reference adapter for embedding/hidden-state capture;
-- immutable manifest validation and execution;
-- content-addressed SHA-256 vector/JSON artifact store;
-- Observation output with `OBSERVED` provenance;
-- explicit FailureRecord persistence for missing fixtures/capture failures;
+### SLICE-001 — Representation capture
+- typed capture-domain objects and adapter capabilities;
+- deterministic test adapter and optional Hugging Face reference adapter;
+- immutable manifest validation/execution;
+- content-addressed SHA-256 artifacts;
+- Observation + FailureRecord semantics;
 - cosine, Euclidean, linear CKA, neighborhood overlap;
 - permutation-null and bootstrap uncertainty utilities;
-- deterministic replay and schema tests;
-- fail-closed numeric and metric tests;
-- runtime GitHub Actions validation.
+- deterministic replay, contract, numeric, artifact-integrity, and failure tests.
 
-The fake adapter is not scientific model evidence and cannot settle a latent claim.
+The fake adapter is test infrastructure only and is not scientific latent evidence.
 
-## Hyperlex adapter boundary
+### SLICE-001A — Pinned real-model acceptance readiness
+Implemented:
+- `N01AcceptanceConfig` and executable AC-N0/AC-N1 acceptance harness;
+- single-capture persistence so compared tensors are the exact tensors recorded as observations;
+- `N01AcceptanceEvidence` contract;
+- pinned-revision CLI that rejects obvious floating revisions;
+- manual GitHub Actions workflow for open-weight Hugging Face acceptance runs;
+- uploaded acceptance artifact packet on manual execution.
 
+Not yet executed against a selected pinned open-weight model revision. Therefore AC-N0/AC-N1 remain unsettled scientifically.
+
+### SLICE-002A — Hyperlex adapter/preregistration readiness
 Implemented without binding to the still-training Hyperlex model:
-- `HyperlexTransformRequest` JSON Schema;
-- `HyperlexTransformResult` JSON Schema;
-- `HyperlexAdapter` protocol;
-- deterministic test adapter;
-- callable/in-process adapter for a local model or Python service;
-- JSON-over-HTTP adapter for a future served Hyperlex runtime;
-- transform-result provenance and schema validation;
-- immutable fixture materialization with SHA-256 mutation detection;
-- explicit semantic-intent / expected-invariant metadata separation from Noesis latent settlement authority.
+- `HyperlexTransformRequest` / `HyperlexTransformResult` contracts;
+- callable/in-process, HTTP, and deterministic test adapters;
+- transform provenance/hash validation and immutable fixture materialization;
+- deterministic request IDs and transform/control classes;
+- replayable transform bundles;
+- `EXP001SourceCorpus` contract with discovery/confirmation/control partitions;
+- `EXP001TransformCatalog` contract for operator-owned transform/control hypotheses;
+- deterministic EXP-001 preregistration compiler from frozen corpus + transform catalog.
 
 Invariant: Hyperlex may declare intended semantic invariants; Hyperlex may not assert latent truth labels or settle Noesis evidence.
 
-## Remaining acceptance blockers
+## Remaining blockers
 
-1. Freeze an open-weight reference model family and exact revision for controlled N1 acceptance.
-2. Execute embedding and hidden-state capture twice against that exact model/revision and compare artifact/metric evidence under declared numeric tolerance.
-3. Record runtime/device/dependency fingerprint for that execution.
-4. Complete AC-N0/AC-N1 review from the resulting evidence packet.
-5. EXP-001 fixture corpus remains unfrozen.
-6. Bind the trained Hyperlex model to either the callable or HTTP adapter when its inference surface stabilizes.
-7. No independent replication evidence exists.
-8. No FIELD authorization exists.
-9. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
+1. Select and freeze an open-weight reference model plus immutable model/tokenizer revision.
+2. Execute `n01-real-model-acceptance` and review the resulting `N01AcceptanceEvidence` packet.
+3. Freeze an operator-approved EXP-001 source corpus; Noesis does not invent that semantic corpus.
+4. Freeze the initial EXP-001 transform/control catalog.
+5. Bind the trained Hyperlex model to the callable or HTTP adapter when its inference surface stabilizes.
+6. No independent replication evidence exists.
+7. No FIELD authorization exists.
+8. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
 
-## Next executable slices
+## Next executable actions
 
-### `SLICE-001A — Pinned Real-Model Acceptance`
+### A — Execute SLICE-001A
+Use the manual `n01-real-model-acceptance` workflow with a pinned model commit and public fixture. Exit: `AC-N0/AC-N1 ACCEPT | REJECT | NOT_COMPUTABLE` from preserved evidence.
 
-Scope:
-- choose a small open-weight reference model suitable for repeatable CI/lab execution;
-- pin immutable model and tokenizer revisions;
-- capture embedding and at least two hidden-state sites;
-- execute repeated captures with fixed fixture/seed/environment;
-- record Observation and FailureRecord evidence;
-- compute replay cosine/Euclidean and applicable matrix metrics;
-- verify artifact integrity and environment fingerprint;
-- assemble AC-N0/AC-N1 evidence packet.
+### B — Freeze EXP-001 inputs
+Create operator-approved `EXP001SourceCorpus` and `EXP001TransformCatalog`, then run `scripts/compile_exp001_plan.py`. This may proceed while Hyperlex training continues.
 
-Exit gate: `AC-N0 ACCEPTED` and `AC-N1 ACCEPTED` or explicit `REJECTED/NOT_COMPUTABLE` with preserved evidence.
-
-### `SLICE-002A — Hyperlex Adapter Readiness`
-
-Scope while the Hyperlex model is still training:
-- keep transport/model implementation replaceable behind the adapter protocol;
-- add deterministic transform-set generation helpers;
-- add EXP-001 fixture-bundle assembly from transform results;
-- add negative/control transform classes without requiring the trained model;
-- keep actual model binding and semantic-quality acceptance pending.
-
-Exit gate: Noesis can consume a complete, schema-valid transform bundle from any conforming Hyperlex adapter without changing latent evidence semantics.
+### C — Bind Hyperlex when ready
+Attach the trained model behind `CallableHyperlexAdapter` or `HttpHyperlexAdapter`; no Noesis evidence semantics should change.
 
 ## Promotion posture
 
