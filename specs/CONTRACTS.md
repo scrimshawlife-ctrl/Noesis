@@ -1,7 +1,7 @@
 # Noesis Contracts
 
 Status: `CANON-SHADOW`
-Version: `0.2.1`
+Version: `0.2.2`
 
 ## Contract rules
 
@@ -77,6 +77,20 @@ Purpose: immutable, versioned transform output that can be materialized as a Noe
 Required semantics: transform/request/source identities, output text, transform class/version, output SHA-256, semantic intent, expected invariants, expected changed attributes, provider metadata, `OBSERVED` provenance.
 Invariant: the output hash must match the exact transformed text before fixture materialization.
 Schema: `contracts/hyperlex-transform-result.schema.json`.
+
+## C-012 — EXP001SourceCorpus
+
+Purpose: freeze operator-approved EXP-001 source fixtures without inventing semantic content inside Noesis.
+Required semantics: corpus/version identity, data classification, fixture IDs/text/hashes, hypothesis tags, discovery/confirmation/control partition, creation time.
+Invariant: fixture text or partition changes require a new corpus version; duplicate fixture IDs fail closed.
+Schema: `contracts/exp001-source-corpus.schema.json`.
+
+## C-013 — N01AcceptanceEvidence
+
+Purpose: durable AC-N0/AC-N1 acceptance evidence from repeated captures against one declared model/runtime identity.
+Required semantics: model/revision identity, fixture and seed, numeric tolerance, per-site observations/failures/comparisons, gate decisions, limitations.
+Invariant: this contract settles capture reproducibility only; it cannot establish semantic invariance or mechanistic interpretation.
+Schema: `contracts/n01-acceptance-evidence.schema.json`.
 
 ## Boundary contracts
 
