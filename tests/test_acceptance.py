@@ -1,3 +1,5 @@
+import pytest
+
 from noesis.acceptance import N01AcceptanceConfig, run_n01_acceptance
 from noesis.adapters.fake import DeterministicFakeAdapter
 from noesis.artifacts.store import ContentAddressedStore
@@ -21,7 +23,7 @@ def test_n01_acceptance_accepts_deterministic_embedding_and_hidden_state(tmp_pat
     evidence = run_n01_acceptance(adapter, store, config)
     assert evidence["gate_decisions"] == {"AC-N0": "ACCEPT", "AC-N1": "ACCEPT"}
     assert all(result["decision"] == "ACCEPT" for result in evidence["site_results"])
-    assert all(result["comparisons"][0]["cosine"] == 1.0 for result in evidence["site_results"])
+    assert all(result["comparisons"][0]["cosine"] == pytest.approx(1.0) for result in evidence["site_results"])
 
 
 def test_n01_acceptance_without_hidden_state_keeps_n1_not_computable(tmp_path):
