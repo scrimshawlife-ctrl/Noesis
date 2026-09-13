@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -17,11 +18,26 @@ REQUIRED = [
     "PLANS.md",
     "TRACEABILITY.md",
     "specs/NOESIS-SYSTEM-SPEC.md",
+    "specs/REQUIREMENTS.md",
+    "specs/JOURNEYS.md",
+    "specs/WORKFLOWS.md",
+    "specs/STATE-MACHINES.md",
+    "specs/CONTRACTS.md",
+    "specs/DATA-MODEL.md",
+    "specs/SECURITY-GOVERNANCE.md",
+    "specs/ACCEPTANCE.md",
+    "specs/TASKS.md",
+    "specs/VERIFICATION.md",
     "specs/EXP-001-SEMANTIC-INVARIANCE.md",
     "specs/EXP-002-LATENT-COMMUNICATION.md",
     "docs/RESEARCH.md",
     "contracts/observation.schema.json",
     "contracts/settlement.schema.json",
+    "contracts/experiment-manifest.schema.json",
+    "contracts/metric-result.schema.json",
+    "contracts/intervention-result.schema.json",
+    "contracts/alignment-map.schema.json",
+    "contracts/latent-channel-result.schema.json",
 ]
 
 REQUIRED_SPEC_MARKERS = [
@@ -39,10 +55,16 @@ REQUIRED_SPEC_MARKERS = [
     "## 14. Verification",
 ]
 
+PROVENANCE = ("OBSERVED", "INFERRED", "SPECULATIVE", "NOT_COMPUTABLE")
+
 
 def fail(message: str) -> None:
     print(f"ERROR: {message}", file=sys.stderr)
     raise SystemExit(1)
+
+
+def read(path: str) -> str:
+    return (ROOT / path).read_text(encoding="utf-8")
 
 
 def main() -> None:
@@ -50,12 +72,15 @@ def main() -> None:
     if missing:
         fail("missing required files: " + ", ".join(missing))
 
-    spec = (ROOT / "specs/NOESIS-SYSTEM-SPEC.md").read_text(encoding="utf-8")
+    spec = read("specs/NOESIS-SYSTEM-SPEC.md")
     absent = [marker for marker in REQUIRED_SPEC_MARKERS if marker not in spec]
     if absent:
         fail("system spec missing sections: " + ", ".join(absent))
 
-    for schema_path in ROOT.glob("contracts/*.schema.json"):
+    schema_files = sorted(ROOT.glob("contracts/*.schema.json"))
+    if len(schema_files) < 7:
+        fail("expected at least seven canonical JSON schemas")
+    for schema_path in schema_files:
         try:
             data = json.loads(schema_path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:
@@ -64,16 +89,38 @@ def main() -> None:
             fail(f"{schema_path.relative_to(ROOT)} must use JSON Schema draft 2020-12")
         if "required" not in data or "properties" not in data:
             fail(f"{schema_path.relative_to(ROOT)} lacks required/properties declarations")
+        if not data.get("$id") or not data.get("title"):
+            fail(f"{schema_path.relative_to(ROOT)} lacks $id/title")
 
-    traceability = (ROOT / "TRACEABILITY.md").read_text(encoding="utf-8")
-    for prefix in ("FR-", "WF-", "AC-"):
+    requirements = read("specs/REQUIREMENTS.md")
+    workflows = read("specs/WORKFLOWS.md")
+    journeys = read("specs/JOURNEYS.md")
+    acceptance = read("specs/ACCEPTANCE.md")
+    tasks = read("specs/TASKS.md")
+    verification = read("specs/VERIFICATION.md")
+    traceability = read("TRACEABILITY.md")
+
+    for prefix, text in (("FR-", requirements), ("NFR-", requirements), ("J-", journeys), ("WF-", workflows), ("AC-", acceptance), ("T-", tasks), ("V-", verification)):
+        if not re.search(rf"\b{re.escape(prefix)}\d+", text):
+            fail(f"canonical spec missing {prefix} identifiers")
+
+    for prefix in ("FR-", "NFR-", "J-", "WF-", "AC-", "T-", "V-"):
         if prefix not in traceability:
             fail(f"traceability missing {prefix} references")
 
-    constitution = (ROOT / "CONSTITUTION.md").read_text(encoding="utf-8")
-    for label in ("OBSERVED", "INFERRED", "SPECULATIVE", "NOT_COMPUTABLE"):
+    constitution = read("CONSTITUTION.md")
+    for label in PROVENANCE:
         if label not in constitution:
             fail(f"constitution missing provenance label {label}")
+
+    security = read("specs/SECURITY-GOVERNANCE.md")
+    for marker in ("ADVISORY_ONLY", "FIELD", "PROMOTION_ELIGIBLE"):
+        if marker not in security:
+            fail(f"security/governance spec missing {marker}")
+
+    latent = read("specs/EXP-002-LATENT-COMMUNICATION.md")
+    if "BLOCKED" not in latent or "AC-N4" not in latent:
+        fail("latent communication experiment must remain gated by AC-N4")
 
     print("Noesis specification validation: PASS")
 
