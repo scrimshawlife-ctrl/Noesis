@@ -1,291 +1,210 @@
 # NOESIS-SYSTEM-SPEC
 
 Status: `CANON-SHADOW`
-Version: `0.1.0`
+Version: `0.2.0`
+Specification state: `COMPLETE`
+Runtime state: `NOT_STARTED`
+
+This document is the canonical system overview. Normative details are decomposed into the referenced specifications below.
 
 ## 1. Doctrine
 
-Noesis is an experimental latent-representation evidence system. It measures and tests model representations without assuming that those representations form a universal language or faithful transcript of internal reasoning.
+Noesis is the Abraxas latent-representation research module. It measures, compares, falsifies, aligns, and settles claims about model representations without assuming that latent states form a universal hidden language or a faithful transcript of internal reasoning.
 
 ### Invariants
 
 - Evidence precedes interpretation.
+- `OBSERVED` is distinct from `INFERRED`, `SPECULATIVE`, and `NOT_COMPUTABLE`.
 - Correlation is not causal evidence.
-- Natural-language feature descriptions are annotations, not ground truth.
-- Missing evidence yields `NOT_COMPUTABLE`.
-- No experiment may silently mutate Abraxas governance or production behavior.
-- Negative results are first-class evidence.
+- Natural-language feature descriptions are hypotheses, not latent ground truth.
+- Missing or weak signal yields `NOT_COMPUTABLE` or an explicitly inconclusive settlement.
+- Negative, failed, contradictory, and null evidence is first-class.
+- Noesis is `ADVISORY_ONLY`; it cannot mutate Abraxas canon.
+- Hyperlexical owns lexical/symbolic transformation, not latent truth.
+- Latent communication is blocked until AC-N4 plus explicit operator authorization.
+
+Primary doctrine: `CONSTITUTION.md`.
 
 ## 2. Domain model
 
-### Entities
+Core entities:
 
-- `ModelIdentity`: provider/source, family, revision, weights hash where available, tokenizer revision.
-- `RepresentationSite`: model component and layer/site from which a vector/tensor is captured.
-- `InputFixture`: immutable experiment input and metadata.
-- `Transform`: controlled modification of an input with declared semantic intent.
-- `Observation`: immutable captured representation plus provenance.
-- `FeatureDictionary`: versioned SAE/dictionary decomposition artifact.
-- `Probe`: hypothesis-bound classifier/regressor/evaluator.
-- `Intervention`: patch, ablation, steering, injection, or equivalent causal manipulation.
-- `AlignmentMap`: fitted transform between representation spaces.
-- `MetricResult`: deterministic result from a declared metric.
-- `EvidenceBundle`: content-addressed set of observations/results.
-- `Settlement`: durable conclusion and provenance label.
+`ModelIdentity`, `RepresentationSite`, `InputFixture`, `Transform`, `ExperimentManifest`, `Run`, `Observation`, `FeatureDictionary`, `FeatureHypothesis`, `Probe`, `MetricResult`, `InterventionResult`, `AlignmentMap`, `EvidenceBundle`, `Settlement`, `FailureRecord`, `SupersessionRecord`, `LatentChannelResult`.
 
-### Relationships
+Primary relationship:
 
-`InputFixture -> Transform* -> Observation* -> MetricResult* -> EvidenceBundle -> Settlement`
+`ExperimentManifest -> Run -> Observation -> Metric/Feature/Intervention/Alignment evidence -> EvidenceBundle -> Settlement`
 
-Optional branches:
-
-`Observation -> FeatureDictionary -> candidate Feature -> Probe/Intervention`
-
-`Observation(A), Observation(B) -> AlignmentMap -> aligned MetricResult`
+Normative model: `specs/DATA-MODEL.md`.
 
 ## 3. Requirements
 
-### Functional
+The complete normative requirement catalog is `specs/REQUIREMENTS.md`.
 
-- `FR-001` Capture embeddings and hidden-state representations from supported open-weight runtimes.
-- `FR-002` Record exact model/tokenizer/revision/site metadata for every capture.
-- `FR-003` Apply versioned controlled transformations from Hyperlexical or deterministic fixtures.
-- `FR-004` Compare representations using experiment-declared metrics.
-- `FR-005` Train/load versioned sparse feature dictionaries and report reconstruction, sparsity, dead-feature, and consistency metrics.
-- `FR-006` Run pre-registered probes with baselines and distribution-shift controls.
-- `FR-007` Run causal interventions where technically supported.
-- `FR-008` Fit and evaluate explicit cross-layer/cross-model alignment maps.
-- `FR-009` Preserve raw evidence references, negative results, and contradictions.
-- `FR-010` Produce schema-valid settlements with provenance and promotion recommendation.
-- `FR-011` Expose stable contracts to Hyperlexical and Abraxas without creating hidden coupling.
-- `FR-012` Support deterministic replay of an experiment from its manifest where dependencies remain available.
-- `FR-013` Keep latent agent communication disabled until its entry gate is satisfied.
-
-### Non-functional
-
-- `NFR-001` Reproducibility: seed, environment, hashes, revision IDs, metrics, and configs recorded.
-- `NFR-002` Auditability: every settlement references evidence identifiers/hashes.
-- `NFR-003` Modularity: adapters and experiment methods can change without changing settlement semantics.
-- `NFR-004` Fail-closed semantics: malformed/missing evidence cannot be promoted.
-- `NFR-005` Data minimization: raw sensitive input is not persisted unless explicitly required and authorized.
-- `NFR-006` Determinism: deterministic methods must reproduce within declared numeric tolerance.
-- `NFR-007` Portability: initial implementation should target Python and open-weight transformer runtimes without requiring a single vendor.
+Requirement families:
+- `FR-001–005`: capture and identity;
+- `FR-010–013`: controlled transforms and fixtures;
+- `FR-020–025`: representation metrics and null controls;
+- `FR-030–035`: sparse features and probes;
+- `FR-040–043`: causal intervention;
+- `FR-050–054`: cross-space alignment;
+- `FR-060–065`: settlement/evidence;
+- `FR-070–074`: reproducibility;
+- `FR-080–082`: external boundaries;
+- `FR-090–094`: gated latent communication;
+- `NFR-*`: reproducibility, auditability, modularity, failure semantics, portability, privacy/security, and storage/performance.
 
 ## 4. Journeys
 
-### `J-001` Researcher tests semantic invariance
-A researcher defines concepts and surface transformations, captures latent representations, compares invariance, falsifies candidate features, and obtains a settlement.
-
-### `J-002` Researcher evaluates a candidate feature
-A researcher discovers an SAE/probe feature, tests lexical contamination and distribution shift, performs causal intervention where possible, and settles functional relevance.
-
-### `J-003` Researcher aligns two model spaces
-A researcher captures paired fixtures from model A/B, fits an alignment on a training split, evaluates held-out transfer, tests null baselines, and settles whether alignment is supported.
-
-### `J-004` Abraxas consumes a Noesis settlement
-Abraxas reads a schema-valid immutable settlement and may treat it as advisory evidence. No automatic canon promotion occurs.
-
-### `J-005` Researcher evaluates latent communication
-Only after the N5 entry gate: a researcher configures sender/receiver models, latent encoder/decoder or alignment, baselines, compression budget, information-leak controls, and task metrics.
+Normative actor journeys are defined in `specs/JOURNEYS.md`:
+- `J-001` semantic invariance;
+- `J-002` candidate feature evaluation;
+- `J-003` cross-space alignment;
+- `J-004` Abraxas evidence consumption;
+- `J-005` reproducible capture;
+- `J-006` independent falsification;
+- `J-007` latent communication;
+- `J-008` evidence supersession.
 
 ## 5. Workflows
 
-### `WF-001` Register experiment
-Purpose: create an immutable experiment manifest.
-Actor: researcher/spec agent.
-Trigger: approved research question.
-Preconditions: supported model/data rights; explicit hypothesis and metrics.
-Inputs: fixtures, transforms, model IDs, sites, metrics, seeds, acceptance thresholds.
-Happy path:
-1. Validate manifest schema.
-2. Hash fixtures/transforms/config.
-3. Record environment and model revisions.
-4. Freeze acceptance criteria.
-5. Assign experiment ID.
-Alternate: unsupported capture site -> revise manifest.
-Failure: missing required provenance -> terminal `NOT_READY`.
-Terminal states: `REGISTERED`, `NOT_READY`.
-Side effects: immutable manifest artifact.
-Observability: manifest hash and creation record.
+Normative workflows are defined in `specs/WORKFLOWS.md`:
+- `WF-001` register experiment;
+- `WF-002` capture representations;
+- `WF-003` compare representations;
+- `WF-004` evaluate sparse feature/probe;
+- `WF-005` fit alignment;
+- `WF-006` causal intervention;
+- `WF-007` settle evidence;
+- `WF-008` independent replication/falsification;
+- `WF-009` supersede evidence;
+- `WF-010` latent communication experiment.
 
-### `WF-002` Capture representations
-Purpose: create observations.
-Preconditions: `REGISTERED`; adapter supports site.
-Happy path:
-1. Load exact model/tokenizer revision.
-2. Execute fixture deterministically where possible.
-3. Capture declared sites only.
-4. Persist tensor artifact or content-addressed reference.
-5. Emit `Observation` metadata.
-Failures: OOM, revision unavailable, unsupported hook, non-finite values.
-Recovery: record failure; retry only under new run ID if execution conditions change.
-Terminal: `CAPTURED`, `CAPTURE_FAILED`.
-Invariant: failed runs never masquerade as missing-at-random observations.
-
-### `WF-003` Compare representations
-Purpose: compute declared metrics.
-Preconditions: compatible observations.
-Happy path: normalize as declared -> compute metrics -> bootstrap/permutation/null controls where specified -> persist results.
-Failure: dimensional incompatibility or metric preconditions unmet -> `NOT_COMPUTABLE`.
-Terminal: `MEASURED`, `NOT_COMPUTABLE`.
-
-### `WF-004` Evaluate sparse feature
-Purpose: determine whether an interpretable feature claim survives falsification.
-Preconditions: versioned dictionary + candidate feature.
-Happy path:
-1. Measure reconstruction/sparsity/dead-feature and run-to-run consistency.
-2. Identify candidate activation contexts.
-3. Run lexical-trigger controls.
-4. Run non-reasoning/negative examples designed to activate candidate correlates.
-5. Run expected-positive examples under surface perturbation.
-6. Run causal intervention where supported.
-7. Record contradictions.
-8. Settle claim strength.
-Promotion rule: semantic/function claim cannot exceed `INFERRED` without causal support and cannot exceed CANON-SHADOW without independent replication.
-
-### `WF-005` Fit cross-model alignment
-Purpose: test shared geometry without assuming equivalence.
-Happy path:
-1. Define paired fixtures and train/validation/test split.
-2. Fit map on train only.
-3. Select hyperparameters on validation only.
-4. Evaluate held-out alignment, neighborhood preservation, and task transfer.
-5. Compare against shuffled/null mappings.
-6. Test at least one distribution shift.
-7. Persist alignment map and limits.
-Terminal: `SUPPORTED`, `WEAK`, `REJECTED`, `NOT_COMPUTABLE`.
-
-### `WF-006` Settle evidence
-Purpose: produce a durable conclusion.
-Inputs: evidence bundle + requested proposition.
-Happy path:
-1. Validate evidence completeness.
-2. Separate observations from interpretation.
-3. Assess contradictions and negative controls.
-4. Assign provenance label.
-5. Record confidence basis and limitations.
-6. Emit settlement.
-Invariant: no unsupported field may be synthesized.
-
-### `WF-007` Run latent communication experiment
-Entry gate: N0–N4 evidence stack accepted; explicit experiment approval; sender/receiver compatibility path defined.
-Happy path: establish text baseline -> latent channel -> compression variants -> held-out tasks -> information/latency/task metrics -> adversarial controls -> settlement.
-Invariant: latent performance is never interpreted as proof of shared semantics without independent alignment evidence.
+Each workflow defines purpose, actors, trigger, preconditions, inputs, deterministic path, alternatives, failure/recovery, state transitions, terminal states, side effects, invariants, permissions, observability, acceptance, dependencies, and unresolved items.
 
 ## 6. State machines
 
-### Experiment
-`DRAFT -> REGISTERED -> RUNNING -> ANALYZED -> SETTLED`
-Exceptional: `DRAFT|REGISTERED -> NOT_READY`; `RUNNING -> FAILED`; `ANALYZED -> INCONCLUSIVE`.
+Normative state machines are `specs/STATE-MACHINES.md`:
+- `SM-001` experiment lifecycle;
+- `SM-002` observation lifecycle;
+- `SM-003` candidate feature lifecycle;
+- `SM-004` alignment lifecycle;
+- `SM-005` settlement lifecycle;
+- `SM-006` capability maturity;
+- `SM-007` evidence classification;
+- `SM-008` latent-channel lifecycle.
 
-### Candidate feature
-`DISCOVERED -> CONTROL_TESTED -> FALSIFICATION_TESTED -> CAUSAL_TESTED -> REPLICATED -> PROMOTION_ELIGIBLE`
-Any state may transition to `REJECTED` or `INCONCLUSIVE`.
+Capability maturity remains:
 
-### Capability tier
 `N0 -> N1 -> N2 -> N3 -> N4 -> N5`
-Advancement requires explicit acceptance evidence; tiers cannot be inferred from code existence.
+
+No tier advances from code existence alone.
 
 ## 7. Contracts
 
-Canonical JSON schemas live under `contracts/`.
+Normative semantics: `specs/CONTRACTS.md`.
+Machine-readable JSON Schemas:
+- `contracts/experiment-manifest.schema.json`;
+- `contracts/observation.schema.json`;
+- `contracts/metric-result.schema.json`;
+- `contracts/intervention-result.schema.json`;
+- `contracts/alignment-map.schema.json`;
+- `contracts/settlement.schema.json`;
+- `contracts/latent-channel-result.schema.json`.
 
-Minimum contracts:
-- `Observation`
-- `Settlement`
-- future: `ExperimentManifest`, `MetricResult`, `AlignmentMap`, `InterventionResult`
-
-Contracts are versioned and additive changes require compatibility review.
+`FailureRecord` and `SupersessionRecord` are fully specified semantically and may receive external JSON Schemas in the first runtime slice if interchange requires them.
 
 ## 8. Data model
 
-Metadata storage must support:
+Normative data ownership, lineage, artifact storage, identity rules, relationships, and retention classes are in `specs/DATA-MODEL.md`.
 
-- stable UUID/ULID-style IDs;
-- SHA-256 or stronger content hashes;
-- explicit schema version;
-- UTC timestamps;
-- model and dataset revision strings;
-- artifact URI/reference separated from metadata;
-- provenance and environment records.
-
-Large tensors should use content-addressed files or object storage rather than transactional metadata rows.
+Large tensors and model-derived artifacts are content-addressed and separated from transactional metadata. Evidence objects are immutable after issuance.
 
 ## 9. Security, privacy, governance
 
-- No secrets, access tokens, private prompts, or proprietary training data in fixtures.
-- Capture only declared representation sites.
-- Sensitive experiments require explicit data classification, retention, and deletion policy.
-- External model artifacts must record license/provenance.
-- No latent trace may be treated as a reliable method for recovering private training data or hidden user data.
-- FIELD execution is blocked until governance defines authorization and retention.
-- Settlements are advisory-only to Abraxas by default.
+Normative policy and threat model: `specs/SECURITY-GOVERNANCE.md`.
+
+Key posture:
+- default environments: LAB/RESEARCH;
+- FIELD: blocked pending explicit governance;
+- sensitive data: explicit classification/retention/access scope required;
+- N5: explicit authorization required;
+- production steering: outside default authority;
+- Noesis cannot directly promote Abraxas canon.
 
 ## 10. Architecture
 
-See `ARCHITECTURE.md`. Implementation target is adapter-based and contract-first. Initial reference runtime should favor open-weight Hugging Face-compatible models because hidden-state access is required.
+Normative architecture: `ARCHITECTURE.md`.
+
+Boundary:
+
+```text
+Hyperlexical -> versioned transforms/fixtures -> Noesis -> settlements/evidence -> Abraxas
+```
+
+Reference runtime direction is Python with adapter-based access to open-weight transformer models because hidden-state access is required for N1+ experiments.
 
 ## 11. Acceptance criteria
 
-### Foundation gate `AC-G0`
-- Constitution, architecture, system spec, glossary, status, roadmap, research basis, contracts, and traceability exist.
-- JSON schemas parse and reject missing required fields.
-- AGENTS instructions preserve provenance and doctrine.
+Normative gates: `specs/ACCEPTANCE.md`.
 
-### N0 `AC-N0`
-- Same input/revision produces representation metadata reproducibly within tolerance.
-- Comparison metrics have deterministic fixtures and null controls.
-
-### N1 `AC-N1`
-- Hidden-state capture works at declared sites for at least one open-weight model.
-- Capture failures are explicit and replayable.
-
-### N2 `AC-N2`
-- SAE/probe experiment records contamination controls and feature consistency.
-- At least one candidate is falsified or rejected; the pipeline must demonstrate ability to preserve negative evidence.
-
-### N3 `AC-N3`
-- EXP-001 completes with preregistered transformations and held-out perturbations.
-- Invariance estimates include uncertainty and between-concept baselines.
-
-### N4 `AC-N4`
-- Cross-model alignment beats null baselines on held-out data and survives at least one distribution shift.
-- Failure to meet threshold produces `REJECTED`, not a weaker semantic claim.
-
-### N5 `AC-N5`
-- Text and serialized-vector baselines exist.
-- Latent channel provides measurable task/latency/compression benefit on held-out tasks.
-- Semantic-equivalence claims remain separately tested.
+- `AC-G0`: specification foundation;
+- `AC-N0`: deterministic representation comparison;
+- `AC-N1`: hidden-state capture;
+- `AC-N2`: feature/probe/intervention lab;
+- `AC-N3`: semantic invariance;
+- `AC-N4`: cross-space alignment;
+- `AC-N5`: latent communication;
+- `AC-R1`: reproducibility;
+- `AC-R2`: independent replication;
+- `AC-S1`: security/privacy.
 
 ## 12. Traceability
 
-Every task must cite at least one requirement and one acceptance criterion. Every experiment must cite its workflow(s), state transitions, and output contract(s). See `TRACEABILITY.md`.
+Canonical end-to-end mapping: `TRACEABILITY.md`.
+
+Required chain:
+
+`Journey -> Workflow -> State Transition -> Contract -> Acceptance Test -> Implementation Task -> Verification`
+
+Every implementation PR must identify affected IDs and unresolved `NOT_COMPUTABLE` items.
 
 ## 13. Implementation task families
 
-- `T-001` repository/spec foundation
-- `T-010` core contracts/types
-- `T-020` Hugging Face model adapter
-- `T-030` deterministic capture harness
-- `T-040` representation comparison metrics
-- `T-050` Hyperlexical transform interface
-- `T-060` SAE/probe/falsification lab
-- `T-070` causal intervention lab
-- `T-080` cross-model alignment lab
-- `T-090` settlement writer
-- `T-100` EXP-001 execution
-- `T-200` N5 latent channel research after gate
+Normative task graph: `specs/TASKS.md`.
+
+Major groups:
+- foundation/domain/contracts;
+- runtime adapters and deterministic capture;
+- metric engine;
+- Hyperlexical boundary;
+- SAE/probe/falsification;
+- causal intervention;
+- alignment;
+- settlement/replication/security;
+- EXP-001 execution;
+- gated N5 latent channel.
+
+Current authorized next slice: `SLICE-001 — Reproducible Representation Capture` as defined in `STATUS.md`.
 
 ## 14. Verification
 
-Verification requires:
+Normative verification plan: `specs/VERIFICATION.md`.
 
-- schema validation;
-- deterministic unit fixtures;
-- property tests for invalid/missing metadata;
-- numerical tolerance tests;
-- negative controls;
-- reproducibility reruns;
-- independent replication for promotion-worthy claims;
-- explicit SHADOW review for drift/contamination;
-- traceability completeness before merge.
+Verification covers schema correctness, deterministic unit fixtures, adapter behavior, capture replay, metric correctness, falsification, causal interventions, alignment leakage/nulls, settlement epistemics, security/privacy, traceability, reproducibility, independent replication, and gated N5 channel controls.
+
+CI entry point:
+
+```bash
+python scripts/validate_specs.py
+```
+
+## Research program
+
+- `specs/EXP-001-SEMANTIC-INVARIANCE.md`: canonical first experiment.
+- `specs/EXP-002-LATENT-COMMUNICATION.md`: fully specified but `BLOCKED` until AC-N4 + operator authorization.
+- `docs/RESEARCH.md`: current evidence baseline and limitations.
+
+## Settlement
+
+The specification is complete enough to begin implementation without inventing architecture, authority, workflow, contract, or evidence semantics. Runtime evidence remains nonexistent until the implementation and experiments execute; therefore all capability claims remain `NOT_IMPLEMENTED`, `NOT_EXECUTED`, or `BLOCKED` as recorded in `STATUS.md`.
