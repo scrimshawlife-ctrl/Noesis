@@ -33,6 +33,12 @@ jobs:
   accept:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      NOESIS_MODEL_ID: ${{ inputs.model_id }}
+      NOESIS_REVISION: ${{ inputs.revision }}
+      NOESIS_FIXTURE_TEXT: ${{ inputs.fixture_text }}
+      NOESIS_LAYER_1: ${{ inputs.hidden_layer_1 }}
+      NOESIS_LAYER_2: ${{ inputs.hidden_layer_2 }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -43,13 +49,13 @@ jobs:
       - name: Run pinned-model acceptance
         run: |
           python scripts/run_n01_acceptance.py \
-            --model-id '${{ inputs.model_id }}' \
-            --revision '${{ inputs.revision }}' \
-            --fixture-id 'n01-manual-fixture' \
-            --text '${{ inputs.fixture_text }}' \
+            --model-id "$NOESIS_MODEL_ID" \
+            --revision "$NOESIS_REVISION" \
+            --fixture-id "n01-manual-fixture" \
+            --text "$NOESIS_FIXTURE_TEXT" \
             --site embedding \
-            --site 'hidden_state:${{ inputs.hidden_layer_1 }}' \
-            --site 'hidden_state:${{ inputs.hidden_layer_2 }}' \
+            --site "hidden_state:$NOESIS_LAYER_1" \
+            --site "hidden_state:$NOESIS_LAYER_2" \
             --repeats 2 \
             --artifacts out/acceptance/artifacts \
             --output out/acceptance/n01-evidence.json
