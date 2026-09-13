@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/metric-result.schema.json",
+  "title": "MetricResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","metric_result_id","metric_name","metric_version","input_observation_ids","preprocessing_id","status","created_at_utc"],
+  "properties": {
+    "schema_version": {"type":"string","const":"1.0.0"},
+    "metric_result_id": {"type":"string","minLength":1},
+    "metric_name": {"type":"string","minLength":1},
+    "metric_version": {"type":"string","minLength":1},
+    "input_observation_ids": {"type":"array","minItems":1,"items":{"type":"string"}},
+    "preprocessing_id": {"type":"string","minLength":1},
+    "status": {"enum":["MEASURED","NOT_COMPUTABLE","INVALID"]},
+    "value": {"type":["number","array","object","null"]},
+    "uncertainty": {"type":["number","object","null"]},
+    "tolerance": {"type":["number","null"]},
+    "null_control_ids": {"type":"array","items":{"type":"string"},"default":[]},
+    "limitations": {"type":"array","items":{"type":"string"},"default":[]},
+    "created_at_utc": {"type":"string","format":"date-time"}
+  }
+}

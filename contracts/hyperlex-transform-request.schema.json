@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/hyperlex-transform-request.schema.json",
+  "title": "HyperlexTransformRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","request_id","source_fixture_id","source_text","transform_class","semantic_intent","expected_invariants","expected_changed_attributes","seed"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "request_id": {"type":"string","minLength":1},
+    "source_fixture_id": {"type":"string","minLength":1},
+    "source_text": {"type":"string"},
+    "transform_class": {"type":"string","minLength":1},
+    "semantic_intent": {"type":"string","minLength":1},
+    "expected_invariants": {"type":"array","items":{"type":"string"}},
+    "expected_changed_attributes": {"type":"array","items":{"type":"string"}},
+    "seed": {"type":"integer"},
+    "parameters": {"type":"object","additionalProperties":true}
+  }
+}

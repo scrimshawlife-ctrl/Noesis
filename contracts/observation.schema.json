@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/observation.schema.json",
+  "title": "Noesis Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","observation_id","experiment_id","created_at","model","input","site","artifact","provenance"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "observation_id": {"type": "string", "minLength": 1},
+    "experiment_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family","revision","tokenizer_revision"],
+      "properties": {
+        "family": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "weights_sha256": {"type": ["string","null"], "pattern": "^[0-9a-f]{64}$"},
+        "tokenizer_revision": {"type": "string", "minLength": 1}
+      }
+    },
+    "input": {
+      "type": "object",
+      "required": ["fixture_id","sha256"],
+      "properties": {
+        "fixture_id": {"type": "string", "minLength": 1},
+        "transform_id": {"type": ["string","null"]},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "site": {
+      "type": "object",
+      "required": ["kind","layer"],
+      "properties": {
+        "kind": {"enum": ["embedding","hidden_state","residual","attention","mlp","custom"]},
+        "layer": {"type": "integer"},
+        "name": {"type": ["string","null"]}
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["uri","sha256","dtype","shape"],
+      "properties": {
+        "uri": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "dtype": {"type": "string", "minLength": 1},
+        "shape": {"type": "array", "items": {"type": "integer", "minimum": 0}}
+      },
+      "additionalProperties": false
+    },
+    "environment": {"type": "object"},
+    "seed": {"type": ["integer","null"]},
+    "provenance": {"enum": ["OBSERVED"]}
+  }
+}
