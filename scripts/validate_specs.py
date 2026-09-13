@@ -31,6 +31,7 @@ REQUIRED = [
     "specs/EXP-001-SEMANTIC-INVARIANCE.md",
     "specs/EXP-002-LATENT-COMMUNICATION.md",
     "docs/RESEARCH.md",
+    "docs/HYPERLEX-INTEGRATION.md",
     "contracts/observation.schema.json",
     "contracts/settlement.schema.json",
     "contracts/experiment-manifest.schema.json",
@@ -38,6 +39,8 @@ REQUIRED = [
     "contracts/intervention-result.schema.json",
     "contracts/alignment-map.schema.json",
     "contracts/latent-channel-result.schema.json",
+    "contracts/hyperlex-transform-request.schema.json",
+    "contracts/hyperlex-transform-result.schema.json",
 ]
 
 REQUIRED_SPEC_MARKERS = [
@@ -88,8 +91,8 @@ def main() -> None:
         fail("system spec missing sections: " + ", ".join(absent))
 
     schema_files = sorted(ROOT.glob("contracts/*.schema.json"))
-    if len(schema_files) < 7:
-        fail("expected at least seven canonical JSON schemas")
+    if len(schema_files) < 9:
+        fail("expected at least nine canonical JSON schemas")
     for schema_path in schema_files:
         try:
             data = json.loads(schema_path.read_text(encoding="utf-8"))
@@ -133,6 +136,11 @@ def main() -> None:
     latent = read("specs/EXP-002-LATENT-COMMUNICATION.md")
     if "BLOCKED" not in latent or "AC-N4" not in latent:
         fail("latent communication experiment must remain gated by AC-N4")
+
+    hyperlex = read("docs/HYPERLEX-INTEGRATION.md")
+    for marker in ("ADAPTER_READY", "MODEL_BINDING_PENDING", "may not state"):
+        if marker not in hyperlex:
+            fail(f"Hyperlex integration boundary missing {marker}")
 
     print("Noesis specification validation: PASS")
 
