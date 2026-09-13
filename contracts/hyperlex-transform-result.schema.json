@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/hyperlex-transform-result.schema.json",
+  "title": "HyperlexTransformResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","transform_id","request_id","source_fixture_id","output_text","transform_class","transform_version","transform_sha256","semantic_intent","expected_invariants","expected_changed_attributes","provenance"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "transform_id": {"type":"string","minLength":1},
+    "request_id": {"type":"string","minLength":1},
+    "source_fixture_id": {"type":"string","minLength":1},
+    "output_text": {"type":"string"},
+    "transform_class": {"type":"string","minLength":1},
+    "transform_version": {"type":"string","minLength":1},
+    "transform_sha256": {"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "semantic_intent": {"type":"string","minLength":1},
+    "expected_invariants": {"type":"array","items":{"type":"string"}},
+    "expected_changed_attributes": {"type":"array","items":{"type":"string"}},
+    "provider_metadata": {"type":"object","additionalProperties":true},
+    "provenance": {"enum":["OBSERVED"]}
+  }
+}
