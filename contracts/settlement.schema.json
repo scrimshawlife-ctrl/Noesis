@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/settlement.schema.json",
+  "title": "Noesis Settlement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version","settlement_id","experiment_id","created_at","proposition","label","evidence","limitations","promotion"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "settlement_id": {"type": "string", "minLength": 1},
+    "experiment_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "proposition": {"type": "string", "minLength": 1},
+    "label": {"enum": ["OBSERVED","INFERRED","SPECULATIVE","NOT_COMPUTABLE"]},
+    "summary": {"type": "string"},
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id","sha256","role"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "role": {"enum": ["supporting","contradicting","control","negative_result"]}
+        }
+      }
+    },
+    "confidence_basis": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "unresolved": {"type": "array", "items": {"type": "string"}},
+    "promotion": {"enum": ["HOLD_SHADOW","ELIGIBLE_FOR_REPLICATION","ELIGIBLE_FOR_REVIEW","REJECT"]},
+    "governance_effect": {"const": "ADVISORY_ONLY"}
+  }
+}
