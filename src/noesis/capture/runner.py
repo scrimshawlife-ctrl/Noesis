@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import hashlib
 import platform
-from dataclasses import asdict
 from datetime import UTC, datetime
 from typing import Callable
 
 from noesis.adapters.base import ModelAdapter
 from noesis.artifacts.store import ContentAddressedStore
-from noesis.domain.models import CaptureRequest
+from noesis.domain.models import CaptureRequest, CaptureResult
 
 Clock = Callable[[], datetime]
 
@@ -25,6 +24,10 @@ class CaptureRunner:
 
     def run(self, experiment_id: str, run_id: str, request: CaptureRequest) -> dict:
         result = self.adapter.capture(request)
+        return self.record(experiment_id, run_id, result)
+
+    def record(self, experiment_id: str, run_id: str, result: CaptureResult) -> dict:
+        request = result.request
         artifact_sha, artifact_path = self.store.put_vector(result.vector)
         input_sha = hashlib.sha256(request.text.encode("utf-8")).hexdigest()
         stable_material = "|".join(
