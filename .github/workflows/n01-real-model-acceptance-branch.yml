@@ -1,0 +1,46 @@
+name: n01-real-model-acceptance-branch
+
+on:
+  push:
+    branches:
+      - codex/n01-acceptance-run
+
+permissions:
+  contents: read
+
+jobs:
+  accept:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NOESIS_MODEL_ID: sshleifer/tiny-distilbert-base-cased
+      NOESIS_REVISION: 657df2b83a6986d88e4f528740259c9b49f796b1
+      NOESIS_FIXTURE_TEXT: The quick brown fox jumps over the lazy dog.
+      NOESIS_LAYER_1: "1"
+      NOESIS_LAYER_2: "2"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Noesis Hugging Face runtime
+        run: python -m pip install -e '.[hf]'
+      - name: Run pinned-model acceptance
+        run: |
+          python scripts/run_n01_acceptance.py \
+            --model-id "$NOESIS_MODEL_ID" \
+            --revision "$NOESIS_REVISION" \
+            --fixture-id "n01-branch-fixture" \
+            --text "$NOESIS_FIXTURE_TEXT" \
+            --site embedding \
+            --site "hidden_state:$NOESIS_LAYER_1" \
+            --site "hidden_state:$NOESIS_LAYER_2" \
+            --repeats 2 \
+            --artifacts out/acceptance/artifacts \
+            --output out/acceptance/n01-evidence.json
+      - name: Upload acceptance evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: n01-acceptance-evidence
+          path: out/acceptance
+          if-no-files-found: error
