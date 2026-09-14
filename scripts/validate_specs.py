@@ -42,8 +42,11 @@ REQUIRED = [
     "contracts/latent-channel-result.schema.json",
     "contracts/hyperlex-transform-request.schema.json",
     "contracts/hyperlex-transform-result.schema.json",
+    "contracts/exp001-source-corpus.schema.json",
+    "contracts/exp001-transform-catalog.schema.json",
     "contracts/geometry-profile.schema.json",
     "contracts/geometric-metric-result.schema.json",
+    "contracts/exp001-freeze-receipt.schema.json",
 ]
 
 REQUIRED_SPEC_MARKERS = [

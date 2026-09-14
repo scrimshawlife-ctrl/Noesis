@@ -13,6 +13,7 @@ Traceability follows:
 |---|---|---|---|---|---|---|
 | FR-001–005 capture/identity | J-001/J-005 | WF-001/WF-002 | C-001/C-002/C-008 | AC-N0/AC-N1 | T-010/T-020/T-021/T-030 | V-002/V-003/V-004 |
 | FR-010–013 transforms/fixtures | J-001 | WF-001/WF-003 | C-001/C-002 | AC-N3 | T-050/T-100 | V-002/V-006 |
+| EXP-001 input approval/freeze | J-001 | WF-001 | C-012/C-014/C-017 | AC-N3 | T-050/T-100 | V-002/V-012 |
 | FR-020–025 metrics | J-001/J-003 | WF-003/WF-005 | C-003 | AC-N0/AC-N3/AC-N4 | T-040/T-080 | V-005/V-008 |
 | FR-026–029 geometry profiles | J-009 | WF-003/WF-011 | C-003/C-015/C-016 | AC-N3-GEO | T-040/T-101 | V-005/V-015 |
 | FR-030–035 sparse features/probes | J-002/J-006 | WF-004/WF-008 | C-003/C-006 | AC-N2/AC-R2 | T-060/T-061/T-062/T-110 | V-006/V-013 |
