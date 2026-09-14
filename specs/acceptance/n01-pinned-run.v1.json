@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "gate": "SLICE-001A",
+  "acceptance": ["AC-N0", "AC-N1"],
+  "model_id": "sshleifer/tiny-distilbert-base-cased",
+  "revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+  "tokenizer_revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+  "fixture_id": "n01-manual-fixture",
+  "fixture_text": "The quick brown fox jumps over the lazy dog.",
+  "sites": ["embedding", "hidden_state:1", "hidden_state:2"],
+  "seed": 0,
+  "repeats": 2,
+  "cosine_floor": 0.999999,
+  "euclidean_ceiling": 1e-9,
+  "device": "cpu",
+  "execution_surface": ".github/workflows/n01-real-model-acceptance.yml",
+  "expected_evidence": "out/acceptance/n01-evidence.json",
+  "authority": {
+    "research_hypothesis_acceptance": false,
+    "canon_mutation": false,
+    "promotion": false,
+    "field_authority": false
+  }
+}
