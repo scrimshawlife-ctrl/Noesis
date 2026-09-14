@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 from typing import Any
+from urllib.parse import unquote, urlparse
 
 import numpy as np
 
@@ -26,6 +27,23 @@ class ContentAddressedStore:
         elif path.read_bytes() != payload:
             raise RuntimeError(f"content-addressed artifact mismatch for {sha}")
         return sha, path
+
+    def verify_path(self, path: str | Path, expected_sha256: str) -> bool:
+        candidate = Path(path).resolve()
+        if not candidate.is_file():
+            raise FileNotFoundError(candidate)
+        actual = self.digest(candidate.read_bytes())
+        if actual != expected_sha256:
+            raise RuntimeError(
+                f"artifact hash mismatch: expected {expected_sha256}, got {actual}"
+            )
+        return True
+
+    def verify_uri(self, uri: str, expected_sha256: str) -> bool:
+        parsed = urlparse(uri)
+        if parsed.scheme != "file":
+            raise ValueError("only file:// artifact URIs are accepted by the local store verifier")
+        return self.verify_path(Path(unquote(parsed.path)), expected_sha256)
 
     def put_json(self, value: Any) -> tuple[str, Path]:
         payload = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
