@@ -12,6 +12,7 @@
 - N1 hidden-state capture: `IMPLEMENTED / REAL-MODEL ACCEPTANCE READY / NOT_EXECUTED`
 - N2 sparse-feature/probe/causal lab: `SPECIFIED / NOT_IMPLEMENTED`
 - N3 semantic invariance: `FULLY_SPECIFIED / PREREGISTRATION TOOLING IMPLEMENTED / NOT_EXECUTED`
+- EXP-001-GEO curvature-aware profile: `FULLY_SPECIFIED / NOT_IMPLEMENTED / NOT_EXECUTED`
 - N4 cross-model alignment: `FULLY_SPECIFIED / NOT_EXECUTED`
 - N5 latent communication: `FULLY_SPECIFIED / BLOCKED`
 
@@ -59,10 +60,11 @@ Invariant: Hyperlex may declare intended semantic invariants; Hyperlex may not a
 2. Execute `n01-real-model-acceptance` and review the resulting `N01AcceptanceEvidence` packet.
 3. Freeze an operator-approved EXP-001 source corpus; Noesis does not invent that semantic corpus.
 4. Freeze the initial EXP-001 transform/control catalog.
-5. Bind the trained Hyperlex model to the callable or HTTP adapter when its inference surface stabilizes.
-6. No independent replication evidence exists.
-7. No FIELD authorization exists.
-8. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
+5. Keep EXP-001-GEO inactive until AC-N0/AC-N1 evidence is accepted and its relational corpus/profile receive operator approval.
+6. Bind the trained Hyperlex model to the callable or HTTP adapter when its inference surface stabilizes.
+7. No independent replication evidence exists.
+8. No FIELD authorization exists.
+9. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
 
 ## Next executable actions
 

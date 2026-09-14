@@ -85,6 +85,17 @@ Required semantics: catalog/version identity and transform entries containing cl
 Invariant: the catalog states hypotheses and controls only; it does not establish that a transformation actually preserved its intended meaning.
 Schema: `contracts/exp001-transform-catalog.schema.json`.
 
+## C-015 — GeometryProfile
+Purpose: preregister candidate spaces, partitions, metrics, nulls, diagnostics, complexity costs, selection rule, and failure policy for `EXP-001-GEO`.
+Invariant: at least one dimension-matched Euclidean baseline is required by the experiment specification; profile changes produce a new identity.
+Schema: `contracts/geometry-profile.schema.json`.
+
+## C-016 — GeometricMetricResult
+Purpose: record a direct geometric or topological measurement with split, evidence inputs, uncertainty, null references, and candidate-specific diagnostics.
+Statuses: `MEASURED`, `NOT_COMPUTABLE`, `INVALID`.
+Invariant: result values cannot populate semantic identity, causal meaning, or universal geometry fields.
+Schema: `contracts/geometric-metric-result.schema.json`.
+
 ## Boundary contracts
 
 ### Hyperlex -> Noesis

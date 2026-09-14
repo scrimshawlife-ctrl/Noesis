@@ -29,6 +29,7 @@ REQUIRED = [
     "specs/TASKS.md",
     "specs/VERIFICATION.md",
     "specs/EXP-001-SEMANTIC-INVARIANCE.md",
+    "specs/EXP-001-GEOMETRY-PROFILE.md",
     "specs/EXP-002-LATENT-COMMUNICATION.md",
     "docs/RESEARCH.md",
     "docs/HYPERLEX-INTEGRATION.md",
@@ -41,6 +42,8 @@ REQUIRED = [
     "contracts/latent-channel-result.schema.json",
     "contracts/hyperlex-transform-request.schema.json",
     "contracts/hyperlex-transform-result.schema.json",
+    "contracts/geometry-profile.schema.json",
+    "contracts/geometric-metric-result.schema.json",
 ]
 
 REQUIRED_SPEC_MARKERS = [

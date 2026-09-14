@@ -62,6 +62,8 @@ Deliverables:
 
 Gate: `AC-N3`.
 
+Optional subtrack: `EXP-001-GEO` may begin only after AC-N0/AC-N1 acceptance and an operator-approved relational corpus plus `GeometryProfile`. Its separate exit gate is `AC-N3-GEO`; no geometry is presumed to win.
+
 ## Phase 4 — N4 Cross-model alignment
 
 Goal: determine which geometry transfers across model families/checkpoints.

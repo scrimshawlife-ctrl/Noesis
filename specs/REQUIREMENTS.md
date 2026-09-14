@@ -29,6 +29,10 @@ This document is the normative requirement catalog for Noesis. Requirements are 
 - `FR-023` Metric execution SHALL reject incompatible inputs rather than coerce them silently.
 - `FR-024` Null, shuffled, or random baselines SHALL be supported for every metric family used to make an inferential claim.
 - `FR-025` Uncertainty estimates SHALL accompany aggregate invariance or alignment claims when repeated samples permit estimation.
+- `FR-026` Registered geometry profiles SHALL include a dimension-matched Euclidean baseline and SHALL NOT privilege a non-Euclidean candidate before measurement.
+- `FR-027` Geometry selection SHALL use separated discovery, selection, confirmation, and control partitions when fitting or model selection occurs.
+- `FR-028` Geometric claims SHALL report candidate-specific degeneracy, numerical-stability, and complexity diagnostics.
+- `FR-029` Failure of manifold, sample-adequacy, metric, or numerical assumptions SHALL yield `NOT_COMPUTABLE` or `INVALID`, not a substituted geometry.
 
 ### Sparse features and probes
 - `FR-030` Noesis SHALL support versioned sparse feature dictionaries, including SAE-derived dictionaries.

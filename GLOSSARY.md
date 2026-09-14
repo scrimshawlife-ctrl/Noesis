@@ -21,6 +21,15 @@ The sibling lexical/symbolic module responsible for surface language, register, 
 ## Invariance
 Measured stability of a representation under a specified transformation set and metric. Invariance is always scoped to model, site, data, transforms, and tolerance.
 
+## Geometry profile
+An experiment-owned preregistration of candidate representation spaces, metrics, partitions, nulls, diagnostics, complexity costs, and selection rules. It is not a claim that the measured phenomenon intrinsically has that geometry.
+
+## Geodesic distortion
+The registered discrepancy between relational distances in a source structure and distances measured along a candidate geometric space. Low distortion is scoped measurement, not semantic truth.
+
+## Projection loss
+Loss of registered relations after a representation is projected or compressed. It operationalizes dimensional loss without inferring motive, legitimacy, or social cause.
+
 ## Latent communication
 Direct transfer of continuous learned representations between computational agents/models without requiring the message to be fully rendered as natural-language tokens.
 
