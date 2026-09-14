@@ -49,15 +49,18 @@ def run_n01_acceptance(
             )
             try:
                 result = adapter.capture(request)
-                vectors.append(result.vector)
-                observations.append(
-                    runner.record(
-                        config.experiment_id,
-                        f"accept-{site.key()}-{repeat_index}",
-                        result,
-                    )
+                observation = runner.record(
+                    config.experiment_id,
+                    f"accept-{site.key()}-{repeat_index}",
+                    result,
                 )
-            except Exception as exc:  # noqa: BLE001 - evidence must preserve adapter failures
+                store.verify_uri(
+                    observation["artifact"]["uri"],
+                    observation["artifact"]["sha256"],
+                )
+                vectors.append(result.vector)
+                observations.append(observation)
+            except Exception as exc:  # noqa: BLE001 - evidence must preserve adapter/artifact failures
                 failures.append({
                     "repeat_index": repeat_index,
                     "error_class": exc.__class__.__name__,
