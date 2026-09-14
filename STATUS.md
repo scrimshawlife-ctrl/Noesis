@@ -8,8 +8,8 @@
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
 - Runtime implementation: `SLICE-001 IMPLEMENTED / STACKED PR #2`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
-- N0 embedding/representation comparison: `IMPLEMENTED / CI-VERIFIED / REAL-MODEL ACCEPTANCE READY`
-- N1 hidden-state capture: `IMPLEMENTED / REAL-MODEL ACCEPTANCE READY / NOT_EXECUTED`
+- N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
+- N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N2 sparse-feature/probe/causal lab: `SPECIFIED / NOT_IMPLEMENTED`
 - N3 semantic invariance: `FULLY_SPECIFIED / PREREGISTRATION TOOLING IMPLEMENTED / NOT_EXECUTED`
 - EXP-001-GEO curvature-aware profile: `FULLY_SPECIFIED / NOT_IMPLEMENTED / NOT_EXECUTED`
@@ -39,7 +39,7 @@ Implemented:
 - manual GitHub Actions workflow for open-weight Hugging Face acceptance runs;
 - uploaded acceptance artifact packet on manual execution.
 
-Not yet executed against a selected pinned open-weight model revision. Therefore AC-N0/AC-N1 remain unsettled scientifically.
+Executed in [workflow run 34826673897](https://github.com/scrimshawlife-ctrl/Noesis/actions/runs/34826673897) against the pinned model/tokenizer revision. AC-N0 and AC-N1 are accepted for the bounded reference run. See `specs/acceptance/N01-ACCEPTANCE-SETTLEMENT-2026-09-14.md`. This does not establish semantic invariance, mechanistic interpretation, or layer distinctness.
 
 ### SLICE-002A — Hyperlex adapter/preregistration readiness
 Implemented without binding to the still-training Hyperlex model:
@@ -56,20 +56,18 @@ Invariant: Hyperlex may declare intended semantic invariants; Hyperlex may not a
 
 ## Remaining blockers
 
-1. Select and freeze an open-weight reference model plus immutable model/tokenizer revision.
-2. Execute `n01-real-model-acceptance` and review the resulting `N01AcceptanceEvidence` packet.
-3. Freeze an operator-approved EXP-001 source corpus; Noesis does not invent that semantic corpus.
-4. Freeze the initial EXP-001 transform/control catalog.
-5. Keep EXP-001-GEO inactive until AC-N0/AC-N1 evidence is accepted and its relational corpus/profile receive operator approval.
-6. Bind the trained Hyperlex model to the callable or HTTP adapter when its inference surface stabilizes.
-7. No independent replication evidence exists.
-8. No FIELD authorization exists.
-9. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
+1. Freeze an operator-approved EXP-001 source corpus; Noesis does not invent that semantic corpus.
+2. Freeze the initial EXP-001 transform/control catalog.
+3. Keep EXP-001-GEO inactive until its relational corpus/profile receive operator approval.
+4. Bind the trained Hyperlex model to the callable or HTTP adapter when its inference surface stabilizes.
+5. No independent replication evidence exists.
+6. No FIELD authorization exists.
+7. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
 
 ## Next executable actions
 
-### A — Execute SLICE-001A
-Use the manual `n01-real-model-acceptance` workflow with a pinned model commit and public fixture. Exit: `AC-N0/AC-N1 ACCEPT | REJECT | NOT_COMPUTABLE` from preserved evidence.
+### A — Preserve SLICE-001A settlement
+Keep the accepted reference run, evidence JSON, archive/evidence hashes, limitations, and source workflow linked. Any materially different model, revision, fixture, site, environment, or tolerance requires a new acceptance identity.
 
 ### B — Freeze EXP-001 inputs
 Create operator-approved `EXP001SourceCorpus` and `EXP001TransformCatalog`, then run `scripts/compile_exp001_plan.py`. This may proceed while Hyperlex training continues.

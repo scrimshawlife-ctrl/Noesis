@@ -1,0 +1,319 @@
+{
+  "experiment_id": "N01-ACCEPTANCE",
+  "fixture": {
+    "fixture_id": "n01-manual-fixture",
+    "seed": 0
+  },
+  "gate_decisions": {
+    "AC-N0": "ACCEPT",
+    "AC-N1": "ACCEPT"
+  },
+  "generated_at_utc": "2026-09-14T09:13:53.281397+00:00",
+  "limitations": [
+    "This packet evaluates capture reproducibility only; it does not establish semantic invariance or mechanistic interpretation."
+  ],
+  "model": {
+    "model_id": "sshleifer/tiny-distilbert-base-cased",
+    "revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+    "tokenizer_revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+    "weights_sha256": null
+  },
+  "schema_version": "1.0.0",
+  "site_results": [
+    {
+      "comparisons": [
+        {
+          "against_repeat": 1,
+          "cosine": 1.0,
+          "euclidean": 0.0,
+          "within_tolerance": true
+        }
+      ],
+      "decision": "ACCEPT",
+      "failures": [],
+      "observations": [
+        {
+          "artifact": {
+            "dtype": "float64",
+            "sha256": "45784db5197840154da48b746f985ffe6fefb8721fc839f19f3fcf442e8989a5",
+            "shape": [
+              2
+            ],
+            "uri": "file:///home/runner/work/Noesis/Noesis/out/acceptance/artifacts/45/45784db5197840154da48b746f985ffe6fefb8721fc839f19f3fcf442e8989a5.f64"
+          },
+          "created_at": "2026-09-14T09:13:53.270305Z",
+          "environment": {
+            "adapter": "huggingface",
+            "device": "cpu",
+            "python": "3.12.14",
+            "token_count": 12,
+            "torch_version": "2.14.0+cu130",
+            "transformers_version": "4.57.6"
+          },
+          "experiment_id": "N01-ACCEPTANCE",
+          "input": {
+            "fixture_id": "n01-manual-fixture",
+            "sha256": "ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c",
+            "transform_id": null
+          },
+          "model": {
+            "family": "sshleifer/tiny-distilbert-base-cased",
+            "revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "tokenizer_revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "weights_sha256": null
+          },
+          "observation_id": "obs_fecfe10cee7b27c9a4b9ead8",
+          "provenance": "OBSERVED",
+          "run_id": "accept-embedding:token=-1-0",
+          "schema_version": "0.1.0",
+          "seed": 0,
+          "site": {
+            "kind": "embedding",
+            "layer": 0,
+            "name": "embedding:token=-1"
+          }
+        },
+        {
+          "artifact": {
+            "dtype": "float64",
+            "sha256": "45784db5197840154da48b746f985ffe6fefb8721fc839f19f3fcf442e8989a5",
+            "shape": [
+              2
+            ],
+            "uri": "file:///home/runner/work/Noesis/Noesis/out/acceptance/artifacts/45/45784db5197840154da48b746f985ffe6fefb8721fc839f19f3fcf442e8989a5.f64"
+          },
+          "created_at": "2026-09-14T09:13:53.272477Z",
+          "environment": {
+            "adapter": "huggingface",
+            "device": "cpu",
+            "python": "3.12.14",
+            "token_count": 12,
+            "torch_version": "2.14.0+cu130",
+            "transformers_version": "4.57.6"
+          },
+          "experiment_id": "N01-ACCEPTANCE",
+          "input": {
+            "fixture_id": "n01-manual-fixture",
+            "sha256": "ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c",
+            "transform_id": null
+          },
+          "model": {
+            "family": "sshleifer/tiny-distilbert-base-cased",
+            "revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "tokenizer_revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "weights_sha256": null
+          },
+          "observation_id": "obs_e487995fefb29f2bc5701939",
+          "provenance": "OBSERVED",
+          "run_id": "accept-embedding:token=-1-1",
+          "schema_version": "0.1.0",
+          "seed": 0,
+          "site": {
+            "kind": "embedding",
+            "layer": 0,
+            "name": "embedding:token=-1"
+          }
+        }
+      ],
+      "site": "embedding:token=-1"
+    },
+    {
+      "comparisons": [
+        {
+          "against_repeat": 1,
+          "cosine": 0.9999999999999998,
+          "euclidean": 0.0,
+          "within_tolerance": true
+        }
+      ],
+      "decision": "ACCEPT",
+      "failures": [],
+      "observations": [
+        {
+          "artifact": {
+            "dtype": "float64",
+            "sha256": "723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5",
+            "shape": [
+              2
+            ],
+            "uri": "file:///home/runner/work/Noesis/Noesis/out/acceptance/artifacts/72/723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5.f64"
+          },
+          "created_at": "2026-09-14T09:13:53.274676Z",
+          "environment": {
+            "adapter": "huggingface",
+            "device": "cpu",
+            "python": "3.12.14",
+            "token_count": 12,
+            "torch_version": "2.14.0+cu130",
+            "transformers_version": "4.57.6"
+          },
+          "experiment_id": "N01-ACCEPTANCE",
+          "input": {
+            "fixture_id": "n01-manual-fixture",
+            "sha256": "ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c",
+            "transform_id": null
+          },
+          "model": {
+            "family": "sshleifer/tiny-distilbert-base-cased",
+            "revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "tokenizer_revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "weights_sha256": null
+          },
+          "observation_id": "obs_692dd8ef9a86a8b7e2ad7bae",
+          "provenance": "OBSERVED",
+          "run_id": "accept-hidden_state:layer=1:token=-1-0",
+          "schema_version": "0.1.0",
+          "seed": 0,
+          "site": {
+            "kind": "hidden_state",
+            "layer": 1,
+            "name": "hidden_state:layer=1:token=-1"
+          }
+        },
+        {
+          "artifact": {
+            "dtype": "float64",
+            "sha256": "723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5",
+            "shape": [
+              2
+            ],
+            "uri": "file:///home/runner/work/Noesis/Noesis/out/acceptance/artifacts/72/723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5.f64"
+          },
+          "created_at": "2026-09-14T09:13:53.276682Z",
+          "environment": {
+            "adapter": "huggingface",
+            "device": "cpu",
+            "python": "3.12.14",
+            "token_count": 12,
+            "torch_version": "2.14.0+cu130",
+            "transformers_version": "4.57.6"
+          },
+          "experiment_id": "N01-ACCEPTANCE",
+          "input": {
+            "fixture_id": "n01-manual-fixture",
+            "sha256": "ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c",
+            "transform_id": null
+          },
+          "model": {
+            "family": "sshleifer/tiny-distilbert-base-cased",
+            "revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "tokenizer_revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "weights_sha256": null
+          },
+          "observation_id": "obs_890aa69241f1e99f977a046f",
+          "provenance": "OBSERVED",
+          "run_id": "accept-hidden_state:layer=1:token=-1-1",
+          "schema_version": "0.1.0",
+          "seed": 0,
+          "site": {
+            "kind": "hidden_state",
+            "layer": 1,
+            "name": "hidden_state:layer=1:token=-1"
+          }
+        }
+      ],
+      "site": "hidden_state:layer=1:token=-1"
+    },
+    {
+      "comparisons": [
+        {
+          "against_repeat": 1,
+          "cosine": 0.9999999999999998,
+          "euclidean": 0.0,
+          "within_tolerance": true
+        }
+      ],
+      "decision": "ACCEPT",
+      "failures": [],
+      "observations": [
+        {
+          "artifact": {
+            "dtype": "float64",
+            "sha256": "723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5",
+            "shape": [
+              2
+            ],
+            "uri": "file:///home/runner/work/Noesis/Noesis/out/acceptance/artifacts/72/723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5.f64"
+          },
+          "created_at": "2026-09-14T09:13:53.278755Z",
+          "environment": {
+            "adapter": "huggingface",
+            "device": "cpu",
+            "python": "3.12.14",
+            "token_count": 12,
+            "torch_version": "2.14.0+cu130",
+            "transformers_version": "4.57.6"
+          },
+          "experiment_id": "N01-ACCEPTANCE",
+          "input": {
+            "fixture_id": "n01-manual-fixture",
+            "sha256": "ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c",
+            "transform_id": null
+          },
+          "model": {
+            "family": "sshleifer/tiny-distilbert-base-cased",
+            "revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "tokenizer_revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "weights_sha256": null
+          },
+          "observation_id": "obs_987d8fbf0c2fd93af1bca21b",
+          "provenance": "OBSERVED",
+          "run_id": "accept-hidden_state:layer=2:token=-1-0",
+          "schema_version": "0.1.0",
+          "seed": 0,
+          "site": {
+            "kind": "hidden_state",
+            "layer": 2,
+            "name": "hidden_state:layer=2:token=-1"
+          }
+        },
+        {
+          "artifact": {
+            "dtype": "float64",
+            "sha256": "723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5",
+            "shape": [
+              2
+            ],
+            "uri": "file:///home/runner/work/Noesis/Noesis/out/acceptance/artifacts/72/723f1c3eac1d2c306857db9f4466b219af88d13fb056836892154fcd058c55d5.f64"
+          },
+          "created_at": "2026-09-14T09:13:53.280954Z",
+          "environment": {
+            "adapter": "huggingface",
+            "device": "cpu",
+            "python": "3.12.14",
+            "token_count": 12,
+            "torch_version": "2.14.0+cu130",
+            "transformers_version": "4.57.6"
+          },
+          "experiment_id": "N01-ACCEPTANCE",
+          "input": {
+            "fixture_id": "n01-manual-fixture",
+            "sha256": "ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c",
+            "transform_id": null
+          },
+          "model": {
+            "family": "sshleifer/tiny-distilbert-base-cased",
+            "revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "tokenizer_revision": "657df2b83a6986d88e4f528740259c9b49f796b1",
+            "weights_sha256": null
+          },
+          "observation_id": "obs_f275b1e217db5406bee023ac",
+          "provenance": "OBSERVED",
+          "run_id": "accept-hidden_state:layer=2:token=-1-1",
+          "schema_version": "0.1.0",
+          "seed": 0,
+          "site": {
+            "kind": "hidden_state",
+            "layer": 2,
+            "name": "hidden_state:layer=2:token=-1"
+          }
+        }
+      ],
+      "site": "hidden_state:layer=2:token=-1"
+    }
+  ],
+  "tolerance": {
+    "cosine_floor": 0.999999,
+    "euclidean_ceiling": 1E-9
+  }
+}
