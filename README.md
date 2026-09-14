@@ -6,7 +6,7 @@ Noesis is the Abraxas latent-representation research module: a contract-first sy
 
 - Canonical status: `CANON-SHADOW`
 - Governance effect: `ADVISORY_ONLY`
-- Runtime: `NOT_STARTED`
+- Runtime: `SLICE-001 + SLICE-002A IMPLEMENTED`
 - Specification: `COMPLETE`
 - N5 latent communication: `BLOCKED` pending AC-N4 + explicit operator authorization
 
@@ -66,13 +66,11 @@ Noesis does **not** treat vector similarity, SAE feature labels, probe accuracy,
 
 Negative evidence, failed captures, contradictory controls, and failed replications are first-class outputs.
 
-## Current next slice
+## Current next gate
 
-`SLICE-001 — Reproducible Representation Capture`
+`EXP-001 INPUT FREEZE — OPERATOR APPROVAL REQUIRED`
 
-Build the typed core, adapter protocol, Hugging Face reference adapter, immutable experiment-manifest runner, hidden-state/embedding capture, content-addressed observations, baseline metrics, and replay/failure tests.
-
-Exit gate: `AC-N0` plus the capture portion of `AC-N1`.
+AC-N0 and AC-N1 are accepted. The Hyperlex adapter and preregistration boundary are implemented. EXP-001 compilation requires an approval receipt bound to the exact corpus and transform/control catalog hashes. Noesis does not invent or self-approve those semantic inputs.
 
 ## Validation
 

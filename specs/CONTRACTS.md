@@ -96,6 +96,12 @@ Statuses: `MEASURED`, `NOT_COMPUTABLE`, `INVALID`.
 Invariant: result values cannot populate semantic identity, causal meaning, or universal geometry fields.
 Schema: `contracts/geometric-metric-result.schema.json`.
 
+## C-017 — EXP001FreezeReceipt
+Purpose: prove that an identified operator approved the exact EXP-001 corpus and transform/control catalog used for compilation.
+Required semantics: receipt identity, `APPROVED` decision, operator reference, UTC decision time, scope/constraints, corpus/catalog identities, and canonical JSON SHA-256 digests.
+Invariant: compilation fails closed when the receipt is absent or any identity/digest differs. A changed input requires a new receipt.
+Schema: `contracts/exp001-freeze-receipt.schema.json`.
+
 ## Boundary contracts
 
 ### Hyperlex -> Noesis

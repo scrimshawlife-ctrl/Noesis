@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/exp001-freeze-receipt.schema.json",
+  "title": "EXP001FreezeReceipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "decision",
+    "operator_ref",
+    "decided_at_utc",
+    "corpus_id",
+    "corpus_version",
+    "corpus_sha256",
+    "catalog_id",
+    "catalog_version",
+    "catalog_sha256"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0.0"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "decision": {"type": "string", "const": "APPROVED"},
+    "operator_ref": {"type": "string", "minLength": 1},
+    "decided_at_utc": {"type": "string", "format": "date-time"},
+    "scope": {"type": ["string", "null"]},
+    "constraints": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "corpus_id": {"type": "string", "minLength": 1},
+    "corpus_version": {"type": "string", "minLength": 1},
+    "corpus_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "catalog_id": {"type": "string", "minLength": 1},
+    "catalog_version": {"type": "string", "minLength": 1},
+    "catalog_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

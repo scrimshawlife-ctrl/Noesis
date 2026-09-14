@@ -7,21 +7,26 @@ from pathlib import Path
 
 from noesis.contracts.registry import ContractRegistry
 from noesis.experiments.exp001 import SourceFixtureSpec, TransformSpec, compile_exp001_requests
+from noesis.experiments.freeze import verify_freeze_receipt
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Compile frozen EXP-001 source corpus and transform catalog into deterministic Hyperlex requests.")
     parser.add_argument("--corpus", type=Path, required=True)
     parser.add_argument("--catalog", type=Path, required=True)
+    parser.add_argument("--approval", type=Path, required=True)
     parser.add_argument("--seed", type=int, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
     corpus = json.loads(args.corpus.read_text(encoding="utf-8"))
     catalog = json.loads(args.catalog.read_text(encoding="utf-8"))
+    approval = json.loads(args.approval.read_text(encoding="utf-8"))
     registry = ContractRegistry("contracts")
     registry.validate("exp001-source-corpus", corpus)
     registry.validate("exp001-transform-catalog", catalog)
+    registry.validate("exp001-freeze-receipt", approval)
+    verify_freeze_receipt(corpus, catalog, approval)
 
     sources = tuple(
         SourceFixtureSpec(fixture_id=item["fixture_id"], text=item["text"])
@@ -44,6 +49,7 @@ def main() -> None:
         "corpus_version": corpus["version"],
         "catalog_id": catalog["catalog_id"],
         "catalog_version": catalog["version"],
+        "freeze_receipt_id": approval["receipt_id"],
         "seed": args.seed,
         "request_count": len(requests),
         "requests": list(requests),

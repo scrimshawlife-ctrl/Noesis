@@ -64,6 +64,8 @@ Invariant: Hyperlex may declare intended semantic invariants; Hyperlex may not a
 6. No FIELD authorization exists.
 7. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
 
+The EXP-001 compiler now requires a schema-valid `EXP001FreezeReceipt` that binds an identified operator approval to the exact corpus and catalog canonical hashes. A draft review packet exists at `specs/exp001/INPUT-FREEZE-CANDIDATE.md`; it contains no invented corpus fixtures.
+
 ## Next executable actions
 
 ### A — Preserve SLICE-001A settlement

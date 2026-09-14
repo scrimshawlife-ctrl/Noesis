@@ -1,9 +1,9 @@
 # NOESIS-SYSTEM-SPEC
 
 Status: `CANON-SHADOW`
-Version: `0.2.0`
+Version: `0.3.0`
 Specification state: `COMPLETE`
-Runtime state: `NOT_STARTED`
+Runtime state: `SLICE-001 + SLICE-002A IMPLEMENTED`
 
 This document is the canonical system overview. Normative details are decomposed into the referenced specifications below.
 
@@ -113,7 +113,10 @@ Machine-readable JSON Schemas:
 - `contracts/intervention-result.schema.json`;
 - `contracts/alignment-map.schema.json`;
 - `contracts/settlement.schema.json`;
-- `contracts/latent-channel-result.schema.json`.
+- `contracts/latent-channel-result.schema.json`;
+- `contracts/exp001-source-corpus.schema.json`;
+- `contracts/exp001-transform-catalog.schema.json`;
+- `contracts/exp001-freeze-receipt.schema.json`.
 
 `FailureRecord` and `SupersessionRecord` are fully specified semantically and may receive external JSON Schemas in the first runtime slice if interchange requires them.
 
@@ -190,7 +193,7 @@ Major groups:
 - optional EXP-001-GEO geometry profiling;
 - gated N5 latent channel.
 
-Current authorized next slice: `SLICE-001 — Reproducible Representation Capture` as defined in `STATUS.md`.
+Current gate: operator-approved, hash-bound EXP-001 source corpus and transform/control catalog as defined in `STATUS.md`.
 
 ## 14. Verification
 
@@ -213,4 +216,4 @@ python scripts/validate_specs.py
 
 ## Settlement
 
-The specification is complete enough to begin implementation without inventing architecture, authority, workflow, contract, or evidence semantics. Runtime evidence remains nonexistent until the implementation and experiments execute; therefore all capability claims remain `NOT_IMPLEMENTED`, `NOT_EXECUTED`, or `BLOCKED` as recorded in `STATUS.md`.
+The specification is complete. AC-N0 and AC-N1 have bounded pinned-model acceptance evidence. Semantic invariance, geometry, alignment, and latent-communication claims remain `NOT_EXECUTED`, `NOT_COMPUTABLE`, or `BLOCKED` as recorded in `STATUS.md`.
