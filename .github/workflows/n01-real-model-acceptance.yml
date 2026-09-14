@@ -6,14 +6,17 @@ on:
       model_id:
         description: "Open-weight Hugging Face model ID"
         required: true
+        default: "sshleifer/tiny-distilbert-base-cased"
         type: string
       revision:
         description: "Immutable model revision/commit SHA"
         required: true
+        default: "657df2b83a6986d88e4f528740259c9b49f796b1"
         type: string
       fixture_text:
         description: "Public reproducible acceptance fixture text"
         required: true
+        default: "The quick brown fox jumps over the lazy dog."
         type: string
       hidden_layer_1:
         description: "First hidden-state layer index"
