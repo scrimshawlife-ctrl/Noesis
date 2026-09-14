@@ -2,6 +2,14 @@
 
 Status: `DRAFT / CANON-SHADOW`
 
+## Research-program boundary
+
+`EXP-001` is one consumer of Noesis capabilities. Its concepts, semantic-invariance hypothesis, transform catalog, controls, thresholds, and interpretations are experiment-owned.
+
+They SHALL NOT define Noesis core ontology or architecture.
+
+If EXP-001 rejects semantic invariance entirely, the Noesis capture, comparison, control, provenance, and settlement systems remain valid instruments. The same infrastructure may support unrelated research programs without modification to core evidence semantics.
+
 ## Research question
 Which latent structures remain stable when semantic content is preserved while surface form changes?
 
@@ -11,8 +19,12 @@ Which latent structures remain stable when semantic content is preserved while s
 - `H2` Some candidate features remain stable across lexical/register/language transformations while surface-sensitive features do not.
 - `H3` Candidate semantic features that are only lexical artifacts will fail targeted trigger/falsification controls.
 
+These are experiment hypotheses, not Noesis assumptions.
+
 ## Corpus
 Initial target: 100 concepts spanning relation, agency, boundary, exchange, threat, identity, causality, temporal change, social role, and symbolic/archetypal categories. Concept selection must be frozen before execution.
+
+The concept taxonomy is experiment-owned and may be replaced without changing Noesis core semantics.
 
 ## Transform classes
 
@@ -27,7 +39,7 @@ Initial target: 100 concepts spanning relation, agency, boundary, exchange, thre
 - adversarial paraphrase
 - lexical-trigger controls
 
-Each transform declares whether semantics are expected to be `PRESERVED`, `ALTERED`, or `CONTROL`.
+Each transform declares whether semantics are expected to be `PRESERVED`, `ALTERED`, or `CONTROL`. These declarations are preregistered expectations, not observations.
 
 ## Procedure
 
@@ -77,6 +89,8 @@ A candidate may be described as a **representation invariant** only if:
 
 A candidate may be described as **functionally relevant** only with causal evidence. Without causal evidence, maximum claim is correlational `INFERRED`.
 
+Acceptance of EXP-001 does not alter the hypothesis-neutral status of Noesis core.
+
 ## Outputs
 
 - experiment manifest
@@ -96,3 +110,5 @@ A candidate may be described as **functionally relevant** only with causal evide
 - translation changing pragmatics rather than surface form alone.
 
 Any unresolved failure mode capable of explaining the main result forces `INCONCLUSIVE` or `NOT_COMPUTABLE`.
+
+A failed scientific hypothesis is an experiment result, not an instrument failure unless independent evidence identifies a defect in Noesis measurement behavior.
