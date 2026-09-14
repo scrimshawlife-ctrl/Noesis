@@ -70,6 +70,21 @@ ID_PATTERNS = {
     "V-": r"\bV-\d+",
 }
 
+CORE_DIRS = (
+    "src/noesis/adapters",
+    "src/noesis/artifacts",
+    "src/noesis/capture",
+    "src/noesis/contracts",
+    "src/noesis/domain",
+    "src/noesis/metrics",
+    "src/noesis/acceptance",
+)
+
+FORBIDDEN_CORE_IMPORTS = (
+    "noesis.experiments",
+    "noesis.hyperlex",
+)
+
 
 def fail(message: str) -> None:
     print(f"ERROR: {message}", file=sys.stderr)
@@ -78,6 +93,13 @@ def fail(message: str) -> None:
 
 def read(path: str) -> str:
     return (ROOT / path).read_text(encoding="utf-8")
+
+
+def require_markers(path: str, markers: tuple[str, ...]) -> None:
+    text = read(path)
+    for marker in markers:
+        if marker not in text:
+            fail(f"{path} missing required marker: {marker}")
 
 
 def main() -> None:
@@ -128,6 +150,39 @@ def main() -> None:
         if label not in constitution:
             fail(f"constitution missing provenance label {label}")
 
+    require_markers(
+        "CONSTITUTION.md",
+        ("C-016", "Hypothesis neutrality", "C-017", "Research ontology isolation", "C-018", "Instrument–theory separation"),
+    )
+    require_markers(
+        "ARCHITECTURE.md",
+        ("Research-program boundary", "Noesis Core", "Research Programs", "Forbidden dependencies"),
+    )
+    require_markers(
+        "specs/REQUIREMENTS.md",
+        ("FR-083", "FR-088", "NFR-023", "NFR-025", "Research neutrality"),
+    )
+    require_markers(
+        "specs/CONTRACTS.md",
+        ("Core contracts", "Integration contracts", "Research contracts", "Research-owned metadata rule"),
+    )
+    require_markers(
+        "specs/VERIFICATION.md",
+        ("V-015", "Hypothesis-neutrality verification", "V-016", "Ontology leakage verification"),
+    )
+    require_markers(
+        "specs/ACCEPTANCE.md",
+        ("No core runtime contract requires an experiment-specific semantic theory", "scientific falsification does not invalidate the measurement apparatus"),
+    )
+    require_markers(
+        "specs/EXP-001-SEMANTIC-INVARIANCE.md",
+        ("Research-program boundary", "one consumer of Noesis capabilities", "not Noesis assumptions"),
+    )
+    require_markers(
+        "docs/HYPERLEX-INTEGRATION.md",
+        ("external experimental instrument", "Noesis does not assume", "Hypothesis-neutral integration rule"),
+    )
+
     security = read("specs/SECURITY-GOVERNANCE.md")
     for marker in ("ADVISORY_ONLY", "FIELD", "PROMOTION_ELIGIBLE"):
         if marker not in security:
@@ -141,6 +196,16 @@ def main() -> None:
     for marker in ("ADAPTER_READY", "MODEL_BINDING_PENDING", "may not state"):
         if marker not in hyperlex:
             fail(f"Hyperlex integration boundary missing {marker}")
+
+    for directory in CORE_DIRS:
+        root = ROOT / directory
+        if not root.exists():
+            continue
+        for path in root.rglob("*.py"):
+            text = path.read_text(encoding="utf-8")
+            for forbidden in FORBIDDEN_CORE_IMPORTS:
+                if forbidden in text:
+                    fail(f"ontology leakage: {path.relative_to(ROOT)} imports {forbidden}")
 
     print("Noesis specification validation: PASS")
 
