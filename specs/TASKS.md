@@ -95,6 +95,13 @@ Requirements: FR-065, FR-072–074
 Outputs: independent rerun/falsification workflow, comparison envelope, replication settlement.
 Exit: AC-R1/AC-R2.
 
+## T-101 — EXP-001 curvature-aware geometry profile
+Depends on: accepted AC-N0/AC-N1, T-040, T-050, T-090
+Requirements: FR-020–029, FR-060–074, NFR-001–032
+Outputs: geometry-profile registry, Euclidean/hyperbolic/spherical/product/topological metric adapters, assumption checks, matched controls, diagnostics, complexity-aware selection, schema-valid results, and evidence packet.
+Invariant: candidate spaces are experiment configuration; no geometry is privileged in core.
+Exit: AC-N3-GEO plus AC-R2 before any promotion recommendation.
+
 ## T-120 — Audit and security controls
 Depends on: T-010
 Requirements: NFR-010–012, NFR-050–053

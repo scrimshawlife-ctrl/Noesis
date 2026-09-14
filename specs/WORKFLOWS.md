@@ -172,3 +172,24 @@ Every meaningful workflow defines purpose, actors, trigger, preconditions, input
 **State:** `AUTHORIZED -> BASELINED -> LATENT_TESTED -> CONTROL_TESTED -> SETTLED`.
 **Invariant:** task utility never proves universal neuralese.
 **Acceptance:** AC-N5.
+
+## WF-011 — Profile and compare candidate geometries
+
+**Purpose:** Test whether registered geometric structure improves held-out relational preservation without assuming a manifold exists.
+**Actors:** Researcher, analysis runner, independent reviewer.
+**Trigger:** Registered EXP-001 manifest enables `EXP-001-GEO`.
+**Preconditions:** AC-N0/AC-N1 accepted; corpus, relations, partitions, observations, candidates, nulls, thresholds, and compute budget frozen.
+**Inputs:** `GeometryProfile`, observations, relation graph, transform catalog, matched controls.
+**Happy path:** validate assumptions -> fit candidates on discovery -> select on selection partition -> freeze artifacts -> evaluate confirmation and control partitions once -> run candidate diagnostics and component ablations -> apply complexity penalty -> emit `GeometricMetricResult` records -> settle -> independently replicate.
+**Alternate:** descriptive metrics may run without fitting when preregistered and mathematically valid.
+**Failures:** leakage, insufficient sample size, non-finite results, boundary/radius collapse, unstable curvature, invalid topology parameters, missing matched control.
+**Recovery:** emit `INVALID` or `NOT_COMPUTABLE`; a revised profile requires a new identity and untouched confirmation data.
+**State:** `PROPOSED -> REGISTERED -> ASSUMPTIONS_VALIDATED -> FIT -> FROZEN -> CONFIRMATION_TESTED -> DIAGNOSTIC_TESTED -> SETTLED`.
+**Terminal:** `SETTLED`, `REJECTED`, `INCONCLUSIVE`, `NOT_COMPUTABLE`, `INVALID`.
+**Side effects:** immutable fitted artifacts, metric results, diagnostics, and settlement only.
+**Invariants:** confirmation data never affects fit/selection; geometry does not populate semantic truth; null and negative results remain first-class.
+**Permissions:** RESEARCH execution only; FIELD remains blocked.
+**Observability:** profile hash, partition hashes, candidate configuration, seeds, compute, artifact hashes, diagnostics, and access timestamps.
+**Acceptance:** AC-N3-GEO.
+**Dependencies:** WF-001/002/003/007/008, C-015/C-016, V-015.
+**Unresolved:** winning geometry and cross-model generalization are `NOT_COMPUTABLE` before execution.

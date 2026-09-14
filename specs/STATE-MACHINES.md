@@ -115,3 +115,18 @@ Transitions:
 - Any execution state may terminate in `REJECTED`, `FAILED`, or `INCONCLUSIVE`.
 
 Invariant: a successful task result does not transition any semantic-equivalence claim automatically.
+
+## SM-009 — Geometry candidate lifecycle
+
+`PROPOSED -> REGISTERED -> ASSUMPTIONS_VALIDATED -> FIT -> FROZEN -> CONFIRMATION_TESTED -> DIAGNOSTIC_TESTED -> SETTLED`
+
+Terminal alternatives:
+- `REJECTED`
+- `INCONCLUSIVE`
+- `NOT_COMPUTABLE`
+- `INVALID`
+
+Constraints:
+- accessing confirmation labels before `FROZEN` invalidates the run;
+- failure of candidate assumptions cannot trigger silent substitution;
+- `SETTLED` geometry remains scoped to the registered experiment and does not become core ontology.

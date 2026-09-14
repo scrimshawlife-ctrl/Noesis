@@ -14,6 +14,7 @@ Traceability follows:
 | FR-001–005 capture/identity | J-001/J-005 | WF-001/WF-002 | C-001/C-002/C-008 | AC-N0/AC-N1 | T-010/T-020/T-021/T-030 | V-002/V-003/V-004 |
 | FR-010–013 transforms/fixtures | J-001 | WF-001/WF-003 | C-001/C-002 | AC-N3 | T-050/T-100 | V-002/V-006 |
 | FR-020–025 metrics | J-001/J-003 | WF-003/WF-005 | C-003 | AC-N0/AC-N3/AC-N4 | T-040/T-080 | V-005/V-008 |
+| FR-026–029 geometry profiles | J-009 | WF-003/WF-011 | C-003/C-015/C-016 | AC-N3-GEO | T-040/T-101 | V-005/V-015 |
 | FR-030–035 sparse features/probes | J-002/J-006 | WF-004/WF-008 | C-003/C-006 | AC-N2/AC-R2 | T-060/T-061/T-062/T-110 | V-006/V-013 |
 | FR-040–043 causal intervention | J-002/J-006 | WF-006/WF-008 | C-004/C-006 | AC-N2/AC-R2 | T-070/T-110 | V-007/V-013 |
 | FR-050–054 alignment | J-003/J-006 | WF-005/WF-008 | C-005/C-003/C-006 | AC-N4/AC-R2 | T-080/T-110 | V-008/V-013 |
@@ -46,6 +47,7 @@ Traceability follows:
 | J-006 falsification | independently challenge claim | WF-008 -> WF-007 | replication settlement / AC-R2 |
 | J-007 latent communication | evaluate latent channel utility | WF-010 -> WF-007 | LatentChannelResult + AC-N5 |
 | J-008 supersession | retire obsolete evidence without deletion | WF-009 | SupersessionRecord |
+| J-009 geometry profile | compare candidate geometries on held-out semantic relations | WF-001 -> WF-002 -> WF-003 -> WF-011 -> WF-007 -> WF-008 | GeometryProfile + GeometricMetricResult + AC-N3-GEO |
 
 ## 4. State-machine traceability
 
@@ -59,6 +61,7 @@ Traceability follows:
 | SM-006 Capability maturity | all | gate settlements | V-011 |
 | SM-007 Evidence classification | WF-007 | C-006 | V-009 |
 | SM-008 Latent channel | WF-010 | C-007 | V-014 |
+| SM-009 Geometry candidate | WF-011/WF-008 | C-015/C-016/C-006 | V-015/V-013 |
 
 ## 5. Contract traceability
 
@@ -73,6 +76,8 @@ Traceability follows:
 | C-007 LatentChannelResult | `contracts/latent-channel-result.schema.json` | WF-010 | WF-007 |
 | C-008 FailureRecord | schema pending runtime slice | WF-002/006/010 | audit/replay |
 | C-009 SupersessionRecord | schema pending runtime slice | WF-009 | audit/governance |
+| C-015 GeometryProfile | `contracts/geometry-profile.schema.json` | WF-001/WF-011 | WF-003/WF-011 |
+| C-016 GeometricMetricResult | `contracts/geometric-metric-result.schema.json` | WF-011 | WF-007/WF-008 |
 
 C-008/C-009 are domain contracts fully specified semantically but their JSON Schemas may be added with the first runtime package because no acceptance gate currently depends on their external interchange format.
 
@@ -87,6 +92,17 @@ C-008/C-009 are domain contracts fully specified semantically but their JSON Sch
 - Gates: AC-N0, AC-N1, AC-N2, AC-N3, AC-R1; AC-R2 before promotion eligibility.
 - Tasks: T-010 through T-120 as applicable, T-100, T-110.
 - Verification: V-001 through V-013 as applicable.
+
+### EXP-001-GEO — Curvature-Aware Profile
+- Parent: EXP-001; optional and inactive unless manifest-enabled.
+- Journey: J-009.
+- Workflows: WF-001/WF-002/WF-003/WF-011/WF-007/WF-008.
+- Requirements: FR-020–029, FR-060–074, NFR-001–032.
+- State: SM-009 plus SM-001/002/005/007.
+- Contracts: C-001/C-002/C-003/C-006/C-015/C-016.
+- Gate: AC-N3-GEO; AC-R2 before promotion recommendation.
+- Task: T-101.
+- Verification: V-005/V-009/V-012/V-013/V-015.
 
 ### EXP-002 — Latent Communication
 - Status: `BLOCKED`.

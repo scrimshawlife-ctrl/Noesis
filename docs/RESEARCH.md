@@ -79,3 +79,63 @@ Use in Noesis: reinforces the rule that latent utility and latent interpretabili
 ## Evidence policy
 
 Research citations justify experiment design, not project claims. Noesis results must be independently measured and settled under repository contracts. Conflicting literature is preserved rather than harmonized into false certainty.
+
+## R-009 — Hyperbolic symbolic hierarchy
+
+**Nickel and Kiela (2017), _Poincaré Embeddings for Learning Hierarchical Representations_. NeurIPS 2017.**
+
+Relevance: demonstrates compact representation of latent symbolic hierarchies in hyperbolic space and improvement over evaluated Euclidean baselines.
+
+Use in Noesis: motivates a registered hyperbolic candidate for hierarchical relation fixtures.
+
+Limitation: success on hierarchical symbolic datasets does not establish that general semantics or model representations are hyperbolic.
+
+## R-010 — Directed hyperbolic entailment
+
+**Ganea, Bécigneul, and Hofmann (2018), _Hyperbolic Entailment Cones for Learning Hierarchical Embeddings_. ICML 2018.**
+
+Relevance: represents directed partial-order relations with nested geodesically convex cones.
+
+Use in Noesis: motivates preregistered order/entailment preservation metrics.
+
+Limitation: entailment annotations and cone fit remain task-specific instruments, not latent semantic truth.
+
+## R-011 — Geometric deep-learning doctrine
+
+**Bronstein et al. (2021), _Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges_.**
+
+Relevance: provides a general account of matching model inductive bias to known structure and symmetry.
+
+Use in Noesis: supports candidate-space comparison as an explicit experimental choice rather than a universal default.
+
+Limitation: the framework does not determine which geometry applies to a particular semantic dataset.
+
+## R-012 — Mixed-curvature caution
+
+**McNeela, Sala, and Gitter (2024/2025), _Product Manifold Representations for Learning on Biological Pathways_.**
+
+Relevance: reports lower distortion and in-distribution gains for mixed-curvature representations in tested graphs.
+
+Use in Noesis: motivates product-manifold candidates and component ablations.
+
+Limitation: reported out-of-distribution underperformance shows that topology fit can overfit the training graph; held-out shift tests are mandatory.
+
+## R-013 — Fisher–Rao statistical distance
+
+**Miyamoto et al. (2023), _On Closed-Form Expressions for the Fisher–Rao Distance_.**
+
+Relevance: treats probability distributions as a statistical manifold and defines a parameterization-invariant geodesic distance.
+
+Use in Noesis: supports future registered probability-distribution metrics without changing the default representation comparator.
+
+Limitation: Fisher–Rao geometry applies to specified statistical families; it is not automatically a semantic metric.
+
+## R-014 — Topological representation analysis
+
+**Gardinazzi et al. (2024/2025), _Persistent Topological Features in Large Language Models_.**
+
+Relevance: applies persistence methods to representation point clouds across model layers.
+
+Use in Noesis: motivates an optional topology profile for multiscale structural persistence.
+
+Limitation: observed topology is sensitive to sampling, distance choice, layer, and filtration; topological similarity does not establish semantic or causal identity.

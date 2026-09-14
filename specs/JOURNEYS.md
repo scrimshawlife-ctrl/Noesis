@@ -73,3 +73,13 @@ Journeys describe end-to-end actor objectives. They do not replace workflows.
 **Objective:** Preserve historical evidence while marking it obsolete due to model, method, or research change.
 **Path:** identify superseding evidence → verify immutable source → issue supersession record → update status/traceability → retain original artifacts.
 **Invariant:** evidence is never rewritten to match newer conclusions.
+
+## J-009 — Test curvature-aware semantic invariance
+
+**Actor:** Representation researcher
+**Objective:** Determine whether a registered geometry preserves held-out semantic relations better than a matched Euclidean baseline.
+**Entry conditions:** EXP-001 corpus and relational annotations frozen; AC-N0/AC-N1 accepted; geometry profile registered.
+**Path:** register candidates and nulls -> validate assumptions -> fit on discovery -> select on selection partition -> freeze -> evaluate confirmation/control partitions -> run diagnostics and ablations -> independently replicate -> settle bounded result.
+**Success:** schema-valid `AC-N3-GEO` evidence packet and replication settlement.
+**Failure:** confirmation leakage, absent matched baseline, unstable fit, failed assumptions, or no resolvable evidence.
+**Invariant:** winning geometry remains scoped evidence and never becomes Noesis ontology.

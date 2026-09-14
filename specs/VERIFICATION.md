@@ -111,6 +111,19 @@ Only after authorization:
 - semantic mismatch controls;
 - held-out task and distribution-shift sets.
 
+### V-015 — Curvature-aware geometry verification
+- synthetic Euclidean, tree, cyclic, and mixed-structure fixtures recover their registered control structure within tolerance;
+- confirmation partition access is blocked until fitted artifacts and selection decision are frozen;
+- every non-Euclidean result has a dimension/parameter-matched Euclidean control;
+- shuffled labels and random pairs fail the registered preservation threshold;
+- hyperbolic boundary/radius collapse and non-finite operations are detected;
+- spherical normalization and antipodal ambiguities are reported where applicable;
+- product-manifold component ablations are required;
+- topological metrics enforce sample and filtration assumptions;
+- selection includes uncertainty, practical effect, complexity, and compute cost;
+- failure of assumptions emits `NOT_COMPUTABLE` or `INVALID`;
+- settlement cannot infer semantic truth or universal geometry from geometric fit.
+
 ## 3. CI gates
 
 Minimum pre-merge CI:

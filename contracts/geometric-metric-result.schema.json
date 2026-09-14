@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.invalid/contracts/geometric-metric-result.schema.json",
+  "title": "GeometricMetricResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "result_id", "profile_id", "run_id", "candidate_id", "split", "metric", "status", "input_evidence_ids", "diagnostics", "null_result_ids", "provenance", "created_at"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "result_id": {"type": "string", "minLength": 1},
+    "profile_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "split": {"enum": ["DISCOVERY", "SELECTION", "CONFIRMATION", "CONTROL"]},
+    "metric": {"type": "string", "minLength": 1},
+    "value": {"type": ["number", "null"]},
+    "uncertainty": {"type": ["object", "null"]},
+    "status": {"enum": ["MEASURED", "NOT_COMPUTABLE", "INVALID"]},
+    "input_evidence_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "artifact_hash": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+    "diagnostics": {"type": "object"},
+    "null_result_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "provenance": {"enum": ["OBSERVED", "NOT_COMPUTABLE"]},
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "MEASURED"}}}, "then": {"required": ["value"]}},
+    {"if": {"properties": {"status": {"const": "NOT_COMPUTABLE"}}}, "then": {"properties": {"provenance": {"const": "NOT_COMPUTABLE"}}}}
+  ],
+  "$defs": {"sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}
+}

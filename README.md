@@ -48,6 +48,7 @@ Read in this order:
 
 Experiments:
 - `specs/EXP-001-SEMANTIC-INVARIANCE.md`
+- `specs/EXP-001-GEOMETRY-PROFILE.md` (optional curvature-aware profile; no preferred geometry)
 - `specs/EXP-002-LATENT-COMMUNICATION.md`
 
 Machine-readable contracts live under `contracts/`.

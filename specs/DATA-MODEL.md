@@ -52,6 +52,12 @@ Fields: alignment ID, source/target representation spaces, train/validation/test
 ### MetricResult
 Fields: metric result ID, metric definition/version, input refs, preprocessing ID, values, uncertainty, null/control refs, tolerance, status.
 
+### GeometryProfile
+Fields: profile ID, parent experiment ID, candidate spaces, curvature/dimension/metric configuration, partition hashes, primary metrics, nulls, selection rule, complexity costs, failure policy, creation time.
+
+### GeometricMetricResult
+Fields: result ID, geometry profile/run/candidate IDs, evaluation split, metric/value/uncertainty, input evidence IDs, artifact hash, null references, candidate diagnostics, limitations, status, provenance.
+
 ### EvidenceBundle
 Fields: bundle ID, proposition/question, typed evidence refs, bundle hash, creator, UTC time.
 
@@ -77,7 +83,10 @@ FeatureDictionary 1---* FeatureHypothesis
 FeatureHypothesis 1---* Probe
 FeatureHypothesis 1---* InterventionResult
 Observation *---* AlignmentMap
+ExperimentManifest 1---* GeometryProfile
+GeometryProfile 1---* GeometricMetricResult
 MetricResult/InterventionResult/AlignmentMap *---* EvidenceBundle
+GeometricMetricResult *---* EvidenceBundle
 EvidenceBundle 1---* Settlement
 Settlement 0..1---* SupersessionRecord
 ```

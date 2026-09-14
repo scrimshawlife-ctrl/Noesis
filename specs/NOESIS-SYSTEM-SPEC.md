@@ -44,7 +44,7 @@ The complete normative requirement catalog is `specs/REQUIREMENTS.md`.
 Requirement families:
 - `FR-001–005`: capture and identity;
 - `FR-010–013`: controlled transforms and fixtures;
-- `FR-020–025`: representation metrics and null controls;
+- `FR-020–029`: representation metrics, geometry profiles, null controls, and fail-closed assumptions;
 - `FR-030–035`: sparse features and probes;
 - `FR-040–043`: causal intervention;
 - `FR-050–054`: cross-space alignment;
@@ -65,6 +65,7 @@ Normative actor journeys are defined in `specs/JOURNEYS.md`:
 - `J-006` independent falsification;
 - `J-007` latent communication;
 - `J-008` evidence supersession.
+- `J-009` curvature-aware semantic invariance.
 
 ## 5. Workflows
 
@@ -79,6 +80,7 @@ Normative workflows are defined in `specs/WORKFLOWS.md`:
 - `WF-008` independent replication/falsification;
 - `WF-009` supersede evidence;
 - `WF-010` latent communication experiment.
+- `WF-011` profile and compare candidate geometries.
 
 Each workflow defines purpose, actors, trigger, preconditions, inputs, deterministic path, alternatives, failure/recovery, state transitions, terminal states, side effects, invariants, permissions, observability, acceptance, dependencies, and unresolved items.
 
@@ -93,6 +95,7 @@ Normative state machines are `specs/STATE-MACHINES.md`:
 - `SM-006` capability maturity;
 - `SM-007` evidence classification;
 - `SM-008` latent-channel lifecycle.
+- `SM-009` geometry-candidate lifecycle.
 
 Capability maturity remains:
 
@@ -153,6 +156,7 @@ Normative gates: `specs/ACCEPTANCE.md`.
 - `AC-N1`: hidden-state capture;
 - `AC-N2`: feature/probe/intervention lab;
 - `AC-N3`: semantic invariance;
+- `AC-N3-GEO`: optional curvature-aware semantic-invariance profile;
 - `AC-N4`: cross-space alignment;
 - `AC-N5`: latent communication;
 - `AC-R1`: reproducibility;
@@ -183,6 +187,7 @@ Major groups:
 - alignment;
 - settlement/replication/security;
 - EXP-001 execution;
+- optional EXP-001-GEO geometry profiling;
 - gated N5 latent channel.
 
 Current authorized next slice: `SLICE-001 — Reproducible Representation Capture` as defined in `STATUS.md`.
@@ -202,6 +207,7 @@ python scripts/validate_specs.py
 ## Research program
 
 - `specs/EXP-001-SEMANTIC-INVARIANCE.md`: canonical first experiment.
+- `specs/EXP-001-GEOMETRY-PROFILE.md`: optional experiment-owned geometry profile.
 - `specs/EXP-002-LATENT-COMMUNICATION.md`: fully specified but `BLOCKED` until AC-N4 + operator authorization.
 - `docs/RESEARCH.md`: current evidence baseline and limitations.
 

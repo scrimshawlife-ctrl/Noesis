@@ -76,6 +76,23 @@ PASS requires:
 - semantic equivalence evaluated separately from geometric alignment;
 - failure to pass threshold yields REJECTED/WEAK, not narrative downgrade.
 
+## AC-N3-GEO — Curvature-aware semantic invariance profile
+
+PASS requires:
+- frozen schema-valid `GeometryProfile` with Euclidean baseline;
+- discovery/selection/confirmation/control partition hashes;
+- confirmation partition inaccessible before fitted artifacts and selection are frozen;
+- geodesic distortion, neighborhood retention, registered relation preservation, uncertainty, and nulls;
+- meaning-altering and lexical-overlap controls;
+- candidate-specific stability and degeneracy diagnostics;
+- dimension/parameter matching, compute accounting, and complexity penalty;
+- component ablation for product manifolds;
+- held-out concept and transform evaluation;
+- independent replication classification;
+- settlement explicitly scopes the result and preserves rejected, invalid, and `NOT_COMPUTABLE` candidates.
+
+PASS accepts the profile's measurement validity. It does not accept a universal geometry of meaning.
+
 ## AC-N5 — Latent communication research
 
 ENTRY requires:

@@ -86,6 +86,12 @@ A candidate may be described as **functionally relevant** only with causal evide
 - falsification report
 - settlement
 
+## Optional registered profile — EXP-001-GEO
+
+`specs/EXP-001-GEOMETRY-PROFILE.md` defines a curvature-aware profile for testing relational preservation in Euclidean, hyperbolic, spherical, product-manifold, and topological candidates. It is not active by default. A manifest that enables it must freeze candidate spaces, partitions, metrics, nulls, diagnostics, complexity penalties, and selection rules before confirmation data is accessed.
+
+No geometric result establishes semantic truth. A geometry advantage is scoped to the registered model, site, corpus, relations, transforms, dimensions, and metrics.
+
 ## Failure modes
 
 - semantic drift introduced by transformations;

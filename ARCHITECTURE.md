@@ -27,6 +27,8 @@ Receives controlled surface transformations from Hyperlexical or fixture generat
 ### A-004 Representation Comparator
 Computes predeclared metrics such as cosine similarity, centered-kernel alignment, representational similarity analysis, neighborhood preservation, linear-probe transfer, or task-specific statistics. Metric choice is experiment-defined.
 
+Optional experiment profiles may supply Euclidean, hyperbolic, spherical, product-manifold, information-geometric, or topological metric adapters. These adapters remain behind A-004 and cannot install a preferred geometry or semantic ontology in core. Candidate assumptions, fitting, controls, selection, and failure semantics belong to the registered experiment profile.
+
 ### A-005 Sparse Feature Lab
 Trains or loads versioned SAE/dictionary models. Stores reconstruction, sparsity, dead-feature, feature-consistency, and run-to-run stability metrics. Human-readable feature descriptions remain hypotheses.
 
