@@ -1,7 +1,7 @@
 # Noesis Requirements
 
 Status: `CANON-SHADOW`
-Version: `0.2.0`
+Version: `0.2.1`
 
 ## 1. Scope
 
@@ -75,6 +75,14 @@ This document is the normative requirement catalog for Noesis. Requirements are 
 - `FR-081` Abraxas integration SHALL expose settlements and evidence references without allowing Noesis to mutate Abraxas canon directly.
 - `FR-082` Adapter implementations SHALL be replaceable without changing canonical evidence semantics.
 
+### Research neutrality
+- `FR-083` Noesis SHALL accept experiment-specific hypotheses, semantic labels, transform classes, expected invariants, and interpretation frameworks through versioned external contracts rather than core runtime assumptions.
+- `FR-084` Noesis SHALL preserve experiment-defined semantics as declared metadata and SHALL NOT promote them to observed latent truth.
+- `FR-085` Core measurement operations SHALL remain executable when an experiment hypothesis is false, rejected, superseded, or replaced.
+- `FR-086` Experiment-specific ontologies SHALL be replaceable without changing canonical observation, metric, failure, intervention, alignment, or settlement semantics.
+- `FR-087` Noesis SHALL distinguish instrument outputs from theory-dependent interpretations of those outputs.
+- `FR-088` A research-specific construct SHALL require explicit architecture review before promotion into core Noesis ontology.
+
 ### Latent communication
 - `FR-090` Latent agent communication SHALL remain disabled by default.
 - `FR-091` Latent communication experiments SHALL require accepted N4 evidence plus explicit operator authorization.
@@ -98,6 +106,9 @@ This document is the normative requirement catalog for Noesis. Requirements are 
 - `NFR-020` Runtime adapters, metrics, transforms, and experiment methods SHALL be separately replaceable modules.
 - `NFR-021` No hidden coupling SHALL exist between SHADOW and FORECAST lanes.
 - `NFR-022` Abraxas, Hyperlexical, and Noesis SHALL exchange only explicit versioned contracts.
+- `NFR-023` The Noesis core SHALL remain hypothesis-neutral and SHALL NOT require any specific semantic theory, interpretability framework, or research-program ontology.
+- `NFR-024` Research-program packages SHALL depend on Noesis core; Noesis core SHALL NOT depend on research-program packages.
+- `NFR-025` Rejection or supersession of a scientific hypothesis SHALL NOT invalidate previously valid raw observations or theory-independent metric results.
 
 ### Failure semantics
 - `NFR-030` Invalid or incomplete evidence SHALL fail closed.
@@ -127,7 +138,8 @@ This document is the normative requirement catalog for Noesis. Requirements are 
 - Autonomous production behavior steering.
 - Canon mutation.
 - Training-data reconstruction as a product feature.
+- Privileging one research thesis, semantic ontology, or funding framing as core Noesis doctrine.
 
 ## 5. Requirement change rule
 
-Any change that alters claim strength, promotion criteria, provenance semantics, governance authority, or experimental gate conditions requires explicit spec review and traceability update.
+Any change that alters claim strength, promotion criteria, provenance semantics, governance authority, experimental gate conditions, or core-vs-research ontology boundaries requires explicit spec review and traceability update.
