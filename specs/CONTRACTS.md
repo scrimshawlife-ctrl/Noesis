@@ -1,7 +1,7 @@
 # Noesis Contracts
 
 Status: `CANON-SHADOW`
-Version: `0.2.3`
+Version: `0.2.4`
 
 ## Contract rules
 
@@ -11,6 +11,42 @@ Version: `0.2.3`
 4. Unknown/missing required evidence fails closed.
 5. Additive schema changes require compatibility review; breaking changes require a new major schema version.
 6. Tensor payloads are referenced by content-addressed artifact URIs and hashes rather than embedded by default.
+7. Contract presence records an interface or hypothesis surface; it does not establish the scientific truth of experiment-owned fields.
+
+## Contract layering
+
+### Core contracts
+Stable, research-neutral evidence primitives whose semantics remain valid across competing hypotheses and unrelated research programs.
+
+Core contracts include:
+- `C-001` ExperimentManifest
+- `C-002` Observation
+- `C-003` MetricResult
+- `C-004` InterventionResult
+- `C-005` AlignmentMap
+- `C-006` Settlement
+- `C-007` LatentChannelResult
+- `C-008` FailureRecord
+- `C-009` SupersessionRecord
+
+### Integration contracts
+External-system boundaries that transport inputs or outputs without defining scientific truth.
+
+Integration contracts include:
+- `C-010` HyperlexTransformRequest
+- `C-011` HyperlexTransformResult
+- runtime/model adapter capability surfaces
+- fixture import/export boundaries
+
+### Research contracts
+Experiment- or program-specific schemas. These may evolve, be replaced, or disappear without redefining Noesis core evidence semantics.
+
+Research contracts currently include:
+- `C-012` EXP001SourceCorpus
+- `C-014` EXP001TransformCatalog
+- experiment-specific semantic taxonomies, task hypotheses, and benchmark definitions
+
+`C-013` N01AcceptanceEvidence is a gate-evidence contract for a core capability and does not assert a research thesis.
 
 ## C-001 — ExperimentManifest
 Purpose: immutable executable experiment registration.
@@ -101,6 +137,32 @@ Purpose: prove that an identified operator approved the exact EXP-001 corpus and
 Required semantics: receipt identity, `APPROVED` decision, operator reference, UTC decision time, scope/constraints, corpus/catalog identities, and canonical JSON SHA-256 digests.
 Invariant: compilation fails closed when the receipt is absent or any identity/digest differs. A changed input requires a new receipt.
 Schema: `contracts/exp001-freeze-receipt.schema.json`.
+
+## Research-owned metadata rule
+
+The following are experiment-owned claims or expectations unless independently observed:
+- `semantic_intent`
+- `expected_invariants`
+- `expected_changed_attributes`
+- concept labels
+- hypothesis tags
+- transform taxonomies
+- theoretical categories
+- predicted relationships
+
+Their presence in a versioned contract records what the experiment intends to test. It does not make those statements Noesis observations.
+
+Noesis preserves the distinction:
+
+```text
+DECLARED HYPOTHESIS
+        !=
+OBSERVATION
+        !=
+INFERENCE
+        !=
+SETTLEMENT
+```
 
 ## Boundary contracts
 

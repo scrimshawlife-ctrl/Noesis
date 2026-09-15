@@ -1,7 +1,7 @@
 # Noesis Verification Plan
 
 Status: `CANON-SHADOW`
-Version: `0.2.0`
+Version: `0.2.1`
 
 ## 1. Verification doctrine
 
@@ -124,6 +124,25 @@ Only after authorization:
 - failure of assumptions emits `NOT_COMPUTABLE` or `INVALID`;
 - settlement cannot infer semantic truth or universal geometry from geometric fit.
 
+### V-017 — Hypothesis-neutrality verification
+PASS requires:
+- core modules execute without importing experiment-specific packages;
+- replacing an experiment transform taxonomy does not change Observation semantics;
+- rejecting an experiment hypothesis does not invalidate raw capture artifacts;
+- experiment labels cannot populate `OBSERVED` latent-semantic fields;
+- integration adapters cannot issue settlements;
+- core tests contain at least one fixture whose experiment-level expected invariant is deliberately false;
+- the resulting system preserves the observation and records the failed hypothesis without treating the instrument as failed.
+
+### V-018 — Ontology leakage verification
+PASS requires structural verification that core modules do not depend on:
+- EXP-001-specific concepts;
+- Hyperlex-specific semantic categories;
+- research-program-specific labels;
+- theory-specific settlement assumptions.
+
+Any such dependency requires explicit architectural justification or relocation behind an external contract.
+
 ## 3. CI gates
 
 Minimum pre-merge CI:
@@ -132,7 +151,8 @@ Minimum pre-merge CI:
 3. unit tests;
 4. type/static checks when runtime exists;
 5. contract example tests;
-6. traceability check.
+6. traceability check;
+7. hypothesis-neutrality and ontology-leakage checks where applicable.
 
 Research-result PRs additionally require experiment-specific verification artifacts and settlement validation.
 
@@ -157,4 +177,5 @@ The following are not accepted merely from Noesis measurements and should resolv
 - hidden intent;
 - universal neuralese;
 - faithful transcript of private chain-of-thought;
-- semantic identity inferred solely from vector similarity.
+- semantic identity inferred solely from vector similarity;
+- truth of any experiment-specific ontology merely because Noesis can measure against it.

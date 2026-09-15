@@ -13,6 +13,52 @@ Semiotic Surface ─ labels/relations ─┘                                    
 
 Noesis does not own lexical meaning or Abraxas governance. It owns experimental latent-representation evidence and contracts.
 
+## Research-program boundary
+
+Noesis is a domain-general representation-measurement system. Research programs supply hypotheses and interpretation frameworks through versioned external contracts; Noesis supplies measurement and evidence primitives.
+
+```text
+Research Program
+  hypothesis
+  semantic ontology
+  transform taxonomy
+  expected relationships
+  acceptance thresholds
+         │
+         │ versioned external contracts
+         ▼
+Noesis
+  capture
+  compare
+  align
+  intervene
+  falsify
+  quantify uncertainty
+  preserve evidence
+  settle
+```
+
+Noesis may support research into invariance, robustness, semantic preservation, model drift, interpretability, agent communication, translation, memory, or other representation-level phenomena. None of those research programs define the meaning or architecture of the Noesis core.
+
+### Core-owned semantics
+
+Noesis core owns model and representation identity, observation provenance, artifact identity, capture sites, measurement procedures, metric execution, control/null execution, uncertainty, intervention records, alignment records, failures, evidence relations, settlements, and reproducibility.
+
+### Experiment-owned semantics
+
+Experiments own concepts, semantic categories, hypotheses, expected invariants, expected changes, transform classes, behavioral interpretations, domain-specific labels, and theory-specific metrics or thresholds where they are not generally applicable.
+
+### Promotion rule
+
+A construct may move from experiment-owned semantics into Noesis core only when:
+1. it is useful across materially different research questions;
+2. it does not imply the truth of one research theory;
+3. its semantics can be defined operationally;
+4. its inclusion reduces ambiguity or hidden coupling;
+5. backward compatibility and evidence meaning are preserved.
+
+Otherwise it remains external.
+
 ## Modules
 
 ### A-001 Model Adapter
@@ -22,7 +68,7 @@ Normalizes model-specific hooks for embeddings, residual stream/hidden states, a
 Produces immutable `Observation` records for selected representation sites. Raw tensors may be external artifacts referenced by content hash rather than embedded in metadata.
 
 ### A-003 Transform Harness
-Receives controlled surface transformations from Hyperlexical or fixture generators. Each transform has a stable ID, semantic-intent expectation, and contamination tags.
+Receives controlled surface transformations from Hyperlexical or fixture generators. Each transform has a stable ID, semantic-intent expectation, and contamination tags. Transform semantics remain experiment-owned hypotheses.
 
 ### A-004 Representation Comparator
 Computes predeclared metrics such as cosine similarity, centered-kernel alignment, representational similarity analysis, neighborhood preservation, linear-probe transfer, or task-specific statistics. Metric choice is experiment-defined.
@@ -59,6 +105,7 @@ Packages evidence into deterministic `Settlement` records with provenance label,
 - Model-generated explanations are untrusted annotations.
 - Third-party SAE dictionaries are external evidence until reproduced or independently validated.
 - Cross-model adapters are experimental components, not neutral transports.
+- Research-program labels and semantic expectations are declared hypotheses, not core truth.
 
 ## Execution environments
 
@@ -75,6 +122,16 @@ core types <- comparison/probe/SAE/causal/alignment labs
 settlement <- all evidence producers
 Hyperlexical -> transform contract only
 Abraxas <- settlement contract only
+
+Noesis Core
+   ↑
+Integrations
+   ↑
+Research Programs
 ```
+
+Allowed dependencies include `EXP-* -> Noesis`, external adapters -> Noesis contracts, and benchmarks -> Noesis.
+
+Forbidden dependencies include Noesis core -> EXP-001, Noesis core -> semantic-invariance theory, Noesis core -> Hyperlex ontology, and Noesis core -> funding or research-program framing.
 
 Noesis must remain usable as a standalone research package while exposing stable contracts to Abraxas and Hyperlexical.
