@@ -39,7 +39,7 @@ Each transform declares whether semantics are expected to be `PRESERVED`, `ALTER
 6. For each candidate feature, execute `WF-004` falsification sequence.
 7. Bootstrap uncertainty and run permutation/null baselines.
 8. Hold out at least one transformation class from any alignment/probe fitting.
-9. Emit settlement under `WF-006`.
+9. Emit settlement under `WF-007`.
 
 ## Metrics
 
