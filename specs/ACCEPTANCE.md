@@ -1,9 +1,11 @@
 # Noesis Acceptance Criteria
 
 Status: `CANON-SHADOW`
-Version: `0.2.0`
+Version: `0.2.1`
 
 Acceptance is evidence-based. A capability does not pass because code exists.
+
+Acceptance of a Noesis capability demonstrates that the measurement capability functions as specified. It does not constitute acceptance of every scientific hypothesis that uses that capability.
 
 ## AC-G0 — Specification foundation
 
@@ -13,6 +15,9 @@ PASS requires all:
 - Every FR/NFR is traceable to at least one workflow/task/verification route or explicitly marked governance-only.
 - `OBSERVED`, `INFERRED`, `SPECULATIVE`, `NOT_COMPUTABLE` are used consistently.
 - No document claims universal neuralese, latent thought transcripts, consciousness, or hidden intent as established fact.
+- No core runtime contract requires an experiment-specific semantic theory.
+- Experiment-specific hypotheses and ontologies remain externally replaceable.
+- At least one rejected-hypothesis path demonstrates that scientific falsification does not invalidate the measurement apparatus.
 
 ## AC-N0 — Deterministic representation comparison
 
@@ -63,6 +68,8 @@ PASS requires EXP-001:
 - uncertainty estimate for aggregate claims;
 - at least one held-out transform family;
 - explicit settlement of what is invariant, what is surface-sensitive, and what remains NOT_COMPUTABLE.
+
+Passing AC-N3 validates the declared EXP-001 result under its evidence and controls. It does not make semantic invariance a core Noesis assumption.
 
 ## AC-N4 — Cross-space alignment
 
