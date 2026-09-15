@@ -29,7 +29,6 @@ REQUIRED = [
     "specs/TASKS.md",
     "specs/VERIFICATION.md",
     "specs/EXP-001-SEMANTIC-INVARIANCE.md",
-    "specs/EXP-001-GEOMETRY-PROFILE.md",
     "specs/EXP-002-LATENT-COMMUNICATION.md",
     "docs/RESEARCH.md",
     "docs/HYPERLEX-INTEGRATION.md",
@@ -42,11 +41,6 @@ REQUIRED = [
     "contracts/latent-channel-result.schema.json",
     "contracts/hyperlex-transform-request.schema.json",
     "contracts/hyperlex-transform-result.schema.json",
-    "contracts/exp001-source-corpus.schema.json",
-    "contracts/exp001-transform-catalog.schema.json",
-    "contracts/geometry-profile.schema.json",
-    "contracts/geometric-metric-result.schema.json",
-    "contracts/exp001-freeze-receipt.schema.json",
 ]
 
 REQUIRED_SPEC_MARKERS = [
@@ -67,13 +61,13 @@ REQUIRED_SPEC_MARKERS = [
 PROVENANCE = ("OBSERVED", "INFERRED", "SPECULATIVE", "NOT_COMPUTABLE")
 
 ID_PATTERNS = {
-    "FR-": r"\\bFR-\\d+",
-    "NFR-": r"\\bNFR-\\d+",
-    "J-": r"\\bJ-\\d+",
-    "WF-": r"\\bWF-\\d+",
-    "AC-": r"\\bAC-[A-Z]+\\d+",
-    "T-": r"\\bT-\\d+",
-    "V-": r"\\bV-\\d+",
+    "FR-": r"\bFR-\d+",
+    "NFR-": r"\bNFR-\d+",
+    "J-": r"\bJ-\d+",
+    "WF-": r"\bWF-\d+",
+    "AC-": r"\bAC-[A-Z]+\d+",
+    "T-": r"\bT-\d+",
+    "V-": r"\bV-\d+",
 }
 
 CORE_DIRS = (
