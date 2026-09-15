@@ -44,3 +44,18 @@ SHADOW detects anomaly, drift, contradiction, and contamination. FORECAST perfor
 
 ## C-015 — Complexity must reduce ambiguity
 New abstractions, metrics, and modules are accepted only when they create a clearer experimental boundary, stronger testability, or more reproducible evidence.
+
+## C-016 — Hypothesis neutrality
+Noesis encodes measurement capabilities, evidence semantics, reproducibility rules, and experimental controls. It does not encode a privileged scientific hypothesis, expected conclusion, semantic theory, or research-program thesis as system truth.
+
+Research hypotheses are inputs to experiments, not properties of the Noesis runtime.
+
+## C-017 — Research ontology isolation
+Experiment-specific concepts, semantic categories, transform taxonomies, interpretation frameworks, expected invariants, scoring models, and theoretical constructs enter Noesis through versioned manifests, fixtures, adapters, or research protocols.
+
+They do not become core Noesis ontology unless independently justified as domain-general infrastructure.
+
+## C-018 — Instrument–theory separation
+Noesis instruments remain usable when the scientific hypothesis they were created to test is rejected.
+
+A failed hypothesis does not require changes to the measurement kernel unless the failure identifies a defect in the instrument itself.
