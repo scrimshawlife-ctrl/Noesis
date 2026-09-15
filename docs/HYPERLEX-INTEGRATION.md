@@ -4,7 +4,7 @@ Status: `CANON-SHADOW / ADAPTER_READY / MODEL_BINDING_PENDING`
 
 ## Purpose
 
-Noesis consumes Hyperlex outputs as controlled lexical/symbolic transformations. Hyperlex does not own latent evidence semantics, feature labels, or Noesis settlements.
+Noesis consumes Hyperlex outputs as controlled lexical/symbolic transformations. Hyperlex is an external experimental instrument. It does not own latent evidence semantics, feature labels, Noesis settlements, or the scientific truth of its own declared transform intent.
 
 ## Current adapter surfaces
 
@@ -33,7 +33,7 @@ Result metadata includes:
 - transform class and declared intent;
 - expected invariants/changed attributes;
 - provider metadata;
-- `OBSERVED` provenance.
+- `OBSERVED` provenance for the transform output itself.
 
 ## Authority boundary
 
@@ -41,7 +41,21 @@ Hyperlex may state: `this transformation is intended to preserve X`.
 
 Hyperlex may not state: `Noesis latent feature Y means X`.
 
+Noesis does not assume:
+- that Hyperlex preserved meaning;
+- that Hyperlex transform classes are scientifically valid;
+- that declared invariants were actually preserved;
+- that Hyperlex labels correspond to latent structure.
+
+Hyperlex output is experimental input. Its quality and semantic fidelity are separately measurable propositions.
+
 Noesis independently measures whether the declared invariant survives representation capture and controls. Settlement authority remains in Noesis/Abraxas governance.
+
+## Hypothesis-neutral integration rule
+
+The Hyperlex adapter exists to transport versioned transform requests and results. Hyperlex-specific ontologies, class names, training objectives, or semantic theories do not become Noesis core ontology merely because the adapter supports them.
+
+A different transformation system may implement the same integration role without changing core Noesis evidence semantics.
 
 ## Training-period posture
 
