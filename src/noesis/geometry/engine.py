@@ -42,13 +42,17 @@ def select_geometry_candidate(
     validate_geometry_profile(profile)
     costs = {str(c["candidate_id"]): float(c["complexity_cost"]) for c in profile["candidate_spaces"]}
     penalty = float(profile["selection_rule"].get("complexity_penalty", 0.0))
+    compute_penalty = float(profile["selection_rule"].get("compute_penalty", 0.0))
     scored: list[tuple[float, str]] = []
     for result in results:
         if result.get("split") != "SELECTION" or result.get("status") != "MEASURED":
             continue
         candidate_id = str(result["candidate_id"])
         value = float(result["value"])
-        scored.append((value + penalty * costs.get(candidate_id, 0.0), candidate_id))
+        compute = float((result.get("diagnostics") or {}).get("compute_cost") or 0.0)
+        scored.append(
+            (value + penalty * costs.get(candidate_id, 0.0) + compute_penalty * compute, candidate_id)
+        )
     if not scored:
         raise ValueError("no MEASURED selection-split results to select from")
     scored.sort()
@@ -75,7 +79,13 @@ def evaluate_geometry_candidate(
         value = _geodesic_distortion(candidate, matrix, relations)
         status = "MEASURED"
         provenance = "OBSERVED"
-        diagnostics = {"family": candidate["family"], "metric": candidate["metric"]}
+        diagnostics = {
+            "family": candidate["family"],
+            "metric": candidate["metric"],
+            "compute_cost": float(matrix.shape[0] * matrix.shape[1] * max(len(relations), 1)),
+        }
+        if candidate["family"] == "SPHERICAL":
+            diagnostics.update(_spherical_point_diagnostics(matrix, relations))
     except ValueError as exc:
         if profile["failure_policy"] not in {"NOT_COMPUTABLE", "FAIL_CLOSED"}:
             raise
@@ -501,6 +511,24 @@ def _topological_distortion(
             raise ValueError("topological graph is disconnected at this filtration")
         errors.append(abs(float(dist[i, j]) - float(expected)))
     return float(np.mean(errors))
+
+
+def _spherical_point_diagnostics(
+    points: np.ndarray,
+    relations: Sequence[tuple[int, int, float]],
+) -> dict[str, Any]:
+    norms = np.linalg.norm(points, axis=1)
+    renormalized = bool(np.any(np.abs(norms - 1.0) > 1e-6))
+    antipodal = 0
+    for i, j, _expected in relations:
+        na = float(norms[i])
+        nb = float(norms[j])
+        if na < _EPS or nb < _EPS:
+            continue
+        cosine = float(np.clip(np.dot(points[i], points[j]) / (na * nb), -1.0, 1.0))
+        if cosine <= -1.0 + 1e-6:
+            antipodal += 1
+    return {"renormalized": renormalized, "antipodal_pairs": antipodal}
 
 
 def _spherical_distance(a: np.ndarray, b: np.ndarray) -> float:
