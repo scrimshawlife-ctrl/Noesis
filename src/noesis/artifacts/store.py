@@ -54,3 +54,15 @@ class ContentAddressedStore:
         if not np.all(np.isfinite(array)):
             raise ValueError("vector contains non-finite values")
         return self.put_bytes(array.tobytes(order="C"), "f64")
+
+    def load_vector(self, uri: str, expected_sha256: str, shape: list[int] | tuple[int, ...]) -> np.ndarray:
+        self.verify_uri(uri, expected_sha256)
+        parsed = urlparse(uri)
+        payload = Path(unquote(parsed.path)).read_bytes()
+        array = np.frombuffer(payload, dtype=np.float64).copy()
+        expected = tuple(int(dim) for dim in shape)
+        if array.shape != expected:
+            raise ValueError(f"artifact shape mismatch: expected {expected}, got {array.shape}")
+        if not np.all(np.isfinite(array)):
+            raise ValueError("vector contains non-finite values")
+        return array
