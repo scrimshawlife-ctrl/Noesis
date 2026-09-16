@@ -44,6 +44,9 @@ class RepresentationSite:
 class InputFixture:
     fixture_id: str
     text: str
+    data_classification: str = "PUBLIC_REPRODUCIBLE"
+    retention: str | None = None
+    access_scope: str | None = None
 
     @property
     def sha256(self) -> str:
