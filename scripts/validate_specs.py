@@ -82,6 +82,7 @@ CORE_DIRS = (
     "src/noesis/settlement",
     "src/noesis/features",
     "src/noesis/interventions",
+    "src/noesis/alignment",
 )
 
 FORBIDDEN_CORE_IMPORTS = (
