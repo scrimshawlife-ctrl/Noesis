@@ -6,7 +6,7 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 + SLICE-013 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
@@ -154,6 +154,12 @@ Implemented:
 - missing filtration or disconnected graphs emit `NOT_COMPUTABLE`;
 - shuffled-relation null raises Euclidean distortion;
 - product-manifold component ablations are required and increase distortion.
+
+### SLICE-013 — Neighborhood and rank preservation metrics
+Implemented:
+- `knn_retention` vs registered relation neighborhoods;
+- `rank_order_preservation` (Spearman of measured vs registered distances);
+- invalid k / degenerate ranks fail closed as `NOT_COMPUTABLE`.
 
 ## Remaining blockers
 

@@ -2,7 +2,9 @@
 
 from .engine import (
     evaluate_geometry_candidate,
+    evaluate_knn_retention,
     evaluate_product_ablation,
+    evaluate_rank_preservation,
     freeze_geometry_selection,
     select_geometry_candidate,
     shuffled_relation_null,
@@ -11,7 +13,9 @@ from .engine import (
 
 __all__ = [
     "evaluate_geometry_candidate",
+    "evaluate_knn_retention",
     "evaluate_product_ablation",
+    "evaluate_rank_preservation",
     "freeze_geometry_selection",
     "select_geometry_candidate",
     "shuffled_relation_null",
