@@ -6,7 +6,7 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
@@ -139,6 +139,14 @@ Implemented:
 - synthetic incident records plus supersession without deleting the original.
 
 AC-S1 is not a production authorization. FIELD remains blocked without an operator receipt.
+
+### SLICE-011 — FailureRecord interchange and extra geometry families
+Implemented:
+- schema-valid `C-008` FailureRecord; executor validates before persist;
+- spherical great-circle geodesic distortion;
+- product-manifold geodesic as hypot of component Euclidean distances.
+
+Topological candidates remain `NOT_COMPUTABLE` until a filtration is registered.
 
 ## Remaining blockers
 

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noesis.local/contracts/failure-record.schema.json",
+  "title": "Noesis FailureRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "experiment_id", "run_id", "fixture_id", "site", "seed", "error_type", "message", "provenance"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "failure_id": {"type": "string", "minLength": 1},
+    "experiment_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "fixture_id": {"type": "string", "minLength": 1},
+    "site": {"type": "string", "minLength": 1},
+    "seed": {"type": "integer"},
+    "stage": {"type": "string", "minLength": 1},
+    "error_type": {"type": "string", "minLength": 1},
+    "message": {"type": "string"},
+    "environment": {"type": "object"},
+    "retry_of": {"type": ["string", "null"]},
+    "provenance": {"const": "OBSERVED"},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

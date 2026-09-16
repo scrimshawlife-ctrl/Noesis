@@ -79,5 +79,6 @@ class ManifestExecutor:
             error_type=type(exc).__name__,
             message=str(exc),
         ).as_dict()
+        self.registry.validate("failure-record", record)
         self.store.put_json(record)
         return record

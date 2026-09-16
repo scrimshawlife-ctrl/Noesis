@@ -140,6 +140,8 @@ def _geodesic(candidate: Mapping[str, Any], a: np.ndarray, b: np.ndarray) -> flo
         return _poincare_distance(a, b)
     if family == "SPHERICAL":
         return _spherical_distance(a, b)
+    if family == "PRODUCT_MANIFOLD":
+        return _product_distance(candidate, a, b)
     raise ValueError(f"geometry family is NOT_COMPUTABLE in this slice: {family}")
 
 
@@ -154,6 +156,19 @@ def _poincare_distance(a: np.ndarray, b: np.ndarray) -> float:
     if arg < 1.0:
         arg = 1.0
     return float(np.arccosh(arg))
+
+
+def _product_distance(candidate: Mapping[str, Any], a: np.ndarray, b: np.ndarray) -> float:
+    dims = candidate.get("fit_config", {}).get("component_dims")
+    if not isinstance(dims, list) or not dims or sum(int(d) for d in dims) != a.size:
+        raise ValueError("product manifold requires component_dims that sum to candidate dimension")
+    offset = 0
+    squares = 0.0
+    for dim in dims:
+        width = int(dim)
+        squares += float(np.linalg.norm(a[offset : offset + width] - b[offset : offset + width]) ** 2)
+        offset += width
+    return float(np.sqrt(squares))
 
 
 def _spherical_distance(a: np.ndarray, b: np.ndarray) -> float:

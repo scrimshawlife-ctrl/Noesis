@@ -77,13 +77,18 @@ class FailureRecord:
     message: str
 
     def as_dict(self) -> dict[str, Any]:
+        material = "|".join(
+            [self.experiment_id, self.run_id, self.fixture_id, self.site, str(self.seed), self.error_type]
+        ).encode("utf-8")
         return {
             "schema_version": "0.1.0",
+            "failure_id": "fail_" + hashlib.sha256(material).hexdigest()[:24],
             "experiment_id": self.experiment_id,
             "run_id": self.run_id,
             "fixture_id": self.fixture_id,
             "site": self.site,
             "seed": self.seed,
+            "stage": "capture",
             "error_type": self.error_type,
             "message": self.message,
             "provenance": "OBSERVED",
