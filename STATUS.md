@@ -6,13 +6,13 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N2 sparse-feature/probe/causal lab: `SLICE-004/005/006 IMPLEMENTED / AC-N2 NOT ACCEPTED`
 - N3 semantic invariance: `FULLY_SPECIFIED / PREREGISTRATION TOOLING IMPLEMENTED / NOT_EXECUTED`
-- EXP-001-GEO curvature-aware profile: `FULLY_SPECIFIED / NOT_IMPLEMENTED / NOT_EXECUTED`
+- EXP-001-GEO curvature-aware profile: `SLICE-009 RUNTIME IMPLEMENTED / NOT_EXECUTED / AC-N3-GEO NOT ACCEPTED`
 - N4 cross-model alignment: `SLICE-007 LINEAR MAP IMPLEMENTED / AC-N4 NOT ACCEPTED`
 - N5 latent communication: `FULLY_SPECIFIED / BLOCKED`
 
@@ -117,6 +117,17 @@ Implemented:
 - environment deltas are disclosed on the report.
 
 AC-R1/AC-R2 are not accepted: this is the harness, not an independent scientific replication of N0/N1 or EXP-001.
+
+### SLICE-009 — Geometry profile runtime
+Implemented:
+- `GeometryProfile` validation with mandatory Euclidean baseline;
+- geodesic-distortion evaluation for Euclidean and Poincaré hyperbolic candidates;
+- confirmation blocked until selection is frozen;
+- out-of-ball hyperbolic points emit `NOT_COMPUTABLE`;
+- selection uses the selection split only and applies a complexity penalty;
+- geometric results never populate semantic-truth or universal-geometry fields.
+
+AC-N3-GEO is not accepted: no operator-approved relational corpus, and no geometry is privileged in core.
 
 ## Remaining blockers
 
