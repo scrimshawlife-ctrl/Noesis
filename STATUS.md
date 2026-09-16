@@ -6,7 +6,7 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
@@ -147,6 +147,13 @@ Implemented:
 - product-manifold geodesic as hypot of component Euclidean distances.
 
 Topological candidates remain `NOT_COMPUTABLE` until a filtration is registered.
+
+### SLICE-012 — Topological filtration, shuffled nulls, product ablation
+Implemented:
+- graph-path topological geodesic under `fit_config.max_scale`;
+- missing filtration or disconnected graphs emit `NOT_COMPUTABLE`;
+- shuffled-relation null raises Euclidean distortion;
+- product-manifold component ablations are required and increase distortion.
 
 ## Remaining blockers
 
