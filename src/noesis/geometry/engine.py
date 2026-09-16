@@ -215,6 +215,35 @@ def _evaluate_named_metric(
     return result
 
 
+def label_geometric_rupture(
+    profile: Mapping[str, Any],
+    metric_result: Mapping[str, Any],
+) -> dict[str, Any]:
+    validate_geometry_profile(profile)
+    threshold = float(
+        profile["selection_rule"].get("rupture_threshold", profile["selection_rule"].get("minimum_effect", 0.0))
+    )
+    status = str(metric_result.get("status") or "")
+    if status != "MEASURED" or metric_result.get("value") is None:
+        decision = "NOT_COMPUTABLE"
+    elif float(metric_result["value"]) > threshold:
+        decision = "RUPTURED"
+    else:
+        decision = "INTACT"
+    return {
+        "profile_id": profile["profile_id"],
+        "metric_result_id": metric_result.get("result_id"),
+        "metric": metric_result.get("metric"),
+        "threshold": threshold,
+        "decision": decision,
+        "canonical": False,
+        "limitations": [
+            "GeometricRupture is an experiment-owned label for relational preservation failure",
+            "it is not a claim of semantic destruction",
+        ],
+    }
+
+
 def evaluate_projection_loss(
     profile: Mapping[str, Any],
     *,
