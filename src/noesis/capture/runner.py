@@ -7,6 +7,7 @@ from typing import Callable
 
 from noesis.adapters.base import ModelAdapter
 from noesis.artifacts.store import ContentAddressedStore
+from noesis.capture.fingerprint import environment_fingerprint
 from noesis.domain.models import CaptureRequest, CaptureResult
 
 Clock = Callable[[], datetime]
@@ -36,6 +37,11 @@ class CaptureRunner:
         observation_id = "obs_" + hashlib.sha256(stable_material).hexdigest()[:24]
         identity = result.model
         created = self.clock().astimezone(UTC).isoformat().replace("+00:00", "Z")
+        environment = {
+            "python": platform.python_version(),
+            **result.runtime_metadata,
+        }
+        environment["fingerprint"] = environment_fingerprint(environment)
 
         observation = {
             "schema_version": "0.1.0",
@@ -65,10 +71,7 @@ class CaptureRunner:
                 "dtype": "float64",
                 "shape": [len(result.vector)],
             },
-            "environment": {
-                "python": platform.python_version(),
-                **result.runtime_metadata,
-            },
+            "environment": environment,
             "seed": request.seed,
             "provenance": "OBSERVED",
         }

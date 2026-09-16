@@ -26,6 +26,8 @@ def test_capture_replays_identically(tmp_path):
     assert first == second
     assert first["artifact"]["sha256"] == second["artifact"]["sha256"]
     assert first["provenance"] == "OBSERVED"
+    assert first["environment"]["fingerprint"]
+    assert first["environment"]["fingerprint"] == second["environment"]["fingerprint"]
 
     registry = ContractRegistry("contracts")
     registry.validate("observation", first)
