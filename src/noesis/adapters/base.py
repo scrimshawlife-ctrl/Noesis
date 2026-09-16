@@ -9,6 +9,10 @@ class UnsupportedRepresentationSite(ValueError):
     pass
 
 
+class UnsupportedCausalIntervention(ValueError):
+    pass
+
+
 class ModelAdapter(Protocol):
     @property
     def identity(self) -> ModelIdentity: ...
