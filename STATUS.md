@@ -6,7 +6,7 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 + SLICE-013 + SLICE-014 + SLICE-015 + SLICE-016 + SLICE-017 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 + SLICE-013 + SLICE-014 + SLICE-015 + SLICE-016 + SLICE-017 + SLICE-018 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
@@ -187,6 +187,12 @@ Implemented:
 - preregistered distortion threshold labels a metric as `RUPTURED`, `INTACT`, or `NOT_COMPUTABLE`;
 - the label is experiment-owned (`canonical=false`);
 - it is not a claim of semantic destruction.
+
+### SLICE-018 — Held-out relation prediction
+Implemented:
+- AUC of geodesic ranking for held-out true pairs versus non-edges;
+- missing positives or negatives fail closed as `NOT_COMPUTABLE`;
+- ranking is not treated as semantic truth.
 
 ## Remaining blockers
 
