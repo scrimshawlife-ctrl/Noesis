@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import hashlib
 from datetime import UTC, datetime
 from typing import Any, Mapping, Sequence
@@ -61,6 +62,8 @@ def evaluate_geometry_candidate(
     points,
     relations: Sequence[tuple[int, int, float]],
     frozen_selection: Mapping[str, Any] | None = None,
+    result_suffix: str = "",
+    extra_diagnostics: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     validate_geometry_profile(profile)
     if split == "CONFIRMATION" and not (frozen_selection and frozen_selection.get("frozen")):
@@ -79,9 +82,12 @@ def evaluate_geometry_candidate(
         status = "NOT_COMPUTABLE"
         provenance = "NOT_COMPUTABLE"
         diagnostics = {"reason": str(exc), "family": candidate["family"]}
+    if extra_diagnostics:
+        diagnostics = {**diagnostics, **dict(extra_diagnostics)}
+    suffix = f"-{result_suffix}" if result_suffix else ""
     result = {
         "schema_version": "0.1.0",
-        "result_id": f"geo-{candidate_id}-{split.lower()}",
+        "result_id": f"geo-{candidate_id}-{split.lower()}{suffix}",
         "profile_id": profile["profile_id"],
         "run_id": "geo-run-1",
         "candidate_id": candidate_id,
@@ -100,6 +106,65 @@ def evaluate_geometry_candidate(
     }
     validate_contract("geometric-metric-result", result)
     return result
+
+
+def shuffled_relation_null(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    relations: Sequence[tuple[int, int, float]],
+    seed: int,
+) -> dict[str, Any]:
+    expected = [float(item[2]) for item in relations]
+    rng = np.random.default_rng(seed)
+    shuffled = list(expected)
+    rng.shuffle(shuffled)
+    null_relations = tuple((i, j, value) for (i, j, _), value in zip(relations, shuffled, strict=True))
+    return evaluate_geometry_candidate(
+        profile,
+        candidate_id=candidate_id,
+        split=split,
+        points=points,
+        relations=null_relations,
+        result_suffix="shuffled",
+        extra_diagnostics={"null": "shuffled_labels"},
+    )
+
+
+def evaluate_product_ablation(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    relations: Sequence[tuple[int, int, float]],
+) -> tuple[dict[str, Any], ...]:
+    candidate = _candidate(profile, candidate_id)
+    if candidate["family"] != "PRODUCT_MANIFOLD":
+        raise ValueError("component ablation applies only to PRODUCT_MANIFOLD candidates")
+    dims = candidate.get("fit_config", {}).get("component_dims")
+    if not isinstance(dims, list) or len(dims) < 2:
+        raise ValueError("product ablation requires at least two component_dims")
+    results = []
+    for index in range(len(dims)):
+        cloned = copy.deepcopy(dict(profile))
+        for item in cloned["candidate_spaces"]:
+            if item["candidate_id"] == candidate_id:
+                item.setdefault("fit_config", {})["ablate_component"] = index
+        results.append(
+            evaluate_geometry_candidate(
+                cloned,
+                candidate_id=candidate_id,
+                split=split,
+                points=points,
+                relations=relations,
+                result_suffix=f"ablate-{index}",
+                extra_diagnostics={"ablated_component": index},
+            )
+        )
+    return tuple(results)
 
 
 def _candidate(profile: Mapping[str, Any], candidate_id: str) -> dict[str, Any]:
@@ -125,6 +190,8 @@ def _geodesic_distortion(
 ) -> float:
     if not relations:
         raise ValueError("registered relations are required")
+    if candidate["family"] == "TOPOLOGICAL":
+        return _topological_distortion(candidate, points, relations)
     errors = []
     for i, j, expected in relations:
         measured = _geodesic(candidate, points[i], points[j])
@@ -162,13 +229,49 @@ def _product_distance(candidate: Mapping[str, Any], a: np.ndarray, b: np.ndarray
     dims = candidate.get("fit_config", {}).get("component_dims")
     if not isinstance(dims, list) or not dims or sum(int(d) for d in dims) != a.size:
         raise ValueError("product manifold requires component_dims that sum to candidate dimension")
+    ablate = candidate.get("fit_config", {}).get("ablate_component")
     offset = 0
     squares = 0.0
-    for dim in dims:
+    for index, dim in enumerate(dims):
         width = int(dim)
-        squares += float(np.linalg.norm(a[offset : offset + width] - b[offset : offset + width]) ** 2)
+        if ablate != index:
+            squares += float(np.linalg.norm(a[offset : offset + width] - b[offset : offset + width]) ** 2)
         offset += width
     return float(np.sqrt(squares))
+
+
+def _topological_distortion(
+    candidate: Mapping[str, Any],
+    points: np.ndarray,
+    relations: Sequence[tuple[int, int, float]],
+) -> float:
+    max_scale = candidate.get("fit_config", {}).get("max_scale")
+    if max_scale is None:
+        raise ValueError("topological candidate requires fit_config.max_scale filtration")
+    n = points.shape[0]
+    if n < 3:
+        raise ValueError("topological metric requires at least 3 samples")
+    unreachable = 1e18
+    dist = np.full((n, n), unreachable)
+    np.fill_diagonal(dist, 0.0)
+    limit = float(max_scale)
+    for i in range(n):
+        for j in range(i + 1, n):
+            edge = float(np.linalg.norm(points[i] - points[j]))
+            if edge <= limit + _EPS:
+                dist[i, j] = dist[j, i] = edge
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                alt = dist[i, k] + dist[k, j]
+                if alt < dist[i, j]:
+                    dist[i, j] = alt
+    errors = []
+    for i, j, expected in relations:
+        if dist[i, j] >= unreachable / 2:
+            raise ValueError("topological graph is disconnected at this filtration")
+        errors.append(abs(float(dist[i, j]) - float(expected)))
+    return float(np.mean(errors))
 
 
 def _spherical_distance(a: np.ndarray, b: np.ndarray) -> float:
