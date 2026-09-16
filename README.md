@@ -85,3 +85,7 @@ CI runs the same canonical specification validation on pull requests and pushes.
 ## Shared research program (candidate)
 
 [Noesis participation in persistent-agent research](specs/PERSISTENT-AGENT-PROGRAM.md) maps this component into ABX-NOEMA-REP-001. Advisory specification only; existing contracts and gates remain authoritative.
+
+## License
+
+This repository is licensed under the MIT License. See [`LICENSE`](LICENSE). This matches `license = {text = "MIT"}` in `pyproject.toml`.
