@@ -6,7 +6,7 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
@@ -107,13 +107,24 @@ Implemented:
 
 AC-N4 is not accepted: this is a synthetic linear map, not a cross-model checkpoint study.
 
+### SLICE-008 — Independent replication harness
+Implemented:
+- `replicate_settlement` compares original/replica metric envelopes against a registered tolerance;
+- classifications: `REPLICATED`, `PARTIAL`, `FAILED_REPLICATION`, `NOT_COMPUTABLE`;
+- original settlement is not mutated;
+- full `REPLICATED` requires an independent operator, a new control, resolvable artifacts, and an in-tolerance envelope;
+- replica settlement is a new `C-006` record; `ELIGIBLE_FOR_REVIEW` only on `REPLICATED`;
+- environment deltas are disclosed on the report.
+
+AC-R1/AC-R2 are not accepted: this is the harness, not an independent scientific replication of N0/N1 or EXP-001.
+
 ## Remaining blockers
 
 1. Freeze an operator-approved EXP-001 source corpus; Noesis does not invent that semantic corpus.
 2. Freeze the initial EXP-001 transform/control catalog.
 3. Keep EXP-001-GEO inactive until its relational corpus/profile receive operator approval.
 4. Bind the trained Hyperlex model to the callable or HTTP adapter when its inference surface stabilizes.
-5. No independent replication evidence exists.
+5. No independent scientific replication evidence exists (harness only).
 6. No FIELD authorization exists.
 7. N5 remains blocked until AC-N4 acceptance plus explicit operator authorization.
 
@@ -130,8 +141,8 @@ Create operator-approved `EXP001SourceCorpus` and `EXP001TransformCatalog`, then
 ### C — Bind Hyperlex when ready
 Attach the trained model behind `CallableHyperlexAdapter` or `HttpHyperlexAdapter`; no Noesis evidence semantics should change.
 
-### D — AC-N2 packet
-T-060/T-061/T-062/T-070 runtime paths exist. AC-N2 is still not accepted: fake-adapter interventions are not scientific evidence, and AC-R2 replication is absent.
+### D — Replication and gates
+T-110 harness exists. AC-R2 still requires an independent operator rerun with new controls on real evidence. AC-N2/N3/N4 remain unaccepted.
 
 ## Promotion posture
 
