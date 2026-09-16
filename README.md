@@ -6,7 +6,7 @@ Noesis is the Abraxas latent-representation research module: a contract-first sy
 
 - Canonical status: `CANON-SHADOW`
 - Governance effect: `ADVISORY_ONLY`
-- Runtime: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 IMPLEMENTED`
+- Runtime: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 IMPLEMENTED`
 - Specification: `COMPLETE`
 - N5 latent communication: `BLOCKED` pending AC-N4 + explicit operator authorization
 

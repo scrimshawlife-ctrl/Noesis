@@ -6,14 +6,14 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N2 sparse-feature/probe/causal lab: `SLICE-004/005/006 IMPLEMENTED / AC-N2 NOT ACCEPTED`
 - N3 semantic invariance: `FULLY_SPECIFIED / PREREGISTRATION TOOLING IMPLEMENTED / NOT_EXECUTED`
 - EXP-001-GEO curvature-aware profile: `FULLY_SPECIFIED / NOT_IMPLEMENTED / NOT_EXECUTED`
-- N4 cross-model alignment: `FULLY_SPECIFIED / NOT_EXECUTED`
+- N4 cross-model alignment: `SLICE-007 LINEAR MAP IMPLEMENTED / AC-N4 NOT ACCEPTED`
 - N5 latent communication: `FULLY_SPECIFIED / BLOCKED`
 
 ## Implemented evidence surfaces
@@ -96,6 +96,16 @@ Implemented:
 - causal settlements citing intervention evidence remain `INFERRED`, not `OBSERVED` mechanism.
 
 This does not accept AC-N2: no independent replication, no real-model causal access, and the fake adapter is not scientific evidence.
+
+### SLICE-007 — Alignment lab
+Implemented:
+- least-squares map fit on train only;
+- disjoint train/validation/test hashes with leakage fail-closed;
+- held-out CKA, shuffled-pairing null, and distribution-shift metrics as schema-valid `C-003`;
+- `C-005` AlignmentMap with `SUPPORTED` / `WEAK` / `REJECTED`;
+- geometric CKA never writes a semantic-equivalence field.
+
+AC-N4 is not accepted: this is a synthetic linear map, not a cross-model checkpoint study.
 
 ## Remaining blockers
 
