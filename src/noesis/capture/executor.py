@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import Any, Iterable
+from typing import Any, Iterable, Mapping
 
 from noesis.adapters.base import ModelAdapter
 from noesis.artifacts.store import ContentAddressedStore
 from noesis.capture.runner import CaptureRunner
 from noesis.contracts.registry import ContractRegistry
 from noesis.domain.models import CaptureRequest, FailureRecord, InputFixture, RepresentationSite
-from noesis.security import classify_fixture
+from noesis.security import authorize_scope, classify_fixture
 
 _SITE_RE = re.compile(r"^(embedding|hidden_state)(?::layer=(-?\d+))?:token=(-?\d+)$")
 
@@ -46,8 +46,11 @@ class ManifestExecutor:
         manifest: dict[str, Any],
         fixtures: Iterable[InputFixture],
         run_id: str,
+        authorization: Mapping[str, Any] | None = None,
     ) -> ExecutionReport:
         self.registry.validate("experiment-manifest", manifest)
+        scope = str((manifest.get("environment_requirements") or {}).get("execution_scope") or "LAB")
+        authorize_scope(scope, authorization=authorization)
         fixture_map = {fixture.fixture_id: fixture for fixture in fixtures}
         observations: list[dict[str, Any]] = []
         failures: list[dict[str, Any]] = []
