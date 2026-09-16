@@ -3,7 +3,7 @@
 Status: `CANON-SHADOW`
 Version: `0.3.0`
 Specification state: `COMPLETE`
-Runtime state: `SLICE-001 + SLICE-002A IMPLEMENTED`
+Runtime state: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 IMPLEMENTED`
 
 This document is the canonical system overview. Normative details are decomposed into the referenced specifications below.
 
@@ -118,7 +118,7 @@ Machine-readable JSON Schemas:
 - `contracts/exp001-transform-catalog.schema.json`;
 - `contracts/exp001-freeze-receipt.schema.json`.
 
-`FailureRecord` and `SupersessionRecord` are fully specified semantically and may receive external JSON Schemas in the first runtime slice if interchange requires them.
+`FailureRecord` remains semantically specified; its JSON Schema may be added with the first FailureRecord interchange slice. `SupersessionRecord` uses `contracts/supersession.schema.json`.
 
 ## 8. Data model
 

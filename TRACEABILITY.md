@@ -76,11 +76,11 @@ Traceability follows:
 | C-006 Settlement | `contracts/settlement.schema.json` | WF-007/WF-008 | Abraxas/operator/governance |
 | C-007 LatentChannelResult | `contracts/latent-channel-result.schema.json` | WF-010 | WF-007 |
 | C-008 FailureRecord | schema pending runtime slice | WF-002/006/010 | audit/replay |
-| C-009 SupersessionRecord | schema pending runtime slice | WF-009 | audit/governance |
+| C-009 SupersessionRecord | `contracts/supersession.schema.json` | WF-009 | audit/governance |
 | C-015 GeometryProfile | `contracts/geometry-profile.schema.json` | WF-001/WF-011 | WF-003/WF-011 |
 | C-016 GeometricMetricResult | `contracts/geometric-metric-result.schema.json` | WF-011 | WF-007/WF-008 |
 
-C-008/C-009 are domain contracts fully specified semantically but their JSON Schemas may be added with the first runtime package because no acceptance gate currently depends on their external interchange format.
+C-008 remains a domain contract whose JSON Schema may be added with the first FailureRecord interchange slice. C-009 is schema-backed by the settlement engine (`T-090`).
 
 ## 6. Experiment traceability
 

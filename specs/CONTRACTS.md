@@ -90,6 +90,7 @@ Required semantics: failure ID, run/manifest/fixture IDs, stage, error class, de
 ## C-009 — SupersessionRecord
 Purpose: preserve immutable history while identifying obsolete evidence.
 Required semantics: old object ID, new object/defect reference, reason, operator/producer, UTC time.
+Schema: `contracts/supersession.schema.json`.
 
 ## C-010 — HyperlexTransformRequest
 Purpose: request a controlled lexical/symbolic transformation without granting Hyperlex latent-settlement authority.
