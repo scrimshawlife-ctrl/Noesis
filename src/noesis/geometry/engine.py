@@ -108,6 +108,102 @@ def evaluate_geometry_candidate(
     return result
 
 
+def evaluate_knn_retention(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    relations: Sequence[tuple[int, int, float]],
+    k: int,
+    frozen_selection: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    return _evaluate_named_metric(
+        profile,
+        candidate_id=candidate_id,
+        split=split,
+        points=points,
+        relations=relations,
+        metric="knn_retention",
+        compute=lambda candidate, matrix: _knn_retention(candidate, matrix, relations, k),
+        frozen_selection=frozen_selection,
+        extra_diagnostics={"k": k},
+    )
+
+
+def evaluate_rank_preservation(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    relations: Sequence[tuple[int, int, float]],
+    frozen_selection: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    return _evaluate_named_metric(
+        profile,
+        candidate_id=candidate_id,
+        split=split,
+        points=points,
+        relations=relations,
+        metric="rank_order_preservation",
+        compute=lambda candidate, matrix: _rank_preservation(candidate, matrix, relations),
+        frozen_selection=frozen_selection,
+    )
+
+
+def _evaluate_named_metric(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    relations: Sequence[tuple[int, int, float]],
+    metric: str,
+    compute,
+    frozen_selection: Mapping[str, Any] | None = None,
+    extra_diagnostics: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    validate_geometry_profile(profile)
+    if split == "CONFIRMATION" and not (frozen_selection and frozen_selection.get("frozen")):
+        raise ValueError("confirmation partition is blocked until selection is frozen")
+    candidate = _candidate(profile, candidate_id)
+    matrix = _points(points, int(candidate["dimension"]))
+    try:
+        value = compute(candidate, matrix)
+        status = "MEASURED"
+        provenance = "OBSERVED"
+        diagnostics = {"family": candidate["family"], "metric": metric}
+    except ValueError as exc:
+        value = None
+        status = "NOT_COMPUTABLE"
+        provenance = "NOT_COMPUTABLE"
+        diagnostics = {"reason": str(exc), "family": candidate["family"]}
+    if extra_diagnostics:
+        diagnostics = {**diagnostics, **dict(extra_diagnostics)}
+    result = {
+        "schema_version": "0.1.0",
+        "result_id": f"geo-{candidate_id}-{metric}-{split.lower()}",
+        "profile_id": profile["profile_id"],
+        "run_id": "geo-run-1",
+        "candidate_id": candidate_id,
+        "split": split,
+        "metric": metric,
+        "value": value,
+        "uncertainty": None,
+        "status": status,
+        "input_evidence_ids": [f"points:{candidate_id}"],
+        "artifact_hash": None,
+        "diagnostics": diagnostics,
+        "null_result_ids": [],
+        "limitations": ["geometric fit is not semantic truth or a universal geometry"],
+        "provenance": provenance,
+        "created_at": _CREATED,
+    }
+    validate_contract("geometric-metric-result", result)
+    return result
+
+
 def shuffled_relation_null(
     profile: Mapping[str, Any],
     *,
@@ -181,6 +277,69 @@ def _points(values, dimension: int) -> np.ndarray:
     if not np.all(np.isfinite(matrix)):
         raise ValueError("points contain non-finite values")
     return matrix
+
+
+def _relation_matrix(n: int, relations: Sequence[tuple[int, int, float]]) -> np.ndarray:
+    dist = np.full((n, n), np.inf)
+    np.fill_diagonal(dist, 0.0)
+    for i, j, expected in relations:
+        dist[i, j] = min(dist[i, j], float(expected))
+        dist[j, i] = min(dist[j, i], float(expected))
+    return dist
+
+
+def _knn_sets(dist: np.ndarray, k: int) -> list[set[int]]:
+    n = dist.shape[0]
+    if not 1 <= k < n:
+        raise ValueError("k must satisfy 1 <= k < sample count")
+    neighbors: list[set[int]] = []
+    for i in range(n):
+        order = np.argsort(dist[i])
+        picked = [int(j) for j in order if j != i][:k]
+        if len(picked) < k:
+            raise ValueError("insufficient related neighbors for knn_retention")
+        neighbors.append(set(picked))
+    return neighbors
+
+
+def _knn_retention(
+    candidate: Mapping[str, Any],
+    points: np.ndarray,
+    relations: Sequence[tuple[int, int, float]],
+    k: int,
+) -> float:
+    n = points.shape[0]
+    related = _knn_sets(_relation_matrix(n, relations), k)
+    measured = np.zeros((n, n), dtype=np.float64)
+    for i in range(n):
+        for j in range(i + 1, n):
+            d = _geodesic(candidate, points[i], points[j])
+            measured[i, j] = measured[j, i] = d
+    geo = _knn_sets(measured, k)
+    scores = [len(a & b) / len(a | b) for a, b in zip(related, geo, strict=True)]
+    return float(np.mean(scores))
+
+
+def _rank_preservation(
+    candidate: Mapping[str, Any],
+    points: np.ndarray,
+    relations: Sequence[tuple[int, int, float]],
+) -> float:
+    if len(relations) < 2:
+        raise ValueError("rank preservation requires at least two registered relations")
+    expected = np.asarray([float(item[2]) for item in relations], dtype=np.float64)
+    measured = np.asarray(
+        [_geodesic(candidate, points[i], points[j]) for i, j, _ in relations],
+        dtype=np.float64,
+    )
+    expected_rank = np.argsort(np.argsort(expected))
+    measured_rank = np.argsort(np.argsort(measured))
+    if np.allclose(expected_rank, expected_rank.mean()) or np.allclose(measured_rank, measured_rank.mean()):
+        raise ValueError("rank preservation is undefined for constant ranks")
+    corr = np.corrcoef(expected_rank, measured_rank)[0, 1]
+    if not np.isfinite(corr):
+        raise ValueError("rank preservation is not computable")
+    return float(corr)
 
 
 def _geodesic_distortion(
