@@ -215,6 +215,46 @@ def _evaluate_named_metric(
     return result
 
 
+def evaluate_projection_loss(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    relations: Sequence[tuple[int, int, float]],
+    target_dimension: int,
+    frozen_selection: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    def compute(candidate: Mapping[str, Any], matrix: np.ndarray) -> float:
+        if not 1 <= target_dimension < matrix.shape[1]:
+            raise ValueError("projection target_dimension must satisfy 1 <= k < source dimension")
+        centered = matrix - matrix.mean(axis=0, keepdims=True)
+        _u, _s, vt = np.linalg.svd(centered, full_matrices=False)
+        projected = centered @ vt[:target_dimension].T
+        projected_candidate = {
+            **dict(candidate),
+            "family": "EUCLIDEAN",
+            "dimension": target_dimension,
+            "metric": "l2",
+        }
+        return _geodesic_distortion(projected_candidate, projected, relations)
+
+    return _evaluate_named_metric(
+        profile,
+        candidate_id=candidate_id,
+        split=split,
+        points=points,
+        relations=relations,
+        metric="projection_loss",
+        compute=compute,
+        frozen_selection=frozen_selection,
+        extra_diagnostics={
+            "target_dimension": target_dimension,
+            "note": "projection_loss is relational preservation after compression, not intent or legitimacy",
+        },
+    )
+
+
 def random_pair_null(
     profile: Mapping[str, Any],
     *,
