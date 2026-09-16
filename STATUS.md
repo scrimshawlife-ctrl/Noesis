@@ -6,7 +6,7 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 + SLICE-013 + SLICE-014 + SLICE-015 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 + SLICE-013 + SLICE-014 + SLICE-015 + SLICE-016 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
@@ -172,6 +172,15 @@ Implemented:
 - spherical renormalization and antipodal-pair diagnostics;
 - `compute_cost` on geodesic evaluations;
 - selection applies an optional `compute_penalty`.
+
+### SLICE-016 — ProjectionLoss
+Implemented:
+- PCA/truncate projection of a representation to a lower dimension;
+- geodesic distortion of registered relations after compression;
+- invalid target dimension fails closed;
+- no intent, legitimacy, or social-cause fields.
+
+This operationalizes Flatland only as `ProjectionLoss`. It does not establish the full Flatland Effect.
 
 ## Remaining blockers
 
