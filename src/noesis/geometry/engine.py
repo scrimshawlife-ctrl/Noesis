@@ -244,6 +244,70 @@ def label_geometric_rupture(
     }
 
 
+def evaluate_relation_prediction(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    train_relations: Sequence[tuple[int, int, float]],
+    held_out_relations: Sequence[tuple[int, int, float]],
+    frozen_selection: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    def compute(candidate: Mapping[str, Any], matrix: np.ndarray) -> float:
+        n = matrix.shape[0]
+        known = {_undirected(i, j) for i, j, _ in train_relations}
+        known.update(_undirected(i, j) for i, j, _ in held_out_relations)
+        if not held_out_relations:
+            raise ValueError("relation prediction requires held-out positive pairs")
+        positives = []
+        for i, j, _expected in held_out_relations:
+            positives.append(-_geodesic(candidate, matrix[i], matrix[j]))
+        negatives = []
+        for i in range(n):
+            for j in range(i + 1, n):
+                if _undirected(i, j) in known:
+                    continue
+                negatives.append(-_geodesic(candidate, matrix[i], matrix[j]))
+        if not negatives:
+            raise ValueError("relation prediction requires non-edge negatives")
+        return _pairwise_auc(positives, negatives)
+
+    return _evaluate_named_metric(
+        profile,
+        candidate_id=candidate_id,
+        split=split,
+        points=points,
+        relations=tuple(train_relations) + tuple(held_out_relations),
+        metric="relation_prediction_auc",
+        compute=compute,
+        frozen_selection=frozen_selection,
+        extra_diagnostics={
+            "n_positives": len(held_out_relations),
+            "note": "held-out relation ranking is not semantic truth",
+        },
+    )
+
+
+def _undirected(i: int, j: int) -> tuple[int, int]:
+    return (i, j) if i <= j else (j, i)
+
+
+def _pairwise_auc(positives: Sequence[float], negatives: Sequence[float]) -> float:
+    wins = 0.0
+    total = 0
+    for pos in positives:
+        for neg in negatives:
+            total += 1
+            if pos > neg:
+                wins += 1.0
+            elif pos == neg:
+                wins += 0.5
+    if total == 0:
+        raise ValueError("relation prediction AUC is not computable")
+    return float(wins / total)
+
+
 def evaluate_projection_loss(
     profile: Mapping[str, Any],
     *,
