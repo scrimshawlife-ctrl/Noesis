@@ -8,6 +8,7 @@ from typing import Any, Mapping, Sequence
 import numpy as np
 
 from noesis.contracts.registry import validate_contract
+from noesis.metrics.core import bootstrap_mean_ci
 
 _CREATED = datetime(2026, 9, 16, tzinfo=UTC).isoformat()
 _EPS = 1e-12
@@ -201,6 +202,75 @@ def _evaluate_named_metric(
         "created_at": _CREATED,
     }
     validate_contract("geometric-metric-result", result)
+    return result
+
+
+def random_pair_null(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    relations: Sequence[tuple[int, int, float]],
+    seed: int,
+) -> dict[str, Any]:
+    matrix = _points(points, int(_candidate(profile, candidate_id)["dimension"]))
+    n = matrix.shape[0]
+    if n < 3 or len(relations) < 2:
+        raise ValueError("random-pair null requires at least 3 points and 2 relations")
+    rng = np.random.default_rng(seed)
+    randomized = []
+    for i, _j, expected in relations:
+        choices = [index for index in range(n) if index != i]
+        randomized.append((i, int(rng.choice(choices)), float(expected)))
+    return evaluate_geometry_candidate(
+        profile,
+        candidate_id=candidate_id,
+        split=split,
+        points=points,
+        relations=tuple(randomized),
+        result_suffix="random-pairs",
+        extra_diagnostics={"null": "random_pairs"},
+    )
+
+
+def bootstrap_geodesic_uncertainty(
+    profile: Mapping[str, Any],
+    *,
+    candidate_id: str,
+    split: str,
+    points,
+    relations: Sequence[tuple[int, int, float]],
+    seed: int,
+    repeats: int = 200,
+) -> dict[str, Any]:
+    def compute(candidate: Mapping[str, Any], matrix: np.ndarray) -> float:
+        if len(relations) < 2:
+            raise ValueError("bootstrap uncertainty requires at least two relations")
+        errors = []
+        for i, j, expected in relations:
+            if candidate["family"] == "TOPOLOGICAL":
+                raise ValueError("bootstrap topological paths in this helper via geodesic_distortion")
+            measured = _geodesic(candidate, matrix[i], matrix[j])
+            errors.append(abs(measured - float(expected)))
+        mean, lo, hi = bootstrap_mean_ci(errors, repeats=repeats, seed=seed)
+        compute.last_interval = {"mean": mean, "lo": lo, "hi": hi}  # type: ignore[attr-defined]
+        return mean
+
+    compute.last_interval = None  # type: ignore[attr-defined]
+    result = _evaluate_named_metric(
+        profile,
+        candidate_id=candidate_id,
+        split=split,
+        points=points,
+        relations=relations,
+        metric="geodesic_distortion",
+        compute=compute,
+        extra_diagnostics={"uncertainty_method": "bootstrap_mean_ci", "repeats": repeats},
+    )
+    if result["status"] == "MEASURED" and compute.last_interval:
+        result["uncertainty"] = compute.last_interval
+        validate_contract("geometric-metric-result", result)
     return result
 
 
