@@ -1,7 +1,12 @@
 import pytest
 
 from noesis.artifacts.store import ContentAddressedStore
-from noesis.metrics.compare import cosine_of_observations
+from noesis.metrics.compare import (
+    cka_of_observation_sets,
+    cosine_of_observations,
+    euclidean_of_observations,
+    replay_envelope,
+)
 from noesis.metrics.core import cosine_similarity
 
 
@@ -44,3 +49,34 @@ def test_cosine_of_observations_refuses_substituted_artifact(tmp_path):
     with pytest.raises(RuntimeError, match="hash mismatch"):
         cosine_of_observations(store, left, right)
     assert cosine_similarity((1.0, 0.0), (0.0, 1.0)) == pytest.approx(0.0)
+
+
+def _obs(store, vector):
+    sha, path = store.put_vector(vector)
+    return {"artifact": {"uri": path.as_uri(), "sha256": sha, "shape": [len(vector)]}}
+
+
+def test_euclidean_and_cka_of_verified_observations(tmp_path):
+    store = ContentAddressedStore(tmp_path)
+    a = _obs(store, (1.0, 0.0))
+    b = _obs(store, (0.0, 1.0))
+    c = _obs(store, (1.0, 0.0))
+    d = _obs(store, (0.0, 1.0))
+    assert euclidean_of_observations(store, a, b) == pytest.approx(float(2**0.5))
+    assert cka_of_observation_sets(store, (a, b), (c, d)) == pytest.approx(1.0)
+
+
+def test_replay_envelope_respects_manifest_thresholds(tmp_path):
+    store = ContentAddressedStore(tmp_path)
+    left = _obs(store, (1.0, 0.0))
+    same = _obs(store, (1.0, 0.0))
+    other = _obs(store, (0.0, 1.0))
+    ok = replay_envelope(
+        store,
+        left,
+        same,
+        {"replay_cosine": 1.0, "replay_euclidean": 0.0, "replay_artifact_hash_equal": True},
+    )
+    assert ok["within_thresholds"] is True
+    bad = replay_envelope(store, left, other, {"replay_cosine": 1.0})
+    assert bad["within_thresholds"] is False

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 
+from noesis.capture.fingerprint import environment_fingerprint
 from noesis.contracts.registry import ContractRegistry
 from noesis.replication import ReplicationRequest, replicate_settlement
 from noesis.settlement import EvidenceRef, SettlementRequest, settle_evidence
@@ -115,6 +116,32 @@ def test_same_operator_cannot_fully_replicate():
     )
     assert report.classification == "PARTIAL"
     assert report.settlement["promotion"] != "ELIGIBLE_FOR_REVIEW"
+
+
+def test_equivalent_environment_requirement_blocks_full_replication():
+    original = _original()
+    original_env = {"python": "3.12.3", "adapter": "fake"}
+    replica_env = {"python": "3.13.0", "adapter": "fake"}
+    original_env = {**original_env, "fingerprint": environment_fingerprint(original_env)}
+    replica_env = {**replica_env, "fingerprint": environment_fingerprint(replica_env)}
+    report = replicate_settlement(
+        ReplicationRequest(
+            original_settlement=original,
+            original_metrics=(0.5,),
+            replica_metrics=(0.5,),
+            original_operator="operator:a",
+            replica_operator="operator:b",
+            new_control_ids=("ctrl-new-1",),
+            replica_settlement_id="set-rep-env",
+            tolerance=0.05,
+            original_environment=original_env,
+            replica_environment=replica_env,
+            require_equivalent_environment=True,
+        )
+    )
+    assert report.classification == "PARTIAL"
+    assert report.fingerprint_report["status"] == "NEW_RUN_REQUIRED"
+    assert "python" in report.environment_delta
 
 
 def test_missing_new_control_is_partial():
