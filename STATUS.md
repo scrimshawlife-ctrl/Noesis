@@ -263,6 +263,12 @@ Attach the trained model behind `CallableHyperlexAdapter` or `HttpHyperlexAdapte
 ### D — Replication and gates
 T-110 harness exists. AC-R2 still requires an independent operator rerun with new controls on real evidence. AC-N2/N3/N4 remain unaccepted.
 
+## Notion parity
+
+Repo is source of truth. Paste-ready hub card: `docs/NOTION-PARITY.md`.
+
+Observed 2026-09-16: this host could not reach `api.notion.com` (TLS/connect timeout), so live Hub writeback was **not** performed. Until an operator pastes that card, Notion may lag `main` (SLICE-027 / PR #29).
+
 ## Promotion posture
 
 No latent semantic claim is currently promoted. All semantic, mechanistic, alignment, or communication findings remain CANON-SHADOW until their declared evidence and replication gates are satisfied.
