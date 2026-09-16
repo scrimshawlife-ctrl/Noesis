@@ -3,7 +3,7 @@
 Status: `CANON-SHADOW`
 Version: `0.3.0`
 Specification state: `COMPLETE`
-Runtime state: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 IMPLEMENTED`
+Runtime state: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 IMPLEMENTED`
 
 This document is the canonical system overview. Normative details are decomposed into the referenced specifications below.
 
