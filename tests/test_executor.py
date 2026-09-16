@@ -54,6 +54,19 @@ def test_manifest_executor_emits_observation(tmp_path):
     assert report.failures == ()
 
 
+def test_manifest_executor_rejects_classification_mismatch(tmp_path):
+    adapter = DeterministicFakeAdapter(dimensions=8)
+    store = ContentAddressedStore(tmp_path)
+    executor = ManifestExecutor(adapter, store, ContractRegistry("contracts"))
+    report = executor.execute(
+        manifest(),
+        [InputFixture("fixture-001", "stable fixture", data_classification="RESEARCH_INTERNAL")],
+        "run-mismatch",
+    )
+    assert report.observations == ()
+    assert any("must match the manifest" in item["message"] for item in report.failures)
+
+
 def test_manifest_executor_rejects_secret_like_fixture_text(tmp_path):
     adapter = DeterministicFakeAdapter(dimensions=8)
     store = ContentAddressedStore(tmp_path)
@@ -90,3 +103,4 @@ def test_manifest_executor_persists_missing_fixture_as_failure(tmp_path):
     assert len(report.failures) == 1
     assert report.failures[0]["error_type"] == "KeyError"
     assert report.failures[0]["provenance"] == "OBSERVED"
+    assert report.failures[0]["environment"]["fingerprint"]

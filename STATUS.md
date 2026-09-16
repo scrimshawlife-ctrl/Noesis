@@ -6,7 +6,7 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 + SLICE-013 + SLICE-014 + SLICE-015 + SLICE-016 + SLICE-017 + SLICE-018 + SLICE-019 + SLICE-020 + SLICE-021 + SLICE-022 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 + SLICE-011 + SLICE-012 + SLICE-013 + SLICE-014 + SLICE-015 + SLICE-016 + SLICE-017 + SLICE-018 + SLICE-019 + SLICE-020 + SLICE-021 + SLICE-022 + SLICE-023 + SLICE-024 + SLICE-025 + SLICE-026 + SLICE-027 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
@@ -218,6 +218,24 @@ Implemented:
 - FIELD/N5 require explicit operator authorization before any capture cell runs.
 
 This does not authorize N5 science. It only enforces the gate.
+
+### SLICE-023 — Replication environment fingerprints
+Implemented:
+- optional original/replica environment maps on `replicate_settlement`;
+- `require_equivalent_environment` blocks full `REPLICATED` when fingerprints differ (FR-073);
+- fingerprint deltas are disclosed on the report.
+
+### SLICE-024 — Verified Euclidean and CKA
+Implemented: `euclidean_of_observations` and `cka_of_observation_sets` load tensors only after hash checks.
+
+### SLICE-025 — Replay envelope
+Implemented: `replay_envelope` checks cosine, Euclidean, and artifact-hash equality against manifest thresholds.
+
+### SLICE-026 — Manifest/fixture classification consistency
+Implemented: a fixture whose `data_classification` differs from the manifest becomes a `FailureRecord`.
+
+### SLICE-027 — Failure environment fingerprint
+Implemented: capture failures record a Python environment fingerprint.
 
 ## Remaining blockers
 

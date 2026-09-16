@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import platform
 import re
 from dataclasses import dataclass
 from typing import Any, Iterable, Mapping
@@ -7,6 +8,7 @@ from typing import Any, Iterable, Mapping
 from noesis.adapters.base import ModelAdapter
 from noesis.artifacts.store import ContentAddressedStore
 from noesis.capture.runner import CaptureRunner
+from noesis.capture.fingerprint import environment_fingerprint
 from noesis.contracts.registry import ContractRegistry
 from noesis.domain.models import CaptureRequest, FailureRecord, InputFixture, RepresentationSite
 from noesis.security import authorize_scope, classify_fixture
@@ -69,6 +71,8 @@ class ManifestExecutor:
                         "access_scope": fixture.access_scope,
                     }
                 )
+                if fixture.data_classification != manifest["data_classification"]:
+                    raise ValueError("fixture data_classification must match the manifest")
             except ValueError as exc:
                 failures.append(
                     self._failure(manifest["experiment_id"], run_id, fixture_id, "classification", 0, exc)
@@ -97,6 +101,9 @@ class ManifestExecutor:
             error_type=type(exc).__name__,
             message=str(exc),
         ).as_dict()
+        environment = {"python": platform.python_version()}
+        environment["fingerprint"] = environment_fingerprint(environment)
+        record["environment"] = environment
         self.registry.validate("failure-record", record)
         self.store.put_json(record)
         return record

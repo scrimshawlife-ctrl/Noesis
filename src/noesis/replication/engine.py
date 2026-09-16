@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import hashlib
 from dataclasses import dataclass
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 
+from noesis.capture.fingerprint import compare_environment_fingerprints
 from noesis.settlement import EvidenceRef, SettlementRequest, settle_evidence
 
 
@@ -19,6 +20,9 @@ class ReplicationRequest:
     tolerance: float
     environment_delta: Sequence[str] = ()
     artifacts_resolvable: bool = True
+    original_environment: Mapping[str, Any] | None = None
+    replica_environment: Mapping[str, Any] | None = None
+    require_equivalent_environment: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,6 +32,7 @@ class ReplicationReport:
     settlement: dict[str, Any]
     original_settlement_id: str
     environment_delta: tuple[str, ...]
+    fingerprint_report: dict[str, Any] | None = None
 
 
 def replicate_settlement(request: ReplicationRequest) -> ReplicationReport:
@@ -54,9 +59,18 @@ def replicate_settlement(request: ReplicationRequest) -> ReplicationReport:
 
     independent = request.original_operator != request.replica_operator
     has_new_control = bool(request.new_control_ids)
+    fingerprint_report = None
+    equivalent_env = True
+    if request.original_environment is not None and request.replica_environment is not None:
+        fingerprint_report = compare_environment_fingerprints(
+            request.original_environment, request.replica_environment
+        )
+        equivalent_env = fingerprint_report["status"] == "EQUIVALENT"
     if not request.artifacts_resolvable:
         classification = "NOT_COMPUTABLE"
-    elif within and independent and has_new_control:
+    elif within and independent and has_new_control and (
+        equivalent_env or not request.require_equivalent_environment
+    ):
         classification = "REPLICATED"
     elif not within:
         classification = "FAILED_REPLICATION"
@@ -78,6 +92,8 @@ def replicate_settlement(request: ReplicationRequest) -> ReplicationReport:
             limitations.append("replica operator is not independent of the original producer")
         if not has_new_control:
             limitations.append("replication did not introduce a new control or independent fixture")
+        if request.require_equivalent_environment and not equivalent_env:
+            limitations.append("replica environment fingerprint differs; new run identity required")
         requested = "INFERRED"
         independent_flag = False
     else:
@@ -97,12 +113,14 @@ def replicate_settlement(request: ReplicationRequest) -> ReplicationReport:
             confidence_basis=(f"classification={classification}",),
         )
     )
+    extra_delta = tuple(fingerprint_report.get("delta", []) if fingerprint_report else ())
     return ReplicationReport(
         classification=classification,
         envelope=envelope,
         settlement=settlement,
         original_settlement_id=str(original["settlement_id"]),
-        environment_delta=tuple(request.environment_delta),
+        environment_delta=tuple(request.environment_delta) + extra_delta,
+        fingerprint_report=fingerprint_report,
     )
 
 
