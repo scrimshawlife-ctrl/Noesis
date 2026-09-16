@@ -6,7 +6,7 @@
 - Governance effect: `ADVISORY_ONLY`
 - Foundation spec: `COMPLETE`
 - Canonical requirements/journeys/workflows/state machines/contracts/data/security/acceptance/tasks/verification: `COMPLETE`
-- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 IMPLEMENTED`
+- Runtime implementation: `SLICE-001 + SLICE-002A + SLICE-003 + SLICE-004 + SLICE-005 + SLICE-006 + SLICE-007 + SLICE-008 + SLICE-009 + SLICE-010 IMPLEMENTED`
 - Hyperlex integration: `ADAPTER + PREREGISTRATION BOUNDARY IMPLEMENTED / TRAINED MODEL BINDING PENDING`
 - N0 embedding/representation comparison: `AC-N0 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
 - N1 hidden-state capture: `AC-N1 ACCEPTED / PINNED REAL-MODEL EVIDENCE`
@@ -128,6 +128,17 @@ Implemented:
 - geometric results never populate semantic-truth or universal-geometry fields.
 
 AC-N3-GEO is not accepted: no operator-approved relational corpus, and no geometry is privileged in core.
+
+### SLICE-010 — Audit and security controls
+Implemented:
+- secret-pattern scan over fixture text;
+- `PROHIBITED` classification rejected;
+- `SENSITIVE` requires retention and access scope;
+- FIELD/N5 require explicit operator authorization;
+- artifact substitution detected via content-hash mismatch;
+- synthetic incident records plus supersession without deleting the original.
+
+AC-S1 is not a production authorization. FIELD remains blocked without an operator receipt.
 
 ## Remaining blockers
 
