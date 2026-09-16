@@ -86,6 +86,7 @@ Invariant: task utility and semantic equivalence are separate fields.
 ## C-008 — FailureRecord
 Purpose: make failures first-class rather than absent observations.
 Required semantics: failure ID, run/manifest/fixture IDs, stage, error class, deterministic code, environment fingerprint, retry relationship if any.
+Schema: `contracts/failure-record.schema.json`.
 
 ## C-009 — SupersessionRecord
 Purpose: preserve immutable history while identifying obsolete evidence.

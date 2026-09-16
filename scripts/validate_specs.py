@@ -39,6 +39,7 @@ REQUIRED = [
     "contracts/intervention-result.schema.json",
     "contracts/alignment-map.schema.json",
     "contracts/latent-channel-result.schema.json",
+    "contracts/failure-record.schema.json",
     "contracts/supersession.schema.json",
     "contracts/hyperlex-transform-request.schema.json",
     "contracts/hyperlex-transform-result.schema.json",
