@@ -1,6 +1,8 @@
 import json
 from datetime import UTC, datetime
 
+import pytest
+
 from noesis.adapters.fake import DeterministicFakeAdapter
 from noesis.artifacts.store import ContentAddressedStore
 from noesis.capture.executor import ManifestExecutor
@@ -13,6 +15,33 @@ FIXED_TIME = datetime(2026, 9, 13, 23, 0, tzinfo=UTC)
 
 def manifest():
     return json.loads(open("examples/manifests/slice-001.json", encoding="utf-8").read())
+
+
+def test_manifest_executor_rejects_unauthorized_field_scope(tmp_path):
+    adapter = DeterministicFakeAdapter(dimensions=8)
+    store = ContentAddressedStore(tmp_path)
+    executor = ManifestExecutor(adapter, store, ContractRegistry("contracts"))
+    field_manifest = manifest()
+    field_manifest["environment_requirements"] = {"execution_scope": "FIELD"}
+    with pytest.raises(ValueError, match="FIELD"):
+        executor.execute(field_manifest, [InputFixture("fixture-001", "stable fixture")], "run-field")
+
+
+def test_manifest_executor_allows_authorized_n5(tmp_path):
+    adapter = DeterministicFakeAdapter(dimensions=8)
+    store = ContentAddressedStore(tmp_path)
+    runner = CaptureRunner(adapter, store, clock=lambda: FIXED_TIME)
+    executor = ManifestExecutor(adapter, store, ContractRegistry("contracts"), runner)
+    n5_manifest = manifest()
+    n5_manifest["environment_requirements"] = {"execution_scope": "N5"}
+    report = executor.execute(
+        n5_manifest,
+        [InputFixture("fixture-001", "stable fixture")],
+        "run-n5",
+        authorization={"scope": "N5", "operator": "owner"},
+    )
+    assert len(report.observations) == 1
+    assert report.failures == ()
 
 
 def test_manifest_executor_emits_observation(tmp_path):
