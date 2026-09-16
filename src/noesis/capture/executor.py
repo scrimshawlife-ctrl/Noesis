@@ -9,6 +9,7 @@ from noesis.artifacts.store import ContentAddressedStore
 from noesis.capture.runner import CaptureRunner
 from noesis.contracts.registry import ContractRegistry
 from noesis.domain.models import CaptureRequest, FailureRecord, InputFixture, RepresentationSite
+from noesis.security import classify_fixture
 
 _SITE_RE = re.compile(r"^(embedding|hidden_state)(?::layer=(-?\d+))?:token=(-?\d+)$")
 
@@ -55,6 +56,20 @@ class ManifestExecutor:
             fixture = fixture_map.get(fixture_id)
             if fixture is None:
                 failures.append(self._failure(manifest["experiment_id"], run_id, fixture_id, "fixture", 0, KeyError(fixture_id)))
+                continue
+            try:
+                classify_fixture(
+                    {
+                        "text": fixture.text,
+                        "data_classification": fixture.data_classification,
+                        "retention": fixture.retention,
+                        "access_scope": fixture.access_scope,
+                    }
+                )
+            except ValueError as exc:
+                failures.append(
+                    self._failure(manifest["experiment_id"], run_id, fixture_id, "classification", 0, exc)
+                )
                 continue
             for site_text in manifest["representation_sites"]:
                 for seed in manifest["seeds"]:
