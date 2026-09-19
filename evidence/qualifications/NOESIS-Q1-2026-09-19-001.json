@@ -1,0 +1,35 @@
+{
+  "receipt_id": "NOESIS-Q1-2026-09-19-001",
+  "qualification": "NOESIS-Q1",
+  "decision": "PROVISIONALLY_QUALIFIED",
+  "scope": "controlled epistemic-interchange integration fixtures",
+  "repository": "scrimshawlife-ctrl/Noesis",
+  "revision": "28c840dd9c7921e63e046412bdd7cc4de978905f",
+  "evidence": [
+    {"kind": "github_workflow", "name": "spec-validation", "run_id": 35466074246, "run_number": 168, "conclusion": "success"},
+    {"kind": "github_workflow", "name": "runtime-validation", "run_id": 35466074268, "run_number": 179, "conclusion": "success"}
+  ],
+  "verified_capabilities": [
+    "schema_validation",
+    "canonical_json_sha256_identity",
+    "missing_evidence_fail_closed",
+    "anti_silent_epistemic_promotion",
+    "bounded_interpretation_with_evidence",
+    "not_computable_preservation",
+    "append_only_provenance",
+    "stale_hash_rejection"
+  ],
+  "limitations": [
+    "No independent external reviewer receipt yet",
+    "No pairwise ecosystem conformance executed",
+    "Does not establish scientific validity",
+    "Does not satisfy AC-EIC-G1",
+    "Does not authorize ecosystem-wide EXP-001",
+    "Does not alter N5 BLOCKED status"
+  ],
+  "next_permitted_work": [
+    "HYPERLEX-Q1 specification and fixtures",
+    "NOESIS-Q1 independent review",
+    "R0 contract hardening"
+  ]
+}
