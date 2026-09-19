@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1.0",
+  "object_id": "eic-invalid-missing-evidence",
+  "proposition_id": "prop-invalid-001",
+  "epistemic_status": "OBSERVED",
+  "evidence_refs": [],
+  "provenance": [{
+    "event_id": "prov-invalid-001",
+    "component": "Noesis",
+    "operation": "REGISTER_INTERCHANGE_OBJECT",
+    "utc_time": "2026-09-19T20:00:00Z",
+    "output_hash": "sha256:invalid",
+    "authority": "Noesis Q1 synthetic fixture"
+  }],
+  "authority": {"scope":"integration-conformance","effect":"ADVISORY_ONLY"}
+}
