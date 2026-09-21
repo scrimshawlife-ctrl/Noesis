@@ -265,9 +265,9 @@ T-110 harness exists. AC-R2 still requires an independent operator rerun with ne
 
 ## Notion parity
 
-Repo is source of truth. Paste-ready hub card: `docs/NOTION-PARITY.md`.
+Repo is source of truth. Notion is a mirror. Paste-ready hub card: `docs/NOTION-PARITY.md` (Noesis #30).
 
-Observed 2026-09-16: this host could not reach `api.notion.com` (TLS/connect timeout), so live Hub writeback was **not** performed. Until an operator pastes that card, Notion may lag `main` (SLICE-027 / PR #29).
+`OBSERVED` 2026-09-20 PT: live Hub writeback completed onto the [Noesis Spine Owner page](https://app.notion.com/p/3db3e8ba2f5c81a48f87e6f95ce75e6b). The Hub now mirrors the operator snapshot from that card. This writeback does not accept AC-N2, AC-N3, AC-N4, AC-N5, or AC-R2.
 
 ## Promotion posture
 
