@@ -11,6 +11,15 @@
 
 Noesis is the Abraxas latent-representation research module: a contract-first system for measuring, comparing, falsifying, aligning, and settling claims about model representations without assuming those representations form a universal hidden language.
 
+## Quickstart
+
+```bash
+python -m pip install -e ".[dev]"
+python -m pytest tests/ -q          # 129 passed at last review
+```
+
+Noesis consumes latent captures supplied to it, so there is no model to download and no weights to fetch.
+
 ## Posture
 
 - Canonical status: `CANON-SHADOW`
@@ -98,3 +107,9 @@ CI runs the same canonical specification validation on pull requests and pushes.
 ## License
 
 This repository is licensed under the MIT License. See [`LICENSE`](LICENSE). This matches `license = {text = "MIT"}` in `pyproject.toml`.
+
+## Project status
+
+- [ROADMAP.md](ROADMAP.md) — what is shipped, what is in progress, and what is deliberately not planned, each with its reason.
+- [KANBAN.md](KANBAN.md) — the board, with every blocker named and evidenced.
+- [CONTRIBUTING.md](CONTRIBUTING.md) — the working rules for this repository.
