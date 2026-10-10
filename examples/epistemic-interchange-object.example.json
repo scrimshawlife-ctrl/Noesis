@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1.0",
+  "object_id": "eic-example-001",
+  "proposition_id": "prop-example-001",
+  "epistemic_status": "OBSERVED",
+  "evidence_refs": ["sha256:example-observation"],
+  "observation_refs": ["obs-example-001"],
+  "assertions": [],
+  "transformations": [],
+  "controls": ["control:source-integrity"],
+  "contradictions": [],
+  "uncertainty": null,
+  "provenance": [{
+    "event_id": "prov-example-001",
+    "component": "Noesis",
+    "operation": "REGISTER_INTERCHANGE_OBJECT",
+    "utc_time": "2026-09-19T19:00:00Z",
+    "input_hashes": ["sha256:example-source"],
+    "output_hash": "sha256:example-observation",
+    "revision": "codex/epistemic-interchange-q1",
+    "authority": "Noesis research instrument"
+  }],
+  "authority": {"scope":"integration-conformance","effect":"ADVISORY_ONLY"},
+  "supersedes": []
+}

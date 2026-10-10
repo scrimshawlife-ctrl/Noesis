@@ -30,6 +30,7 @@ REQUIRED = [
     "specs/VERIFICATION.md",
     "specs/EXP-001-SEMANTIC-INVARIANCE.md",
     "specs/EXP-002-LATENT-COMMUNICATION.md",
+    "specs/EPISTEMIC-INTERCHANGE.md",
     "docs/RESEARCH.md",
     "docs/HYPERLEX-INTEGRATION.md",
     "contracts/observation.schema.json",
@@ -43,6 +44,7 @@ REQUIRED = [
     "contracts/supersession.schema.json",
     "contracts/hyperlex-transform-request.schema.json",
     "contracts/hyperlex-transform-result.schema.json",
+    "contracts/epistemic-interchange-object.schema.json",
 ]
 
 REQUIRED_SPEC_MARKERS = [
@@ -200,6 +202,11 @@ def main() -> None:
     latent = read("specs/EXP-002-LATENT-COMMUNICATION.md")
     if "BLOCKED" not in latent or "AC-N4" not in latent:
         fail("latent communication experiment must remain gated by AC-N4")
+
+    require_markers(
+        "specs/EPISTEMIC-INTERCHANGE.md",
+        ("OBSERVED != INTERPRETED != CALIBRATED != SETTLED", "NOESIS-Q1", "AC-EIC-G1", "EXP-001 ecosystem execution: `BLOCKED`"),
+    )
 
     hyperlex = read("docs/HYPERLEX-INTEGRATION.md")
     for marker in ("ADAPTER_READY", "MODEL_BINDING_PENDING", "may not state"):

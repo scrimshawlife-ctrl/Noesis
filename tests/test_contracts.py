@@ -112,3 +112,16 @@ def test_geometric_result_binds_not_computable_provenance():
     result["provenance"] = "OBSERVED"
     with pytest.raises(ValueError):
         registry.validate("geometric-metric-result", result)
+
+
+def test_epistemic_interchange_contract_accepts_reference_fixture():
+    registry = ContractRegistry("contracts")
+    fixture = json.loads(open("examples/epistemic-interchange-object.example.json", encoding="utf-8").read())
+    registry.validate("epistemic-interchange-object", fixture)
+
+
+def test_epistemic_interchange_contract_rejects_missing_evidence():
+    registry = ContractRegistry("contracts")
+    fixture = json.loads(open("examples/epistemic-interchange-object.invalid-missing-evidence.json", encoding="utf-8").read())
+    with pytest.raises(ValueError):
+        registry.validate("epistemic-interchange-object", fixture)

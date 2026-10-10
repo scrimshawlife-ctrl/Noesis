@@ -1,0 +1,49 @@
+{
+  "receipt_id": "NOESIS-Q1-2026-09-19-002",
+  "qualification": "NOESIS-Q1",
+  "decision": "PROVISIONALLY_QUALIFIED",
+  "scope": "controlled epistemic-interchange integration fixtures",
+  "repository": "scrimshawlife-ctrl/Noesis",
+  "supersedes": "NOESIS-Q1-2026-09-19-001",
+  "implementation_revision": "28c840dd9c7921e63e046412bdd7cc4de978905f",
+  "verified_head": "a75735c9f2e95d00bc8d11564f406693a66d1fbd",
+  "note": "verified_head only added receipt 001. Implementation under test remains 28c840dd. This receipt does not name its own future commit as implementation_revision.",
+  "issued_utc": "2026-09-19T23:05:00Z",
+  "reviewer": {
+    "class": "SHADOW_ADVISORY",
+    "actor": "Abraxas Orchestrator / Grok",
+    "independent": false
+  },
+  "evidence": [
+    {"kind": "github_workflow", "name": "spec-validation", "run_id": 35466074246, "run_number": 168, "head_sha": "28c840dd9c7921e63e046412bdd7cc4de978905f", "conclusion": "success"},
+    {"kind": "github_workflow", "name": "runtime-validation", "run_id": 35466074268, "run_number": 179, "head_sha": "28c840dd9c7921e63e046412bdd7cc4de978905f", "conclusion": "success"},
+    {"kind": "github_workflow", "name": "spec-validation", "run_id": 35466146484, "run_number": 169, "head_sha": "a75735c9f2e95d00bc8d11564f406693a66d1fbd", "conclusion": "success"},
+    {"kind": "github_workflow", "name": "runtime-validation", "run_id": 35466146482, "run_number": 180, "head_sha": "a75735c9f2e95d00bc8d11564f406693a66d1fbd", "conclusion": "success"}
+  ],
+  "verified_capabilities": [
+    "schema_validation",
+    "canonical_json_sha256_identity",
+    "missing_evidence_fail_closed",
+    "anti_silent_epistemic_promotion",
+    "bounded_interpretation_with_evidence",
+    "not_computable_preservation",
+    "append_only_provenance",
+    "stale_hash_rejection"
+  ],
+  "limitations": [
+    "No independent external reviewer receipt",
+    "Advisory review is not AC-EIC-Q1 independent review",
+    "No pairwise ecosystem conformance executed",
+    "Does not establish scientific validity",
+    "Does not satisfy AC-EIC-G1",
+    "Does not authorize ecosystem-wide EXP-001",
+    "Does not alter N5 BLOCKED status",
+    "Draft PR #31 remains unmerged; EIC is not on main"
+  ],
+  "next_permitted_work": [
+    "Keep PR #31 draft unless operator explicitly lands SHADOW reference",
+    "Independent NOESIS-Q1 review or explicit remain-provisional decision",
+    "HYPERLEX-Q1 completion; pairwise still blocked",
+    "R0 contract hardening"
+  ]
+}

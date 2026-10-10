@@ -1,0 +1,36 @@
+{
+  "receipt_id": "NOESIS-Q1-REMAIN-PROVISIONAL-2026-09-19",
+  "qualification": "NOESIS-Q1",
+  "decision": "REMAIN_PROVISIONAL",
+  "authority": "operator continuation of recommended path 2026-09-19",
+  "repository": "scrimshawlife-ctrl/Noesis",
+  "draft_pr": 31,
+  "implementation_revision": "28c840dd9c7921e63e046412bdd7cc4de978905f",
+  "current_receipt": "NOESIS-Q1-2026-09-19-002",
+  "issued_utc": "2026-09-19T23:12:00Z",
+  "reviewer": {
+    "class": "SHADOW_ADVISORY",
+    "actor": "Abraxas Orchestrator / Grok",
+    "independent": false
+  },
+  "explicit_choices": {
+    "independent_review": "NOT_PRESENT",
+    "remain_provisional": true,
+    "merge_pr_31": false,
+    "land_on_main": false,
+    "pairwise": "BLOCKED",
+    "exp001_ecosystem": "DEFERRED",
+    "n5": "BLOCKED"
+  },
+  "evidence_bound": [
+    "NOESIS-Q1-2026-09-19-001",
+    "NOESIS-Q1-2026-09-19-002",
+    "spec-validation run 170 on 0a823bc46edd20f25695c3a923a38f2923f96e23 SUCCESS",
+    "runtime-validation run 181 on 0a823bc46edd20f25695c3a923a38f2923f96e23 SUCCESS"
+  ],
+  "limitations": [
+    "This settlement is not AC-EIC-Q1 PASS",
+    "Advisory review cannot substitute for an independent reviewer",
+    "Draft PR remains the publication surface"
+  ]
+}
